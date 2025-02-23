@@ -1,0 +1,330 @@
+All right everyone. I hope Metro SIM either went well or is going well. Um, and that RPN is either going well or will go well shortly, as the case may be. Um, where we are in lecture is we've, um, uh, we we looked at trees uh, two times ago generally. What's a tree then? We look specifically at binary trees because these tend to show up a lot in CSS. Um, particularly as. For a finite map, which allows you to store data associated with something called key that you used to, um, that used to look up the thing, you're interested. So last time was mostly general stuff about binary trees. And um, and so kind of where we ended up was we had looked at sort of four shapes of traversal. Um, three of them were what we consider depth first traversal because they, they all a traversal goes through all the elements in the tree in the data structure. Um, and so they do it in different orders and different shapes. And so three of them were called depth. First, because they kind of go deeper into the tree before they spread out and go, why? Um, those are the first three. And so we saw that, uh, um, those three were the same, except as the relationship between when you process the data element in a node compared to when you process it subtrees. And So in order, um, you do usually we do the left subtree first. So you explore the left subtree. Then you process the current data element. Then you process the right subtree. Always remember that um not all functions are void functions. So you might when you explore the left subtree you might get data back. You might get data back. When you explore the right subtree, you may have to combine that with the information about the current node and return that. Um, so this is this is just a very general shape about sort of how we look at the tree. It's not it's not an algorithm yet. It's just a kind of a meta algorithm. What the it's the structure of the general algorithm. Um, preorder traversals. You visit the data in the nodes before you visit either of those subtrees, and then you visit the data. Right? So all three of those we consider to be depth. First search. There's a search if you're searching for a things that first traversal before. Um, adding up all the values or padding all the strings, or concatenating all of the strings that begin with the letter A is one of the students whose name is good today for some reason, but there may be lots of reasons to do this sort of commercial. Um, one thing I did on an Old Course 11 exam, you know, I couldn't call it a tree. But I nonetheless gave the problem. Um, and it was. But the problem was a tree traversal, and there was a lot of guidance at hand. But the idea there was, you had, um, like the Boston Metro water system and water distribution is often done in a tree like structure that like in New York, you felt like these huge aqueducts that come into Manhattan, even the branch out and they serve a different part of the city, and then those branch out of the service neighborhood, and then that part and then those where exactly they sort of provide water to somebody. Then the pipes can get smaller and smaller and smaller. Google used this. In fact, I remember going to a talk back before Google was public company. And they were doing research on it. It was one. One of the founders gave the talk. Um, but they were specifically talking about what they call fat networks, where you have a big honking light at that time. It was ten gigabits per second wire coming in. And then that splits into like, you know, one gigabit wires and that splits into smaller wires as a way to distribute information through their massive servers. Right. So, um, and so what you can do is you can now calculate the flow through the whole network. I sort of summing up all the nodes. You can answer all kinds of questions. Um, okay. So those are the depth first searches. And I have this similar preorder post order shape. They're all kind of naturally recursive because when you process a node you have access to the data in the node and then we looked at a fourth kind of traversal, which we call level order. Um, and this one, this one is great because it sort of explores the tree in breath before it goes. So breadth first traversal is to look at the root node, and then you look at all of the children of the root. Then you look at all of the children of all the children. And then you look at all the children of the children and the children of the group and basically go down to the tree. Well, level by level. And we said that that was hard to do because they were not as natural to be recursive, because when you're looking at a node, you don't have access to sort of the next thing you want to explore, because it might be a sibling, or if you're the last sibling at a level, it's the first node of the next level, which is, generally speaking, not something you can get to them. Um, and so we saw that what we did there was we used the iterative algorithm that used to queue. And so when the process mode you put it to the end. And this has the effect.
+
+UNKNOWN
+Of the level.
+
+So any questions about the general conversions. A little bit of a plan today we're going to we're going to do a very quick wrap up of this. We're going to do a couple of in-class programing exercises that you'll do. And then we're going to start binary search. So that's kind of today's plan. Um and so here are the exercises actually. But actually before you get too entrenched I want to point out all of these have been previous exam questions. So very often in the slides we'll say exercise. And I used to do a lot of these actually I didn't get them back. Um but you say exercise exercise and then students perform an exam. Where can I get practice questions. So all those things you said exercise. Those are good, practice good. And in fact, they come from exams. That's where they. Oh, this is from an old. And it's a good practice question. But, um, so all three of these come from exams. And so if you're not motivated intrinsically by your love of trees, perhaps you'll be motivated by the desire to be in practice for the exams. Um, okay. So let's look at the particular ones. Um, so these are other forms of questions like, and I think I mentioned this last time. I can give you a bunch of I can give you a tree with labels on it, print the labels out in some order on the exam and ask you what traversal produced that order, or leave a blank and say do it in order. Traversal. List the nodes in the order they would be visited, right? So we can do stuff like that. Um, but of course the fun part is the programing. And so we're going to do that. And so what I'd like to do is give you, um, about ten. So there are three things. And um, 12 divided by three is four. So if you're a birthday um, okay. So first you form a team of 2 or 3 people. Then the person furthest to this side of the room, you look at their birth. If it's in January, February, March or April, you do number one number leaves. If it's May, June, July, August 3rd. Yeah. You do concat leaves if it's after that. So September, October, November, December, so forth. Um, you do the last one. I will warn you, the last one is a little harder. So maybe if you're a three person team, that might be nice. More than three people. And then you just fight over who's doing what. So, um, so make a team of 2 or 3 people, and then the from your point of view, the leftmost person birthday, uh, determines first quarter, first, uh, third of the year, and, um, leaves second concat leaves, um, final four months of the year. Path to value. Um, okay. So for my team, uh, go ahead and program. So start with pseudocode. But you can, um. Um. C plus plus is also fine.
+
+Yeah. So. This one is very hard to grade on the exam. Uh. I think. One member of the group has a laptop open because I'm.
+
+Going to take the slides.
+
+Down. So that's just the through the you got this.
+
+There from yesterday. It's the same slide.
+
+Right? Well, they're a little different this year. Right. Oh. Yeah. Oh, no. I want them to put on this one. That's what I'm assuming. Yeah. Yeah. I have a device for that. Yeah. Yeah. Is there. Any. And. I was like, oh yeah. And I was like. Oh. Yeah. Oh. And. It's. Not. Just for the audience. I think it's like a like a public forum. All we have to say is all we have to do is go through and say it. All the way. Like, it's kind of like what we did with the very first person that was there and what we ran in. Oh, yeah. Oh, yeah. So. Well, I think that's. What we want. No no no no. It's not. Like what I'm. Saying. Not. Now. Not on other forms. Yeah. I mean. Yeah. No, that's. Like what's. Happening now. And. Smells like. You never tried it? Well, I hope so, because.
+
+If you do.
+
+Reference. Yourself. Because I like. It. You can always. Bring like I think I was like shopping, right. Yeah. I was like. Yeah. No, no. Like. You can. And. I know. I can't say. I got. Nothing or whatever. That's why I said. I mean. I mean. Uh. Basically. I think you're right. All right. So far, I think you're right. Um, so, uh. So, yeah, I think. That's right. Yeah. I mean, I don't know. Yeah. Don't worry. Yes. Sir? Yeah, I think so. Very well. So now we're right. And. So I think. That. We can use that for now. I want to bet with you. I like the screen. Let's do. It. I'm opening it. But you're.
+
+Talking about pseudocode is fine. C plus.
+
+Plus also find its direction plus plus the function. Here. I think. I'm getting worse. Right. Yeah. Yeah. You're. Right. back. So. I'm coming. So I'm not there. Honestly. I mean, yeah. So. I think we. All. Know that. Doesn't matter. Yeah. I'll tell you what. Oh. Yeah. Just. Like this. Oh, yeah. Oh! Yes. No. I was just here. Oh, yeah. Oh. Yeah. I don't. Know if you like it. Like. I'm pretty sure if I do it now. Like, it's like I would never be. Like. Yeah. Yeah. So how did it go? It's on the left. Turn on the left.
+
+And wait a minute.
+
+This is a choice. I don't know how to make it.
+
+Okay. Um.
+
+So what I'd like.
+
+To do is.
+
+UNKNOWN
+I'd like to get in here. How do I turn that off?
+
+There's usually a way to do this. explains us. Yes. There we go. Um, if I can get a volunteer per team. That leaves. Which apparently is red.
+
+UNKNOWN
+Oh. Come on.
+
+Sure, you can come up with your whole team, so you have to come up by yourself and nobody will laugh at anyone. Okay, that's very important. You all, in fact, honor and respect you. This is a thing that you should do. Other than that. Oh, yeah. All right. Are you done? Leaves? Uh. We're leaves. I'm gonna go with that. Okay, but as long as there's room for other for the other board. So as many people as you can pile in front of one board is good. So who's taking the marker? You can share the monkey. Uh oh. Yeah. Take up your computer. Take up your friends.
+
+Um.
+
+So we have another vehicle.
+
+Oh. Hold on. So we have the.
+
+So we'll get one volunteer from each section. Oh, so you guys have to. You guys have the.
+
+Hardest.
+
+Respect.
+
+No, no, I don't I don't think I don't I just don't want to. Check my website. And then we need to do the same thing for the website too. But I think we're about to see much better version. Um. Yeah, I. Love. That does not make sense otherwise. Leslie. It's all. Right. It's not all right. Oh, yeah. Yeah.
+
+UNKNOWN
+Yeah. Oh. Yeah.
+
+There's probably. Going to. Yeah. So. Because. Oh, yeah. Because there was five levels. Yeah. I mean yeah. All right. Good question. Oh, that's it looks good. We're just helping functions for this. Sure.
+
+Okay. As long as you're prepared to define the helper function on demand.
+
+Okay. But it's possible that it is possible. Okay.
+
+I used helper.
+
+Functions. Yeah.
+
+You won't be surprised to learn that I defined two key helper functions. Is empty and is leaving.
+
+Oh, that would be. And.
+
+Then they made very nice to help us a lot, but.
+
+I.
+
+Didn't expect everyone to think of that.
+
+In the $10. Oh. Oh. Oh. Yeah. So. I. Feel like my favorite. Book. That you wrote.
+
+I think.
+
+I learned a lot for those. Who were writing it has. Never been. One of a curse. Arguably not. But. It's helped me a lot. So I just. Thank you. Thank you. How's your recursion? Because. He doesn't want to. Okay, so. That sounds simple. Okay. I can't remember. Okay. He pressed. So you can't do this.
+
+On the left and right?
+
+Oh, that's. Right. That's why I'm checking. Okay. I don't know. How to make. It like this. That's what I do. Like you have a class. Okay, general. This is for. You. Oh, this is for you. I mean this. So that's why it makes your point. That's smart. Oh. You. Didn't even have to. Do this. There's no way to know. It. Yeah. Okay. All right. Yes. Finish it up and then. I don't have to. Say. Anything. It's just you guys.
+
+I don't want to stress you out there.
+
+All right. Perfect.
+
+Okay, so.
+
+Um.
+
+Thanks to our volunteers. And then, um, could, uh, could a spokesperson for each group sort of describe. Just walk us through it. So who did the left one? Um, so.
+
+Pretty much. I'm having a hard time reading my handwriting.
+
+So these are numb leaves?
+
+Yeah, but first.
+
+We check if it's the empty. If it's not the empty, um, empty tree. Okay. And if it's not the empty tree, then we say if the left and the right are both null pointer to return one.
+
+Yeah, because I'm a leaf. Because it's just basically if, if tree is not null but the left and the right are, then I'm a leaf. Okay. Fair enough.
+
+Then if the if the left is not null pointer the right if not null pointer we go into the L space which is where we return um it's a recursive function. So we return num leaves on the left and on the plus the numbers of the right. And then otherwise if the tree is empty, it returns. Yeah.
+
+Sounds good.
+
+UNKNOWN
+Does everybody understand?
+
+My comments I should let you guys and you can ask. Um so group two.
+
+And Energy group. Frank. Arnold is right. It looks like my thought process was like we have. We have an empty string, and then we have two base cases. Our first one is if it's empty, we just return the empty string so we can't have anything. And then our second one is if it's a leaf, which I determined by checking it, the left and the right, or null players.
+
+Yeah. Let me just make a note because it's a very common error on exams. So a leaf if I ask you is this a leaf. And I give you a pointer to a node. It's if the if that's not null. But the two children are. Now you've already addressed that case. So the code's not wrong. But I just want to put it out there. It's a very common error in exams okay. It's bad.
+
+Yeah. And then if it is a leaf then we would make a value at that point. And then I want it to traverse through it. So if it wasn't no point at the left or the right was no pointer. Um then we would, uh, we would call recursively so we could call the function on the left. And then we would call this function on the right.
+
+Yeah. So, uh, all right, so, um, so the basic structure is good, but we have to do those, we have to accumulate the leaves on the left. Right. So we could say hi. Plus gets whatever we get to the left and then high plus gets what. Oh sorry. Down here I plus gets whatever is there. And then. Yeah. Yeah. So we could do that. Excellent. All right. So good. All right. And now we have wait. So pause for questions. You know, cause I'm paused for questions. I'm pausing and you're asking questions. So we have to roll the set okay.
+
+Team three. Uh, so.
+
+Uh, we had two base cases as well. We had if the tree was, uh, a null pointer, or if the tree value. The value at that point in the tree was the value that we were looking for. Um, the first case we just returned FD. In the second case, we just returned target. And then if it's neither of those two, we first look through the left side of the tree. And if that returns anything, which means if it returns a target, uh, we would return that plus L, which is left the path we went to. Uh, if that had nothing, we will check the right path. And if the right path had something, it would return anything other than empty string. And if neither of those paths had anything, uh, we would return nothing.
+
+All right. Any questions about that? It all sounds pretty good. Okay, good. Um, and by the way, that's probably about the same amount of time you would expect to spend on it in an exam. So we've just done a little exam question rehearsal and also nailed this down. So that was excellent okay. Thank you. And thank you again for volunteering. Um, that's a lot of fun. Um. Oh, wait, you can't see that because I've turned off the projector, but I can. I can put it back. I can do this. Uh, my solutions are actually pretty similar in a way, but, um, I will say that I've had longer to think about these things over the decades. So I considered having two, um, helper functions. Uh, these are all fine as exam answers. They're perfectly fine. But I had two helper functions, so I had to forgive me for the the case and stuff is a little bit different, but the idea is the same. Um, so I had an empty I also had an Is leaf. So I'm happy to share this.
+
+UNKNOWN
+To a mouse over there. So.
+
+Here's my mouse.
+
+So I think my mouse is over there. Yeah. So the helper functions are down here at the bottom. Um, if you know is empty and is leaf, it's it's a non-empty tree that has no but it has no subtrees. Okay. Um, and then, uh, what was the first one? NUM leaves, I think. Yeah. So here's num leaves, which looks essentially the same. Empty trees have no leaves. If I am a leaf, I have one leaf. And if I'm an internal node that it's the sum of the leaves on either side. So again, pretty much exactly what we just saw. Um. Oh. Concatenate leaves I call it string of leaves. Uh, okay. So, uh, um, empty trees still have no leaves. Leaves are still leaves, and we just return the data. We have to. This was an integer tree, so I had to convert it to a string. But luckily there's a built in function for that to string. And then, um, otherwise, you can get the leaves down. Um, the left side, the leaves down the right side. And then I decided to get fancy and put in a separator. And if the separator wasn't necessary, I didn't put it in, um, or I made it empty. So if, uh, if there aren't any leaves on the left or there aren't any leaves on the right, then I don't need a separator. That's an empty string. Otherwise, there's a space. And then, um, this is completely unnecessary for an example. Okay. Um, it's just I'm testing it, and I wanted it to work, so if you just ran them all together, it was a little less. Okay, so there we go. Well done guys. Really well done. That was excellent. Um. Thank you. I want my hand back because. How do I live without.
+
+Using the mouse. Over here.
+
+It should be there. Ha! Okay, let's go to go over there, then come back OMX window. Now if I had another Emacs window on the screen just in case, because I've always got 2 or 3. Um, okay, so those are binary trees. You'll get more practice with traversals. In particular you'll do, uh, in order preorder post order and level order in lab next week, and you'll use stacks and queues and recursion. You'll sort of it's a big niche. You'll practice lots of different things. Okay. So now remember that we had said we were sort of motivated by this idea that we were going to have, um, efficient searching for things in a finite map. And I kind of said trees are a common choice. And so we looked at specifically binary trees to kind of focus us a little bit. There are, um, trees used in this fashion that aren't, um, that are not binary trees. Confusingly, there's one called a B tree, which is I don't know what B stands for, but it's not binary.
+
+It's not a binary tree.
+
+It gets used in databases a lot. Um, but we're going to talk about now is the next step towards an efficient tree based finite map. And those are binary search trees. We're still not going to get there. We'll get there next week. But this is our first time. And in order to get moving I want to just remind you about invariance. Because invariance are going to be extremely important right now. We we went through this all before. So invariance or properties that don't change. We talked about representation versus loop invariance. Representation invariance are statements that need to be true about the data members in a class whenever you're not manipulating them. So basically whenever your code isn't running, the thing must be true. So you're right to understand that. So like the you know, the capacity of an array should actually be the number of slots available in the array you have on the heap. The size should actually be the number of insertions minus the number of deletions in the array. How many client data elements are stored there? Size can't be greater than capacity, right? That would be an inconsistent state. That would be a good invariant. Size must be less than or equal to capacity for an array list. For linked lists similar things. Right. There's a there's one next pointer. Every next pointer is either now or it's the address of a valid node. Right. These are all useful invariants. Um I kind of mentioned this already. Um, if your list is sorted then we'll see this invariant a lot. So for example, if I've got two indices into an array and the array is sorted, then if the if it's sorted in increasing order then if index I is less than or equal to index j, then the list element to that that I th positions. Right. So these are basic representation of variance. And they're going to be really important. Now um remember our checklist. Because when you write a binary search tree homework for, then you'll need to be sure that you satisfy these in your constructors. And then at the end you can assume them for each public function. But then when a public function returns, it must be true again. So it gives you a checklist. Initialize initialization construction establishes the invariants you assume it's true when when you're public. Anytime you're writing the code for public function, you assume it's true, right? Because you did it in the constructor and you did the thing we're going to talk about in a minute. So you assume it's true. Then, of course, when you add a new element to the array, the size will momentarily be out of sync with the elements in the array. Um, the linked list pointers will be in kind of a not quite consistent state because you've allocated a node, but you haven't changed next pointers and stuff like that. Um, so you'll temporarily violate the invariant temporary. But here's the key point. Before returning from a public function, you reestablish it. Now, private functions don't have to do this, but the more you do it, the better your life will become. Because if you do this, then you get fewer bugs that depend on the entire history and the lifetime of a container. Right. You want bugs to sort of surface immediately, and then everything to be okay until the bug arises. What you don't want is a bug to arise, but nobody notices and then nobody notices, and then nobody notices, and then nobody notices. And then, ah, you know, just vomits all over your screen. So, um, and in order for this to be true, you have to keep your data members private, because the client could violate if the client has access to it, they can make the invariant not be true by just reaching in and saying, oh, I want more elements. I'll just I'll just add 10,000 to the capacity there or there you go. No problem. The writer. No. I want the second note to be the first element in the list. Well, now we didn't. It didn't delete the first note, right. So you. So this is this is one of the reasons why we do this. Okay. So so that's just preaching about invariance because we're going to have a key invariant that we're going to introduce today. That's really crucial. Um and remember where we are. What we found is that a tree gives you a way to access a large number of data elements in logarithmic time. If the tree is well behaved, that is, it's very bushy and full, right? If every level is kind of full, it's maxed out. And if the tree is that way and there's no guarantee that it is. But bear with me. If the tree is that way, then we can get to we can we can search seven elements in at most two probes or three comparisons. Are you.
+
+Is.
+
+Me? So we're going to take a step in this direction. Why do we care? Well, because if we could get to log, if we could get a reliable way in logarithmic time to find things in a tree. We could see a benefit of of something like that. You can access a million elements in 20 probes. So that's the that's the motivation. Are we there yet? No. Um, but of course, what we saw before was that we had to search the tree. And if there are a million elements and we have to look at all of them. So that's a million. And in order, preorder, post order. None of that solves the problem at all. Right. So the problem is that we need to be able to, um, we need to be able to look at a tree and given local information, we need to find out where a thing might be. And we saw with binary search, right? The key to logarithmic behavior is often divide the problem in half. Divide the problem in half. If you've got a bushy tree, you've got a bushy tree. Then that means from any given node, about half the nodes below it are on the left and on the right, sorry. On the left and on the right. Right. So that means if you could figure out that it has to be in one side or the other, you could throw away half the elements and never look at it. So that's what the next data structure is for. It's based on that intuition. Um, it's called a binary search tree. Why? Because they're used for searching for things and they're binary trees. So not all binary trees are binary search trees. Um, it's a this one is a special kind of binary search tree. What's special about it? This one. So a binary tree is just any tree that has, you know, up to two children per node, right? Binary search tree, though, adds a key invariant called, not surprisingly, the binary search tree invariant. Um, and here it is. For any given node n with some key k, all the nodes with a key less than k are on one side. So we'll assume that they're on the left. Right. So that's the general assumption. So if I'm looking at 42 here anything less than 42 has to be in this subtree. This is going to let me not look at the right subtree. If I'm looking for something less than 42, anything bigger than 42 is going to be on the right side. So all nodes with keys less than k in that example are in any left subtree, so smaller on the left, larger on the right, and no keys greater than k on the right. Okay with this. So that's the invariant.
+
+So does this mean that BST.
+
+You can't.
+
+Have um.
+
+Multiple nodes with the same key. Like if you have.
+
+42 to have more.
+
+Funding for difficult ice cream and ask questions like this. Because what about duplicates?
+
+Sorry.
+
+No. Not sorry. This is great. You know, you're thinking. You're thinking exactly the right thought. So I just gave you these inequalities. But it turns out equality is there. So what do we do? And, um, so I'll cut to the chase. So I'm going to ignore the issue for now. But we have a range of options that people have that people use in different circumstances. And I've used all of them. Um, one is that in any given node you store everything in that node, you basically store a list of all the things with equal keys. So you could do that. You could change the definition and say less than or equal to on the left and greater than on the right, or greater than or equal to one right and less than that. So you could I've done I've done all of those. Um, and what I'm going to, uh, what I'm going to do today is ignore it. But but you should know it's a reasonable question. And in fact, if you're doing it in practice, you must address this question. And so those are kind of your options. But really good question. Um, if you're if you're implementing a set called a, if you're implementing a finite map that is a set in place. So that's another way you can just define a way. The problem duplicates. No matter if you store it again I'll just say thank you. I already had that one. Okay. So those are kind of your options. So now we play our game with, uh, with the mean here. Um, is this a button or is this a binary search tree? I usually call the game binary search tree or not binary search tree. Is that a binary search tree? Yes it is. Okay, so remember, empty trees are perfectly valid trees because that's how they all start. They're all born. Indeed. Um, and it does satisfy the requirement, because if I take any node in that tree. And I look at its its key. All the nodes with the smaller keys are on the left. It's vacuous. True is what mathematicians are saying. Um, I heard a terrible, terrifying story of a PhD dissertation before I did mine. So, you know, decades ago where during the presentation, a public presentation, a member of the faculty proved the central theorem and the thesis to be backwards. Basically, no PhD for you. This is this is a thing that circulates among PhD students. Right? This is horrible. Um, yeah, it was Marvin Minsky who proved it, apparently. So. Uh, apparently Marvin worked with the guy, and and they got the thesis. They found a version of the of the of the theorem that was true for non-empty sets.
+
+Woohoo.
+
+So all right. So that's an aside. The important thing is empty trees satisfy the property vacuum. So we're good. How about this one? Uh, yes. Because 17, uh, is smaller than 42. 84 is larger. So it looks good.
+
+Looks good.
+
+How about this one? All so good. Again, trees start out empty, and then the next step is they have one. So this had better be true. But it is true. And again it's vacuous. All the elements in the left subtree have a key less than 42. And likewise it's vacuous. Really true that all the keys in the right subtree are greater. 42. Um, okay. So now let's look at a little bit more complicated of a tree. What do we think? No. Why not?
+
+75 is nothing.
+
+Yeah. 75 looks pretty problematic. It's just kind of on the wrong side. It's, uh, it's greater than 39. Okay. Um. All right, so let's try to fix it.
+
+How are we? How are we doing now?
+
+Is that okay? So, um. Well, let's go through. So 39 one is less than 39, and then 42, 40 and 56 are greater than 39. Um, 40 is greater than 39, but less than 42, 56 is greater than 39 and 42. Did you notice what I just did there? So the invariant applies to every node in the tree. Every single node. Right. So that's that's important. And it can make it really easy to miss your question.
+
+Do you think it's okay.
+
+Um, well, if you come up with a question, you're okay. Um. Just ask. All right. How about this one? Um, yes it is. And this tells you why we haven't yet reached our goal. Because there's no way a tree shaped like this. It's going to give us long time access to this. Okay. Um. And yet. And yet it is a valid binary search tree. So we're not. We're not out of the woods yet. But the dream lives. The dream lives.
+
+UNKNOWN
+Okay. How about this?
+
+Okay, I'm seeing a couple votes for now. Um.
+
+Why now? Well, yeah. See? 45.
+
+Is it? It's okay for 12, but it's greater than, um, 17. But it's in 17 left subtree and it's greater than 35, but it's in 35 left subtree. So 45. So you see what I mean. It has to apply to every you have to sort of verify for every node. So like on an exam just take a minute and go through every single night. Um.
+
+Okay.
+
+Uh, how many more of these.
+
+Do we have?
+
+Um, okay. Well, this one isn't even a tree. So there's no, um. So. So to be a binary search tree, it must in fact be a tree, a binary tree, and satisfy the binary search tree invariant. Okay, so. Um. Yeah. So not even a tree. Um. Okay, so I already mentioned that we're going to use a kind of binary search tree. We're going to find that we're going to add more invariants that are going to get us to our our great goal. So right now we're just going to start with the first invariant binary search tree invariant. And even so we can use this to implement finite maps. And if we're lucky if the tree is is well-behaved and bushy, it's going to be efficient. It's just it's a little bit up to up to luck or, you know, good engineering or something. So there'll be an interface that looks sort of like this, right? In a binary search tree, there's a way to put things in and take things out. You want to ask the question, does the tree contain something with this key? You want to be able to look up a key and get back a value. Um, that you might also want to know. How many things are there? Is it empty? Um, other useful things are min and max. Notice that min and max aren't really well defined and lookups not well defined. But the thing is, are they're running from promising you a value to okay, so we'll just need to throw an exception. Um, but that's you know, if you're designing the interface, you have to think, do we throw an exception or do we have some wonky value that we return? I've seen people do both. Okay. Um, and the way we'll implement it is we'll do the same kind of thing. And you've already seen this with trees and binary trees. Some will have some sort of BST node. And in fact, it's just a binary tree node, right. There's nothing in the node that tells you about the invariant. It's in the code that we'll see. And we'll keep track of the root of the tree. Everybody okay. So so far the only new thing is we have this invariant. Um, but we haven't implemented it. So how many were actually. Further than I thought. Okay. And we're going to come back to this idea of wrapper functions, which I showed you with linked lists I think. So a, um, I sometimes call them trampoline functions because I imagine that somebody bounces in and bounces out of the function. Um, basically we're going to use these wrapper functions. So we'll have a public function. And the implementation of the public function is just one line. It just calls a private function, maybe returns the result of a private function. And it passes the root of the tree. Maybe some other stuff too. But that's the idea. It's all of the work is going to happen in private overload, in overloaded versions of the functions that are private. And we saw this with linked lists. Right. So one way to do a linked list length is of course you can just store it. But if you didn't if you didn't do that you could calculate it by having a link function that returns the the result of that, that returns the length of the list starting in front. And now this function returns the length of the list starting at node p. And if node p is null, then it returns zero, but otherwise it's one and the length of the list starting at the next right. So you can see why we would use a wrapper for the wrapper function by passing in the um. The root allows us to write a function that's more modular, because now it can be used anywhere in the tree, not just at the root. But the client can't access any of the data members. But they they always have to sort of come in at the root. That's kind of the way the client always starts. But now we can write functions that start anywhere. And this will let us use our functions in really creative and interesting ways. So we'll get a lot of modularity out of this. Um.
+
+And of course, it's much.
+
+Easier to do recursive solutions, which, when a recursive solution is natural, is great. Um, so print we can do the same thing you print from the, um, print the list starting in front, and then print the list starting wherever I asked you to start from. And then, you know, if it don't print anything, if there's nothing to print but otherwise, print one data elements and then print everything else. So we saw this with linked lists and um, the key idea, the software engineering idea here is that we're going to make more general purpose, more modular because they're general purpose. They can be reused in more Or circumstances, um, with more general purpose and modular versions of these functions that we use internally. And then the public functions are just a gateway to the more general, very common approach. Um, now you can have more flexible and general contracts. You can use it anywhere in the tree. Recursion is easier when it's appropriate and um, or demanded by the instructor, of course. Routine. Um, and we're going to use it a lot. Even for simple things. I write this. And you can see why in the code I showed you before. It made it really nice. If it's empty, returned this. If it has leaf return, that does that right. Um. And not just. Is the whole tree empty, but is the tree rooted at this node? Right. So now this is answering a more general question. Is the tree rooted at this node.
+
+This is.
+
+Um, likewise for leaf, which I kind of already showed you. I wanted you to imagine typing it. Um, is it complicated? No, it's not complicated, but it's it's useful and it becomes very readable. Um, one thing that you need. Oh. Go ahead.
+
+I mean, I would say that's not easily. It's not. It's not as empty. And so is that saying it's not is empty and is empty and is empty. So one of those like or is it not as empty and is empty, the left hand, you know, like that that gets.
+
+Well, so if you find another more readable way to do it, that's awesome. Um, so but I would read I would read what it is that I wouldn't stop reading here. I would say if, if and I would read it like this. If the BST is not empty and the BST left isn't, and the BST right is it?
+
+But not doesn't carry it through all of those?
+
+No.
+
+Oh, I see what you're concerned. Okay, nevermind. I misunderstood so you could use parentheses then that would help me. Okay. Um, but this is something that's worth noting because this whole expression does dereference best, which is illegal at best isn't right. That's a segmentation fault. So this this is a CSS 11 thing. But I think you might you might have forgotten the and is what we call short circuit. So what that means is that um c plus plus if it knows the result at some point it doesn't bother checking the other things in the hand. Yeah. So, um, if it knows that this thing is, uh, is false, then it's not going to even check these because false and anything is false. So that's what short Circuit.
+
+Is, is true for.
+
+Most programing languages.
+
+It's true for most common programing languages. They're sometimes they have a different name for it. Um so Erlang calls it. And also if this and also is is the short circuit like this. And also the more fun one is they have or else it's either this or else. Um, whenever I read it, I always think, I always think I'm being threatened by the program somehow do this or else. Um, but anyway, so, uh, virtually all common languages have some kind of short circuit test. Uh, sometimes they have non short circuit one, and then they give them different names.
+
+Um. I think this is quite a long time.
+
+And also.
+
+Wow. Um.
+
+Okay. Uh, so if I want to know if something is in the tree. Describe it to me in English. So is 14 in this tree? I want to think of that as trees.
+
+Yes.
+
+Sorry. Hint. Read the thing that I'm standing in front of. Uh.
+
+Yes. So, I guess, like.
+
+Uh, if the key is 14, then it's true. Else then go to, uh, then have find what the then have what the key is. See if it's above or below 14 and then like move accordingly based on that.
+
+Yeah, sure. Okay. Uh, exactly. So there's a there's one other base case we need to consider weather. Okay. So there are two base cases really. But you mentioned one.
+
+Is a tree and then.
+
+You have the trees empty falls. Not here. Right. So that's that's actually pretty easy right. There's nobody home. And so there's nobody home. Anybody who asked about us. Not here. Um, if we found the node, which is the one that you mentioned. So if the data element is the thing we're looking for. True, true. We don't have to look at the subtrees at all. But of course we're always concerned with how bad it can get. But then you use the invariant, which is really um, this is what makes the binary search tree so sweet is um, if it's if the tree is empty, then the value is not here. If the tree is not empty and the value is here, then the value is here. If the tree is not empty and this isn't the node you're looking for, then if the if the search key is less than the key that's here, then you only have to search the left. Right. This is an ellipse. You don't do this case. If this applies, we only do this if the key is greater than or equal to in this case. But we're again we're going it's so we look in the right section. Isn't this beautiful. So but this this is the part that gives us the log time if the tree is well-behaved. Because this is the part that says, look in one half of the things from here down, but ignore the other half, right? This is where the this is where the logarithmic behavior would be if the tree is well behaved. And you can see how we apply the BST invariant to sort of help guide us in the code. Very, very important, very useful. Um, if we sort of animate this, there's a wonderful visualization site. I, I linked to it, um, for, I think, Tuesday's lecture, but maybe I'll make another link. I need to rearrange the calendar because VSTS weren't on the calendar for today. Um, so I'll rearrange it. Um, there's a wonderful visualization site so you can go and make trees and like you say, add this. You put it in the tree. Um, okay. So is 16 in the tree? Well, the tree is not added and 16 is less than 35. So we're going to look. We're going to look left. Um 17 is not 16. So we're going to continue to look left because 16 is less than seven. 12 is also not it. But 16 is larger than 12. So now we're going to look right. And there you go. And notice that we found that in one we had 1234 comparisons three hops in the tree four comparisons. So that's pretty good. How many elements are in the tree? One. Two three. Four five. Six. Seven. Eight. Nine. Interesting. So about half. But it's going to be logged eventually. But we haven't made a big enough tree. And I guess I kind of spilled the beans so we know. Um here's what we know. If the tree is bushy and balanced and well-behaved and nice and glorious, then it's log in. And again, you can think of that is the. That's because if the tree is bushy, then the longest path to anything is on the order of log in. And we don't have to we don't have to explore anything that's not on the path to this node if it's in the tree. That's another. Sadly, however. It may not be bushy balance. It may be one of those linked list trees.
+
+So, you know like this. If you disagree with this.
+
+Um, in which case the height is half n, but still.
+
+It's the average.
+
+Um, well, the average case is going to be log n, because we're going to fix it with more invariants. Um, in this case it depends on the distribution of data.
+
+Assuming an average randomly distributed. Yeah, I would.
+
+Say I would say probably at random if the tree is a random tree. But it's a good question. So I don't know if that would be my that's my knee jerk reaction.
+
+Um.
+
+Okay. So we've got a couple more examples that we can do. How do we find the minimum elements in a binary search tree?
+
+Yeah.
+
+Is that a hand? No, just scratching the chin.
+
+You could go.
+
+All the way until.
+
+There's no other left.
+
+No. Yeah. Yeah. The minimum element is all the way down on the left. That's where it always is, right? Um, so this is undefined if the tree is empty. Because I don't know what we do in that case. Um, but if the tree is a leaf, then this is the minimum element. Otherwise, we give the minimum from the left. Right. So that's kind of what you just said. Um. Oh, yeah.
+
+So, um, this.
+
+Returns it, Max. I'm not a fan of this strategy, but it is a thing that people do. Because now you don't know what was in that in the tree. So it's a little bit. It's a little bit unsatisfying, but it's, uh, it does make the code clean. So I'll give it that. So if the tree is empty, then int max or throw an exception or whatever you think you should do for that case. Um.
+
+If It's the, um.
+
+It's the left tree, isn't? It. If the. So if the left tree is empty, then you return this. So you don't even have to see if it's a leaf extra, right? Because the smaller element can't be on the right anyway. Um, otherwise you return the minimum value from the left. So this goes down. Um, and if I ask you for the complexity, we get the same unsatisfying answer. If we could do a good job at keeping our trees bushy, um, log in. But we can't guarantee that so far. So if I'm sad, sad, sad, sad, sad, sad sad. Um, so here's another practice question. Let me just think. I, um.
+
+I think I will.
+
+Maybe get through the practice questions, which is actually fine because we'll we'll think about insertion next time. Um, okay. So, um, what do you guys think about the depth? Uh, so you want to know, given a key, how deep is this key in the tree? And I think for the purposes of this exercise, you can assume the key is there. So somebody already injected. So this is a question about complexity.
+
+Oh, sure.
+
+So if I think about Big-O we take things into consideration like the worst case scenario. So in worst case if it is um order n why do we refer to them as log n?
+
+Because we're, we're cockeyed optimists. So they're not they're not log n. Okay. What I'm trying to do is get you excited about the next thing that's going to come, because it really is going to be awkward. So we want it to be log n, and I just want to keep fertilizing that seed. It will become log N if we can make the tree bushy. If only we have an invariant that makes the tree bushy.
+
+So it's foreshadowing, I guess.
+
+But they're ordering. So you're right. The ordering is the final answer. Um, okay. Uh, right. So, uh, what are you looking for? Root 20 would return two because two halves. So how would we go about doing this? Not now. You're not practiced yet. But, but, but by the time we get to the midterm, I would estimate the student time on this question at three minutes. Just Listen to how I think about these things.
+
+I'm thinking maybe start with finding the key at the root and maybe.
+
+Dividing it by zero, since we're going to be like sort of splitting the tree and or.
+
+Something along those lines. Um, I'm not sure what you mean by dividing.
+
+By zero, but we're right that we're going to divide the tree in half. What's that? Oh, I meant.
+
+Like dividing it in.
+
+Half. We are going to divide the tree in half. That's exactly right. So we're going to do that right. And we're going to use the BST invariant to do it. So you're exactly right. So that's a key part of the structure. There's going to be an if the if the thing you're looking for is less than the current key look here. Otherwise look there. So so that's definitely part of the structure.
+
+Um so like you could like as a base case it's a key. You could return one. But if it's not, it's like it is.
+
+Less.
+
+Uh, less than the current value. You could return one plus, um, death left. I think, like the other way. That's right. Okay.
+
+The strategy is exactly right. Just the base case. We said that the depth of a leaf is zero. So. So if this is the thing, then the depth relative to the depth of the tree rooted here. If this is here, the depth is zero. We call that. So but otherwise you're exactly on point. Um so if we're assuming it is in the tree, then it's either here, in which case it's a depth of zero starting at this node, or it's somewhere in the left tree. Um, if it's less, if the key we're looking for is less than the current key, then it's definitely in the left tree because we said we were assuming it is in here and however deep it is starting there. If somebody starts with me, it's one more hop, one plus. And likewise if it's greater, you know. Um, remember, we are assuming that the key exists. If it doesn't. I don't know. When we get to the place where we figure out it's not there, we saw an exception or something. Okay, this one is a little bit more challenging, and I don't. There's no way we finish this really? Probably right now. Um, it's not that bad when you get the insight, but until you get the. How long it takes to get the insight is a little unpredictable. Um, because we said, you know, we said we weren't going to do this. We weren't going to say, you know, distance from 28 to 57. So now we're going to do it. Um, but maybe I can help. Um, and again, we're, I think we're going to assume that the nodes are there. So we're going to just take that as an assumption. Okay. Now here's one question. You can use the invariant to decide whether the two things are in the same subtree.
+
+To me when you're a 14 year old. When? This comes to the point where you're certain one of the keys will be on one side, and the other one will be on the other side. Right.
+
+That's that's the other case.
+
+Yeah. So. Yeah.
+
+Perfect. Okay, so you got it. Actually. It's good. So the the key insight is either there are sort of two cases which turn into three cases. I guess either both of the keys are on one side, in which case they could symmetrically be on the left or the right, in which case the distance between them, as far as I'm concerned, is the distance I get back if I recursively look down their form, but if they're in different subtrees, then it's the sum of the distance in the two trees, right. So that's kind of the um, wow. That was uh, I didn't expect that. So, um. Right. Oh, yeah. So this assumes that we the keys are in sorted order. So we sort of know which one is smaller and which is higher. So if the high one is less than this, then they're both in the in one subtree. If the low one is larger then they're both in the right subtree. Otherwise they're in different subtrees. And so the path is the distance down there gets back to me. And then how far it would be when I go to the other side. So that's kind of all right. This is a perfect place to stop. I'll ask you this. Just think about how do we insert elements into the tree and how do we remove elements from the tree? Because the remove is the trickiest. So think about that and I will see you. What's today? What is it? Wednesday. I will see you on Monday. relative to the.

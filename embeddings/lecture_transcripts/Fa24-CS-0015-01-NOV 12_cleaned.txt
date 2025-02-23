@@ -1,0 +1,330 @@
+Um, okay. If if you are at all interested in 40, that's great. Um, procedures are different this semester than they have been in semesters past. So if anyone else said, well, what I did, just you can't listen to it because we didn't. We're not doing that. It doesn't matter what they say because we're doing it differently. Uh, I posted about it on Piazza, so I don't know that I have anything more to say other than, um. Please check that out on Piazza. Um. Ask questions. Um, and the Tas and I are always available to answer questions about CSE courses and stuff like that. Um, happy to help. Uh, let's see, what other announcements do I have? Um, the midterm is graded, but I did not post the grades because I had a holiday yesterday. So I and I remember just and I remember just before coming here today that I hadn't done it yet. So I apologize. And those will be released. Um, if I don't I don't know if I have a meeting after this class. If I don't have a meeting, I'll post it after the class. If I do, I'll post it at like 6:00 because that's the next time I'm not Come in. Um, anyway, it'll come out today. Those will come out today. Um. All right. So we're going to continue with sorts. And, um, so last time we looked at Three Swords, they were sword bubble, sword selection, sword insertion, insertion sort. And all of them had a worst case big O of n squared. Yeah. So today we're going to look at a couple sorts. Um, that maybe can do better. We shall see. Um we're going to look at merge sort and quicksort. And I, I have to say, um, merge sort especially is one of my favorite sorts to program because I feel like it's one of the easiest ones to get right, and it's just beautiful and nice and, um, all of the other sorts. It's not that they're hard to program. It's, you know, they're always these pesky off by one, errors and stuff like that. And I feel like merge sort I usually get right um, more quick. Um, I've gotten them all to work in the end, or at least all the ones I didn't want. Um, so merge sorting, quicksort, merge sort and quicksort are two, um, potentially very efficient, um, algorithms. Both have been widely used in practice. Um, and they have essentially the same what I call meta algorithm. So, um, an algorithm, as you know, is a step by step process for solving a problem. And we like algorithms that terminate and are correct. We like those. And then after that we like them to be reasonably efficient in resource usage, time, space, whatever. Um, a meta algorithm is a template for making algorithms, um, which is sort of a larger structure. So um, both merge sort and quicksort. um, follow these rules. They they say, well, first of all, just observe. This isn't unique to these sorts. Any list of size zero is already sorted, right? Any list of size one also already sorted. Okay. So they start out with kind of stating the obvious. Those two are sorted and then they're going to take a classic approach. They're going to divide the list into two pieces. They're going to sort the two pieces recursively. And then they're going to combine the two pieces together, the two sorted pieces together. Um, and this is an instance of divide, conquer and glue. You often hear people talk about divide and conquer strategies. You'll hear it a lot in 160 if you take that. Um, I don't know. I guess it rolls off the tongue pretty easily. Divide and conquer. But, um, in algorithms, there's typically another step where after you've divided the problem up into pieces and you've solved each piece, you now have to assemble the solutions together. And sometimes that's not trivial. Um, so don't forget the glue now. So if both algorithms follow this structure, how are they different? Well, basically they differ in how they distribute their effort. So for example, merge sort is not going to put any thought at all. It's dividing the list. It's not going to do anything smart. It's going to say you got a list when you chop it in half. Right. Oh yeah. If it's odd then the left side is one bigger, the right arbitrary choice. Just just take your big cleaver, cut the list in half. Don't think about it. Um, the result of that, a consequence of that is that when they have to combine the sorted lists, it's going to be a little bit more complicated. So they're going to have to do some effort here. So here trivial algorithm length of list divided by two. That right divided up this one. We've got an algorithm that we're going to have to work out. And quicksort makes the completely opposite decision. It says, no, we're going to be really smart, and we're going to pick this thing that we call a pivot, and then we're going to we're going to get all deep and algorithmically algorithmic about it, and we're going to separate the listen to Sublists using this really smart strategy. And then when we get to the end, how do we put them together. Concatenation. Right. So uh, merge sort puts no effort into the first part and some effort and some significant effort into the third. Quicksort puts significant effort into the first part and very little effort into the last part. But they both follow this pattern. Okay. Um, merge sort is really cool, I love it. Okay, here we go. Um, maybe I'll give you context in a little bit. Um, so here's sort of a, a high level, um, summary of the algorithm. Like I said, if the list is already sorted. Because it's too, too small to be unsorted. Then there's nothing to do. Otherwise, what you do is you divide the list in half, you sort the first half, then you sort the second half, then you merge the two sorted half, and then you're done. Right? That's going to be the, um, that's going to be the algorithm. And if you want to see the code here it is in C plus plus which isn't much more complicated, which is why it's so beautiful. So given an array and given a low index and a high index, and this is one of those off by one situations, is the high included or not. It looks like it is in this particular case. Um, if if low is greater than or equal to high than the than the list is, is doesn't have anything in it. And so we don't have to sort it. So only if there are things to sort in this part of the array we find the midpoint which is you take this the size of the thing you're sorting high minus low, and then um, divide that in half. So half of that size and then the midpoint is whatever the low index is plus that. Right. So the low index is plus half the length of the list. That's the midpoint of the list. Sorry I apologize. Um okay. So we just compute a midpoint. Then as I said, we recursively sort the array, um, from the from our low index to our middle index. And then we sort from our mid index plus one to the high index. What could be simpler? Um, of course once, once that happens. Now those two sections from low to mid and from mid plus one to high, those two sections are sorted now. So we have to do something called a merge on this. And you probably know how to do this though. Um. So we'll see. Um but the merge operation is where most of the work is, and we're going to look at that now. Um, we used to do this all the time when I was a grad student, and we had to grade papers for a large course. We get a room and we just divide the papers up and we say, here are you, you know, you grade these, you grade these, you grade these, you grade these. And each each of us grade tiers. We take a stack and then we would grade them. And then we would sort our stack in alphabetical order. And then we would have a very satisfying event at the end. But we would merge all the results using this very using an n way version of this algorithm. So this is a this is a two way version. Can you guess how it's going to work. I got two stacks of paper. I even have my sorted things. But that's okay. I don't have to do it in your imagination. Two stacks of papers, each one is sorted. That's important. Right? That's a that's a prerequisite to do the merge. If they're not sorted, it won't work. Okay, so what are we going to do? We've got two lists. Let's see which one is like shorter or which like which stack has the lower number. Okay. If we're sorting numbers. Right. So we, um. So you just, you know, that they're both sorted. So it suffices to start at the beginning of each list. Right. Because you know, that's the least element. Right. So you compare those two. And the smaller one of those two is going to be is going to go into your output list. So we're going to do this with an output list. Okay. So we've got a separate output file. And I look at the two stacks. This one is less goes in the output file. Now what do I do. Rinse and repeat. Uh rinse and repeat. We just keep doing the same thing. Look at the top two. Look at the lowest to take the smaller one. Put it out. Look at the top two smaller one. Look at the top two. Smaller one. Look at the top two smaller one. And like I said this is very satisfying. Can you do this with actual papers? It's a lot of fun because you really get into the rhythm. It's a lot of fun. Um, and eventually what happens, one of your lists will run out, one of our lists will run out, in which case, what happens? What do we know about all the remaining elements in the other list? And in particular, what's the relationship to the things in the output list? Greater than they're all greater than whatever I put in last. Because that came off of the the top of one of the piles. Right. So so you just then you just take that whole stack and you do this and it's a, it's a delicious experience. Um, now this was very, very this algorithm was used widely back in the day of magnetic tapes. Because what you would do is you would run the sorting algorithm like that. You take the data, you put it on two tapes, you'd sort the two tapes, and then to do the merge operation, you would get two, you would get three tape drives, input one, input two output. And you would do the merge onto the onto the tapes. So um widely used. So let's just step through it with numerical examples. Um, so the idea is that you compare the elements at the lowest index in each array because that's the least element. We can call that like the front. Um, if you want to think of this, cuz I guess you can, but I don't know if that's productive or not. So we're going to compare the first elements and then and then take the smaller one. And then the one we don't take stays there, but the smaller one we take it away and it reveals whatever was other. Right. So in particular, um, if we look at this list, zero is less than six, right. Um, so zero goes into the merge list and now zero is not there. Of course we don't remove it from the list necessarily. We just we just have a we just keep track of the index into the second list and plus plus. So now it's looking at four. You can't actually. Okay. Um. So so now we have four and six. Four is less than six. So four goes out. Um six is less than 35. Uh, let's see. So 15 and 35 I think 15 is the smaller one. So that goes out and 35 is smaller than 86. So it looks like 35 is going to win the battle. It feels like a bit of a card game in the war of 86 and 58. Looks like 58 is going to win. And then boom, the last two. Once, once one of the lists is empty, we can just take everything from the other two. Very, very simple. And like I said, if you do this on paper, I'm about to show you some pseudocode and to prepare you that you understand the algorithm. Right. Because the pseudocode is a little bit interesting but not terrible. But but okay. But it's going to fill up a slide this. All right. So now that you've understood that now um okay so what's going on here. But we're going to start a, we're going to get a new empty array for the output. Um, and then um, we're going to start sort of there's going to be sort of a current index, um, and a front one and a front two. So the front one and front two are going to be the indices into the two sorted lists. And then the current index is going to be for the output. Okay. So um. As long as both lists are non-empty both lists are non-empty. Um, then if if L1 has the smaller front value, then that goes into the current output position and um and then L1 sorry front one gets gets increased. So we say otherwise. Then um the result current index is going to get the front element from list two. Back and front two is good. So you only increase the index from the sublist that you take the the element from. Right. But whatever happens you know that you've filled one slot in the output array. So that gets it. So we okay with that. That's the case that we did we spent most of our time. Okay. So when that loop ends you know uh what you know. This could have been very practice. But do you know you completed one of the lists.
+
+But you don't know which one?
+
+Yeah, you've completed one. Um, since each one gets incremented, just since each iteration only increments one, one of them has to run out before the other, I guess. Um, but basically, you know, that front one less than an L1 and front two and front two less than an L2. You know that that's false now, and it can be false in one of two ways either. Um, front one ran up against the end or front two ran up against them. But you don't know that. You could test that. But an easy way to do this and and the normal pattern is to just say, well, as long as front one still has elements to go, copy them all over, as long as front two has as long as L2 has any elements left over. Copy all those. Because if you exhausted, if that loop stopped because front one had reached the length of L1, this loop will run zero times, so it'll copy zero evidence. It's not worth testing it and then running a loop that runs. You know, you can just run the loop, and the loop will run zero times. This is this is such a common programing idiom in cases like this where you've got two lists and you know they're going to run out, but you don't know which ones first, and then you have a, you have sort of a mop up operation and you could figure out which one ran out. But it's just as easy to have to say mop up list one. And then, oh, there's nothing to do in this work. Okay, then mop up list. Right. So everybody clear on how this works. Because if it is, then you're good. You got merge sort. That's the whole thing which is X. I said on that. Um, what time is it. We could look at at C plus plus, but I'm not sure. Why not make. It big in the fight. You won't be able to see that. Much of it. Let's see. 24. That's too bad. Doesn't fit on a screen, but. They can make it sort of fit. So here it is. You can download this from the web. As I said, here's a merge sort which looks suspiciously like what we said in the slides, because guess where that came from. And then merge is down here and there are lots of comments. So it's made it a little bit vertically challenged. But there it is. Wait, is that everything? No it's not. Um, the key, though, is we're creating a temporary output. So that's one thing I didn't. I told you we were doing it, but I didn't sort of say how. So you just make a an output list that's big enough to hold all the things. You could, in fact, have an output list that you share and you use for every merge operation. And that's what a real merge sort would do, because you wouldn't keep allocate for everything. But um, but this suffices for us. So you make a, you make a new output array. Um, then um, you know, you keep track of the indices, you keep track of, uh, merged and then you have a while loop that looks basically like what we said before. Numbers is the index in the output list. And then you've got the mop up operations down here. And then the only thing left to do is we put everything in a temporary. So now we've copied that and free the array. So with the exception of the munging of the, the allocation of the of the spare array and copying the data back out and then deleting it, we pretty much had the algorithm before. Okay. So that object is not there for the execution. Um. So we had a look at merge sort DHCP and because, um, because I find it delightful, I thought I would show it to you in another programing language that I used for my concurrent programing course. So here it is in Erlang, which is not even better. Um, Erlang uses a thing called pattern matching, which you also learn about in 105 standard and uses that to. So this says the merge sort of the empty list is the empty list. The merge sort of a list with one element is is that is the list with that element. Otherwise, there's a built in thing for splitting lists into sublists. So you just you just split it. How long will the length divided by two. And then it creates two sub lists and then you merge the two sublists. So you merge, sort the two sublists and merge the result. So I just I find this delightful. And once you you're not used to the syntax, but if and if you want to know merge merge is actually pretty easy to there's merge. Um, any list merged with the empty list is the is the Non-islamist. If you merge the empty list with any list, it's the non-empty list. Um, otherwise, if the first list has an element, has a front element called e1, and the second one has a front element called e2 and e1 is equal to or less than e2. I don't know why they put the equal sign at the pointy end. They just like that. Um, then E1 comes first and you just. And then you add to that list. There is also, um, merging the rest. And this case is symmetrical. So there you go. So um, unlike merge sort and C plus plus this fits all on the slide with like lots of empty space for comments. Um, okay. Why do I like it? Will it be on the final exam? No no no, not I will not. Uh, no, I guess I won't ask you to write an Erlang code. That would be, um. Okay. Um, so we've we've we've studied the algorithm, and now let's watch how it works. Um, we looked at merge, to be specific. We haven't looked at merge sort. So now let's see how Merge Sort works. So we've got this list of elements and it's 123456789 elements. So we have to divide it up into two sublists one of size four one of size five. So we do that um, and arbitrarily we made the second one the bigger one. It doesn't matter. You can make any choice you like. Um, and so then we're going to recursively merge sort these two sublists. So we'll start with the one on the left. And that needs to be how do you merge sort. You break that in and then. So then we have to sort those. And um how do you merge sort the left one. Well you break that in. Okay. So um now these two lists are already sorted. Right. So now we just have to merge them back into the above list. There we go. So now that one. that list is sorted and we do the same thing on the right, divide it into two lists. Those are already sorted. So they go back. And now we have to merge those two back. And then um, we have to uh merge sort the right hand side. So we'll divide it in half. And then the left side we'll divide that in half. Same thing. The left side now um 58. And the list containing only 58 and the list containing only 35 already sorted. So now we do the merge operation of those two lists, which just takes the smaller one and puts it first. We get that, um, now we have to do the right side, which is going to require another division. So 86 is sorted, but um, the second list is not. So we have to further divide that and then we merge that. And then so merge those two zero comes first, four comes next 86 comes next. Now we do this where zero beats 35, four beats 35, 35 beats 86, 58 means 8686 winds up in the list at the end. And now we can do this. Merge zero beat six four, beat 615, beats 35, etc. and we're done. Cool, right? You see, it just seems so neat because I don't know, maybe it doesn't seem neat to you. It does to me. How does it work.
+
+After, um, you start like the like it gets to an empty list or like only one element in the list or an empty list.
+
+So it depends a bit on how you implement. Sometimes it won't. Sometimes you'll wind up with an empty one and one with two, I guess in this algorithm, but then some implementation to do. Anyway, sorry, what did.
+
+I just want to ask? Like how does it work? Like after you sort like the first two elements in like the sub array.
+
+So remember what's happening here is that we divide the list in two and then we make a recursive call. So now we call the same function and we call the same function. So we call that function on this list which divides that list in half. And then calls merge sort recursive and merge sort immediately returns because these are both sorted. So what does that invocation of merge sort do after it sorts the two sublists it does a merge on the two seconds. So now that one does emerge on these two values, that makes them in the right order.
+
+And then going back up, it does the same thing for like for the next one, it'd be like all four of the elements are sorted.
+
+Uh, yeah. So you have to you have to recursively sort this side. And then once you do then you then the higher level invocation of merge sort merges those two.
+
+Uh, okay.
+
+It's really it's really it's so cool. It's just so cool. Okay. All right. Um, okay. Uh, so, um. We go with the coolness factor is like infinite. But, um, what is the complexity of the merge operation? Time complexity, not coolness complexity. Log n what is it? Log n um, sure. Go ahead and log n. I think you're overthinking. You're thinking too far ahead. Just the merge operation. We haven't gotten to merge sort yet. I think you have what is in the size of the thing, so.
+
+Oh, wait, it's constant.
+
+No, it's not constant. No, you were you were right with N. It's just. I just want to. I just want to nail down what n because.
+
+You're dividing it. Potentially you're dividing it enough to have. So you have to iterate over each items, which is, which is like you're you're hurrying through the list in each thing. Yes.
+
+So don't. So we're going to do that analysis in a minute. Right now I'm just talking about you've got two lists and you want to merge it.
+
+Yeah I think he's great with the end. So I have these two lists. Uh, let's say the uh, if I combine this list them, their uh, length is and so I split them in half. So now I have two lists of length, uh, n over two and.
+
+Um. Yeah, but but the question I'm asking doesn't ask how you got those. This just says, what's the complexity of merging two lists?
+
+So assuming that I have to compare every single element in both of those lists against each other, um, that would mean I've made n over two comparisons, uh, which we just say that's order n.
+
+It's order n, right. So but the question is what is n? Uh, so someone who has in the back.
+
+Some of the elements need to is It's.
+
+Right. Some of the elements in the to this right you have to you basically have to go through the to this and prepare things and put them in an output array. And in the end you're going to have n elements in the output array. And there's a constant amount of operations per element that you put in the output array. So we can count compares if you like. But right now I just want to know the complexity. And however many compares there there are it's bounded by a constant for each new entry in the output array. So you're going to put length of list one plus length of list two things in the output array constant amount of work for each one. So it's linear in n. But we as I cautioned earlier, you always have to be very clear about what n is. N in this case is the sum of the lengths of the two lists. It's a total number of elements. And then you copy them back. But again that's that's an order n operation to copy them back. There's a constant amount of work to copy each element. Can you also say it's.
+
+Order.
+
+Exporter.
+
+N plus.
+
+M, where N and m are the lengths of the lists.
+
+You could. Which is why I pause to say what is in, because it could be order N plus M or, you know, order length list one plus length list two. Right. You can say that, which is also the truth, right?
+
+Okay.
+
+Uh, and that's also true. Okay. So now, um, so every time we do a merge, we do order n, which is the, the number of things we merged. But now let's go back and look at our diagram. Now all of these things, you know, they happen in a particular order. But all of these things happened right. And and nothing else happened. So now what we can do is we can say, well, at each level, um, the sum of the sums of the lengths of the sublists is is n the original the length of the original list? Because at each level we have all the elements of the original list. Right? So we've we've now. So this merge did did two two elements. This merge did two elements. So that's for this merged into two elements. This merge did um three elements. And if you sum those up that's the length of the original list right. So each level of the diagram there's order n word. There's a there's a merge for various sublists. But the the sums of the lengths of all the sublists add up to end the length of the original list. They have to because all the elements are there at each level. Is that cool? Okay, you got it. So order n times the height, the number of calls, which is. We divided the list in half each time. How many times can you divide a number by two until you get down to 1 or 0? Integer division log two base n. Right. So it's it's log n height. Um n at each level. So it's n log n times the log of n. And to talk about that, um, did I tell you about the little that notation. It means ceiling which is if it's not an integer it's the next higher integer. Right. So the ceiling of 3.001 is for. Just you. So ceiling just means whatever it is round up to the next highest integer. Okay. So this is pretty cool. We did order and work at each uh, level. We had um, order log n level, so n log n, and so now we can think about. Excuse me. Um. The best case, the worst case is the average case. And it kind of doesn't matter, right? Because you just you chopped the list in half, and then you have to look at all n things to merge them if they're already sorted. Okay. If they're not sorted also okay, you still have to look at each single one, right? So, um, I guess the best spin on this is it's very predictable. It's, it's going to take n log n time. Right. That's what it's going to take. Um, but the other thing to notice is it beats n squared. And if you have a lot of elements it beats it by a lot. I really encourage you to, uh, program these up and time and you know you can. If you start to do 10,000 or 100,000, you're going to get like minutes right to maybe. So it can be with the n squared. It's going to be a good deal. Uh oh. And remember the I posted a, um, a Linux hint of the week, the chef command, which you can use to generate random integer sequences of random integers of any length you like. So you can say, you know, shuffle and you can specify integers from 0 to 1000. And I want I want 10,000 of those with repeats. And you can do that in shuffle. You save them in a file and then you can. So you can, you can if you ever just start bored one day you can absolutely do this and it will be entertaining. Um, okay. So we've established time complexity and space complexity. Um. How much extra space did he.
+
+You need to like every time you do merge sort, you sort. But the elements in a temporary array. So you have like two temporary arrays. Or maybe you only have one that you put. So you take the elements and you put your referring to them in the main array. But then you look at, you put them into the like merged array that you've located on the heat, and then you put them in the case and space.
+
+Um, yeah. So that array, um, at each level, the sum of the lengths of the of the temporary array is n. Right. Now it turns out that you don't really have to keep allocating new newing a new array each time. You can just have one array of length n and then just use the subparts of it. So it suffices to have one extra array order n extra space. Two internal space and extra space. Um, now you might ask, could it be done in place? And the answer is yes, but then it's not so strikingly beautiful. And in fact, it's devilishly complicated in the bookkeeping really kills you. And so you wouldn't do that on any sort of small list. It's just better to waste some space and and get the algorithm. Um. Um, so is it possible? Now, here's the next question. Stability. What do we think?
+
+I think it would be stable sense whenever you merge arrays. Um, you can always just take the left, um, the left element or the ailment from the left instead of the right of way, so you never have to swap their order, right?
+
+So you have to be careful that basically you take the left one if it's less than or equal to the right one, which our algorithm did not do, by the way, our algorithm swap. So so our algorithm before was I think I can go back and look. But my, my personal memory is that it. It swapped them but yeah. So it can be um it, it is stable if the merge function sort of does the, does the right thing when it encounters two equal values. Um, okay. So we've talked about that. So merge sort the questions about merge sort. It's wonderful. It's really I love merge. I don't like the next one. So much for its beauty. Um I It's interesting. It's very.
+
+Interesting.
+
+Um, and it has the virtue, um, that it's it's actually pretty good in practice. It's so good in practice that it was the standard Unix sword for decades. So the next one is, uh, is quicksort. Um, I find implementing this one a lot harder than, than merge sort, but that doesn't mean it can't be done. Obviously it can be. Um, okay. So what are we going to do? What? We're going to take our array and we're going to pick an element in the array. And we're going to we're just going to call that the pivot element. By the way quicksort was devised by a famous computer scientist. Um, uh Tony for h o r e and he always wrote c a r or in all of his papers. That's that's the binary. Um. Very famous. So he he developed this. Um, he also developed a concept called monitors that I discussed in my concurrent course. And the OS course uses and lots of other uses. Um, okay. So we're going to, we're going to pick a pivot element out of the list. Now it turns out that picking the pivot element is something of an arc. And we're not going to be artful. We're going to be stupid. That's uh and we're going to we're just going to we're going to say, you know what? The first one, that's it. We're not going to think about the pivot that's going to bite us later. But but it's going to help us understand it, uh, because it suffices to have a pivot element. And then once you have that, then we can discuss how you pick a pivot. Um, okay. So we're going to we're going to do it. Okay. Let's not call it stupid. Let's say naive. Naive. Um, once we have a pivot, then we're going to do something called a partition. And what the partition does is we're going to take our list, and we're going to put all the elements less than the pivot on the left and all the elements greater than the pivot on the right. And you can already see why the blue step is going to be so easy, because we recursively sorted the two sublists. You just have the sorted left sub list. Then you put as many things that are equal to the pivot in the middle, and then you have the sorted right segments, right. So the you're just going to concatenate the results in the end. So you can already see why it's like that. So you take the pivot element. You move all the smaller ones to the left, all the larger ones to the right. Um, and we can talk about duplicates later, but it's not that hard to keep track of these. And then we're going to recursively sort each sub list and then concatenate sorted first sub list pivot sorted um second segments. And if there are duplicates in the pivots. You just put all the pin there, or you can just let the algorithm do its magic and it kind of works out. So it's a little bit complicated. Um, when you see code for this, you don't usually see a program step for the concatenation because it's traditionally done in place. And so if if the first five elements are sublist one and the second five elements are sublist two, what do you have to do to concatenate them? Nothing. They're already concatenated right there in the list, already in the right place, so you won't usually see code associated with that. Um, but when you draw it out, um, we will, we will, um, we will do that. Okay. So here's a list of one, two, three, four five, six numbers. And we're going to pick our pivot in the naive way 6Y6 because it's the first one. Is that a good idea. Uh, maybe maybe Um, okay. And so, uh, here's what we're going to do. We're going to find all the elements less than the pivot. Put them to the left, the pivot stays in the middle. And then everything greater than the pivot goes to the right. And notice those lists aren't sorted. But now we just have to sort the two unsorted lists, the list of things equal to the pivot. That's already that's sorted because they're all equal. So we pick a pivot for the last left one five. And then we have to divide it into um all the elements less than five go in the left list all the elements greater than five, of which there are none go in the right list and five goes in the middle. Okay. Now we have to. We have to find the sorted. The empty list is sorted, but we have to sort three four. So we pick three and then everything less than three goes to the left, which of course is empty, and everything greater than three goes to the right, which just contains four. And now we're okay. So then we just concatenate the list zero three. The empty list just doesn't have any effect, so three and four will end up there. Then we concatenate three, four, five and the empty list we get three, four, five. And then we do the same thing. Nine is our pivot. Everything less than the pivot goes to the left. Everything greater goes to the right. Those lists are all sorted. So now we just concatenate them. And then we can just concatenate these lists and we're done. You got it.
+
+Okay. Um.
+
+So we could do that and use extra space the way we did in the merge sort, but it turns out we don't have to. We just do it in place, and that's the way it's usually done. Merge sort is often done with extra space. Remember, in the world of tapes, the extra space was you've got to tape it and you put it there. Um, okay. Uh, right. So we're going to look at, uh, carrefour's original partition scheme and see what he has to say about it. Um, so we're we're going to do the same trick we did before. We've got an array and we're going to we're just going to keep track of the indices that are the boundaries of the two things. So when you're sorting a list, you'll sort a list. And and it's always the original list in this case. And then you'll have sort of a left index and a right index to keep track. But now we've got multiple partitions. Right. Um. So we have to choose. Then we have to rearrange the, um, the array so that the pivot moves in between and all the smaller elements go on the left, all the larger elements go on the right. And then. Oh, and then because we don't know the lengths of the list, our algorithm is going to have to keep track of where did the where did the pivot element go. And so now I really don't want to talk about duplicates okay. But if you just have one index that you return say the pivot elements there, then whoever called you can know where you know what the left, what the legal left indices are and what the legal right is, is. So that sort of. Thing.
+
+Okay. All right.
+
+So here's the here's what we're going to do. Um, uh, the partition algorithm is now going to have sort of.
+
+Two.
+
+Temporary. You could call them pointers or indices. And we're going to start one out on the on the left of the array sorting one on the right. And what we're going to do is we're going to we're going to take them in turn and we'll move like we'll we'll keep going as. So if we start with the, the one on the left, it can keep going as long as it finds elements smaller than the partition. Right. Because those are already in the left side. So they belong there. We don't have to move it. Right. So if, if this element is smaller than the pivot leaving, if this element is smaller than the pivot needed, if this element is larger than the pivot so you might have something out of place, then we do the same thing on the other side. Is this larger than the pivot? Then it remains. There is this element larger than the pivot. Then it remains. There is this element larger than pivot. Oh no. Out of place. Now you have two out of place elements. You swap them and then you keep going. And then when they cross you're done. And that's where the pivot goes. And I'm waving my hands violently. But you can figure out that it's, uh. Um, you can imagine that it's a small matter of pressure.
+
+Okay.
+
+So we're going to pick a pivot index and we'll call that pivot. Um, and then, um, for the sake of the algorithm, we're going to take the pivot wherever it is, and we're going to move it to the left. So even if we weren't picking the left one, we'll move it left. Why? Because we want to take it out of the out of this thing. And then the algorithm at the end will tell us where the pivot belongs, and then we'll just swap it into the right place. So we're going to put the pivot at the left. Um, in our case, since we were picking the leftmost one, that makes the algorithm very easy because then it's just, uh, it's just left because it starts off as left. Um, okay. So as long as left is less than right. So as long as they don't do one of those things right, we're, um, we're going to do something. Right. So while the I forgot to change these slides, that's it's not just my case. Um, so while the data set right is greater than the pivot, um, and as long as it hasn't crossed the left right. So we're going to keep going. As long as we find values that belong where they are. And we'll go until either we find a smaller value that doesn't belong in the right side, or until we hit the left pointer, in which case we've exhausted the whole range. Right. Um, and then we'll just decrement the right. Just keep doing it.
+
+Don't don't don't don't don't don't.
+
+When you get to the end of that, you know, either you've you've you've hit the left pointer and you're, you're you're you're done. Or you found an out of order element. Now we're going to do the same thing with the left one.
+
+Don't don't don't don't don't don't.
+
+Right. So it goes until it finds something out of order or until it crosses the right. Then we can swap the left and the right. If they're equal to each other, then swapping them is very easy. It doesn't hurt anything. And. And then you just. And then you do this loop over and over and over again. Until eventually the reason you stopped is this one that you've you've collided. Uh, and then we take the pivot, which we had left at the left, and we swap it with the data at the left index. So the data at the left index needs to be in the right place for this to work. It may not be obvious. If it's not, it's okay. Um, and we'll return the pivot index. You can do it. Um, I put a link to a nice visualization site that I think might be helpful. Yeah.
+
+Well, um, just to clarify, when you say we're choosing the pivot as a leftmost, do you mean like the list element or like positional? Positional? Positional. Okay.
+
+Yeah. So if we're sorting the list from slots 3 to 63, we'll choose the one in slot three. Okay. And if we choose another pivot that's not in slot three, we swap it with whatever is in slot three and put it there. Right. So um, so that's the that's the technique. But in our case we just pick whatever happens to be in the leftmost slot.
+
+UNKNOWN
+Okay. Excellent question.
+
+Okay. So let's let's run an example. And maybe this will clarify. So um we've got these left and right indices. But now remember this could be a subarray. There could be elements left and right of this. But we're not going to bother with those. Right. That's somebody else's problem. Another invocation of the quicksort element.
+
+Okay.
+
+So we're going to just put the pivot over here uh and um and proceed.
+
+Okay.
+
+So um we start at the right and right away four is less than the pivot. So four is out of order.
+
+Oh yeah.
+
+So it didn't even get out of the gate. Um, six is less than or equal to the pivot, which it always will be. Uh, five is looks less than the pivot. Nine are nine nines out of order. Okay. So now we're going to swap those two. So the idea is everything to the left of the current left pivot is less than the. That's kind of your invariant is less than the value. Everything to the right of the right pointer is larger than the pivot value. So that's the invariant reason. So we swap those and.
+
+Then we.
+
+Resume. So um nine is greater than six. So that's okay. Um three is not however right. So three is out of order. Um four is in the right place. 12 is not. So we swap three and 12. And then um, 12 is greater than six. And then we decrement the right pointer. And now right has run into left. No. So now we stop for the other clause in the in the loop. Right.
+
+We hit it. How do you know that everything at this point necessarily is less than or equal to the pivot? Because if you you happen to be moving right when you got there. But if you've been moving left and you hit, you know the right was somewhere in like it had.
+
+Well, this is why our invariant really helps. So everything. Okay. So. Oh, okay. Good point. Um, let me think. I don't know if I have a good explanation for you. So the invariant is that everything to the right of the right pointer should be in order. Now, the right pointer itself, I suppose, could be out of order. Right. So then we go and we do the left. So let me think about this for a second. Um, I've thought about this before, but it's been a while. Um, okay. So suppose left hits right then everything to the left is less. Oh, but then they're the same.
+
+They're.
+
+Let's say they're the same value. So I think I have an explanation, but I kind of want to not get it wrong. So I'm going to I'm going to stop there. But but that's that that's a good observations that they're the same. So now everything to the left is less less than or equal to everything to the right is is greater. So then there's only this thing. And you just want to make sure that it's not larger than the pivot, which it shouldn't be. But I don't have a great explanation for that. So I'm going to I'm not rather than lying to you, I'm going to stop there. But it's a great question. I can't tell you the code, but that's not an answer. That's um, okay. And then we swap the pivot out and now we're okay. This doesn't deal with duplicates. So the implementation gets a bit hairier through duplicates. Actually it sort of works out in the end. Um, it could be more efficient if you kept track of.
+
+Duplicates, but.
+
+Um, okay, so I have implemented quicksort quite a few times. And so I can tell you there are a lot of potential errors. And I'm sure I've made all of these at some point off by one error. So easy to make. Um. Less than versus. Less than or equal to. And, you know, getting those right, which are kind of an off by one here. Um, actually, this one I don't think I've made, but, um, this is a common, you know, CSS 11 thing is to if you're sorting integers to get confused about what's an index and what's a value in the array at that index.
+
+Um.
+
+Yeah. So it turns out that the order is important. And that's related to your question. If you have to do it in the right order. And if you just if you just think, oh, I'll be creative and do it in the other order, then you may be in uncharted territory. You have to think carefully. Um, use lots of debug print statements, but that's not enough. So, um, years ago, when we had a sorting assignment in the class, I wrote up one for fun just to benchmark, um, the solutions. And mine wasn't particularly optimized. In fact. We'll see. I had an off by one error. My off by one error, however, did not affect the accuracy of the algorithm. It correctly sorted values. I sorted it on hundreds and hundreds of lists of size zero up to 100,000. They all worked fine, so as far as I knew, I'd gotten it right. It was right. Right? Got it. And then when I started to benchmark it, it was like awfully slow. And it turned out I had an off by one error that was causing one of the partitions. I think it was the right one, but it doesn't matter. One of the partitions always to be only to decrease in size by one by one value. And so that one was giving me horrendously poor performance. I wasn't. Then instead of dividing the list in half, I was dividing it into a list of one element and a list of n minus one. So I had a correct sorting algorithm in terms of producing sorting results. But I didn't get the benefit just to. So I'm previewing a little bit.
+
+Uh.
+
+Okay. All right. So now the nice thing is, uh, if if there are any elements left to do. If there aren't, then you're done. It's sort of because you've already as long as there elements you pick up, you pick up, um, partition, um, you partition the data, um, between the left and the right indices, and then you quicksort the, uh, from the left to pivot position minus one and the right from pivot position plus one to the n right. So the main part of quicksort is actually pretty easy. It's this, devilish partition that's kind of tricky. And I'm not going to show it to you because it's stupid. Okay, so I've kind of given away the store, actually. But, uh, um, the partition step is clearly linear because you're just kind of going through the, the list one element at a time. You're just doing it in this hokey way where you're doing this. But clearly there are n operations there, right? And it's what you do at each level is bounded by a constant. Maybe there's a swap, maybe there's not. But still you have to do this. There's sort of n increments plus decrements or n there's n this. Um and so if. So if um, the partition results in about half the elements in each side each time. Then you get basically the same analysis, right? So there's a partition step at each level of our diagram. Um that's order n. And if the partition divides the list roughly in half then they're going to be log n levels. And so you'll get n log n. Now so this brings us to the part about the pivot. Remember I said we were doing the naive thing of just picking the left one. Well it's biting us now because it turns out that picking the pivot um, can can be good or bad. What do you think is the best? How would it be best? I kind of gave you a hint already. It's a small sample size.
+
+Then you can let lead to a one squared.
+
+Yeah. So if it's if it's already the smallest or the largest element then what happens is the. Then you wind up recursively sorting a list of length one and a list of length n minus one. And so now you don't have log n levels, you have n minus one levels.
+
+Um.
+
+Which is n which is n squared. Right. Um, if you could pick the median value, do you guys know what the median is. So the median value is a value in a set such that half the elements are less than half the elements are larger. So the median is the perfect choice, right. If you know it. Do you know how to find the median? You sort the list and take the middle. So so not an option. So you can't have that one, right? Oh no.
+
+Oh, no.
+
+Um. Okay. Um, so anything that gives us these lopsided lists, like marks the implementation from 2016 to 20. Um, it was hilarious because I thought I got it, I got it, and then I started to run the benchmarks like, no, this is this is wrong. Right? And you increase the size of the list by ten and it's 100 times slower instead of log n n log n. Right. So I was very confused until I looked carefully at my code. Yeah. Because then it wasn't beating like selection sort in terms of order of growth. Um, I don't remember if it was to be repeating it in absolute terms, but anyway, same order of growth. Um, okay. So how do we solve this problem? Well, first of all, um, well, we've already talked about it, right. If you pick the least element or the largest element you're going to be using. Um, so if the list is already sorted or if the list is if, you know, leftmost element is a good if the list is already sorted, then it's always the minimum element. So you'll get the n squared behavior. Um, if the list is reverse sorted or even if it's sorted. Yeah. So sorry, if it's reverse sorted, then that would also give you n square behavior because it will always be the largest one. And then you'll get a list of size one and a list of size n minus one. Um, yeah. So that's pretty awful. Um.
+
+Okay.
+
+So, um, so it's a bad choice, but I told you that quicksort was the default sorting algorithm in Unix for decades. In fact, the built in function in C for sorting things is called queue sort, because it used to be quicksort. It's not anymore. But they can't change the name because everybody's code relies on it. So now it does some other sort and it's and the function is still called quicksort. Um, but how does that work? Well, it works because in practice you can often find a good pivot. There's still the potential for n squared, but you can ward that off. Um. Reasonably well. Can you think about how you might do it? What ideas do you have? How would we.
+
+So you could iterate through the. Things you have that are like less and more. Than the than the than like each item that may be maybe better for you.
+
+Um, if you have to do a linear pass, that's acceptable. But if you do more than linear pass, then we start to get in trouble. Yes.
+
+You could do the mean and say. We could try the mean maybe.
+
+So that's not a bad idea. Could you try that? Um, obviously the mean it won't be an integer or an element in the list, but we could then try to find the, the, the element that's closest to the mean. We could do that in linear time. Two passes, one to find the mean and another one to find the element of that value. Okay. Yes.
+
+I mean, in the first 3 or 4 or right.
+
+So you could take the median of, of a sample and then you could sample the list. Right. Okay. So that's an idea. So okay. So we can median of a sample um thing closest to mean um maybe we can do a pass and keep track of some statistics.
+
+Chunk of the list.
+
+Yeah. So another one is you can shuffle the list and then with high probability those have the most, they won't be there. Um, so then you still would like the shuffle operation to be linear. That would that would be interesting. Yeah. So all yes. You know the list is already mostly sorted. You can just choose something in the middle. Um, that's true too. That's true.
+
+Too.
+
+Um, if you know, it's mostly sorted, actually, insertion sort works pretty well, but that's not a bad idea, so we can do that. Um, and so people have tried all of these, you know, all kinds of various things, to be honest. Um, I think the one where you take a sample, and I can't remember if they did a random sample or just a sample. Um, and it wasn't three, it was more like five or whatever. But you can, you can sort of five element list in constant time. And it's fine, which is constant. Okay. So that's cool. Um, or you can yeah, you can do a random sample and pick the median of that. And then you can decide how big a sample you want. Um, so this is, it's it's really interesting because it was the default, because you can be reasonably good about the pivot and mostly avoid the worst case. And when it wins, it kind of wins. Um, it it's relatively easy to do in place. And it turns out that the constant factors are relatively small. So it's, it's, it's when it wins, it's pretty efficient. It's pretty good. Um, so we've sort of I think we've, we've covered all of this and we've covered the space complexity two. Right. But there's a there is a wrinkle. Um, now, you could do this without recursion, but with recursion, it's much easier to write. If you do it with recursion, then you have to count the space in the call stack, which we didn't. We sort of glossed over last time. Um, how much space is in the call stack? But here's another way to think about it. What's the deepest call stack when you do this? Right. So basically the it's the it's the maximum depth of any of those things we drew in our diagram. Right. And if they're all basically log n then then it's log n. So if it's well-behaved there's an extra log in space, but not an extra n space because we're using the original array. Um, could we use tail recursion? That's an interesting thing. In which case it would run in constant extra space. So that would be really neat.
+
+Okay.
+
+Um, if you don't know what tail recursion is, I think they I used to cover it in 11, but I don't think they do now. Um, uh, 105 surely covers it. So I'll give you a start on 105. Okay. Um. So, um, tail call optimization is a thing where if you realize that function A calls function b and function b calls function c, if function b calls function C and then just returns the result of function A. You don't need an activation record for function B, you can just when you call function C, you can just say and your caller, is this a you just you just want you say okay callers AA and then you don't need it. If you do this with recursion, it turns out you get a loop. If you didn't follow, that's okay. Just understand that recursive functional programing languages don't let you change the values of variables. So if you say that n is three, you can't say n gets n plus one or n is four. Um, I saw a great book about this once that says that gave a vocalization of the interpreter that said, you said n was three. What? What now you say it's four, you some kind of liar and N is three. Um, okay. So what this means is that you can't have loops in functional programing languages. Can't have it. Because a loop keeps running until an expression changes from true to false, right? Or the other way around, depending on what kind of loop is. Yeah. But if the variables can never change, that expression can never change values. So you can't have loops. So 100% of recursion in functional programing languages is done. Uh so sorry. All repetition in functional programing languages is done with recursion. And so tail call optimization becomes important because without it the languages are impractical but they're absolutely practical. Um, most of the switches here, well many switches, network switches actually run a functional programing language. It turns out.
+
+What makes a programing language functional or not like a C plus plus functional I mean there's loops. So I guess.
+
+So functional in this sense doesn't mean works right. Like like oh this is a functional car. You can start it up. It doesn't mean that, um functional. How much time do I have? I kind of want to do a visualization thing, but, um, so let's see if I can do this quickly. Um, they're usually two main points that make a language function. One is what I would call function oriented. The primary means of abstraction is the function. And so this means this gets you to places where you can pass functions around as arguments. You'll see this in CSS 40. Actually you'll return functions as a result. So you can have like arrays and functions and stuff like that right. Um the other side is immutable data structures and variables, which means that you can't change the value of a data structure. So if you have a struct that has five things in it, and you want to change the fifth one, you can't do you have to make a copy of this rock with a different fifth thing. So those are the two properties that people mean when they say functional programing. Okay. Um, so it's unstable and all of these switching around, you can sort of see why it would be unstable. Uh, you can make it stable by like, adding the original index for things, but it's, uh, it's a bit of a It's okay.
+
+It's. Okay.
+
+Um. So, um, even though the worst case. So the worst case is n squared. But even even despite that, it was widely used in practice and for the reasons I mentioned. It turns out you can you can usually do a pretty good job with the smart pivot. So the n squared doesn't happen very much. It mostly runs as n log n um. It uses fewer comparisons and swaps, which is a big deal because it's like moving things in memory takes a long time, relatively speaking. It's cache friendly because it keeps everything in the in the array, and it manipulates mostly nearby things. Um, you'll learn more about what that means in Kes 40. Um, and now if you now, um, C plus plus uses intro sort of a hybrid of quicksort and sort um, and now, um, if you want to do some folk dances, you can um, If you haven't seen those, you really should. So, um, click through some of these links. But I have I have a thing I want to show you because it's great fun. And let's see.
+
+Hold on, hold on.
+
+So I thought this was really cool. It's a it's an audition of various sorting algorithms. So this is selection sort. Can you hear it? So if you saw that it was going through the list and picking the smallest one and moving it in. Right. So you could see that here's insertion sort which is going to take each element and slide it back the appropriate amount.
+
+Do you see that?
+
+It's very satisfying. Oh, here's the quicksort. That's what partition sounds like.
+
+UNKNOWN
+If you haven't guessed, the frequency is is proportional to the data value.
+
+Now merge sort I think.
+
+And then.
+
+We're going to. We're going to learn about heaps next. So I couldn't talk about heap sort.
+
+UNKNOWN
+Until we learned that. Listen.
+
+I think this must sound.
+
+Heaps give us a really efficient way to.
+
+Find the smallest.
+
+Thing. Well, mini.
+
+I think I want to talk about this. This uses a thing called radix.
+
+So there you. So. This is way, way around. I can't remember.
+
+What else is here. So there's greatsword. Oh, I think it does. STD sword from C plus plus.
+
+UNKNOWN
+So that'll come. In handy. These are good on sword. Yeah.
+
+So, um, did you notice that radix sort did zero comparisons? I said that n log n is the best you can do with a comparison day sort. Radix sort is not a comparison based sort. Never compares the values. And yet I know. So this is. This is C plus plus STD.
+
+UNKNOWN
+Sort from 11 years ago.
+
+You can see there's some there's some quick naughtiness about it. But then it comes back and does these smaller sort of fixed things up. Have.
+
+Been using insertion sort for these little things.
+
+UNKNOWN
+And then there's an STD.
+
+Stable because that one's not stable. Is that the next one?
+
+Is that one? I can't remember the answer to that.
+
+Oh, sorry. I don't think we're going to have time to talk about Shell's weirdness in this. But, shell, it's fun. It's fun, and it's devilishly hard to analyze.
+
+But it works.
+
+Yeah. So I think in a bubble.
+
+So yeah. So many of you are so. Smart. Yeah. There you go. Okay. So I don't know about context. Okay. Um, so we'll.
+
+Stop there.
+
+And have a good day, everybody, and we'll see you tomorrow. I know I am. I'm sure you. I didn't. Feel like it. Oh! My God. I don't know what's. Going on, I guess, but I guess I'm just part of what I mean.
+
+So anytime you were talking about. You know.
+
+People always say.
+
+Oh, I see, so we can discuss the complexity of.
+
+Marriage or not. It's not about anything. It's good.
+
+It didn't occur to me.
+
+But it's all right. Thank you.
+
+Wow. Cleared out.
+
+Quickly.
+
+I actually find that kind of helpful.
+
+So I like to look up what cocktail shaker sort.
+
+I feel like I must have looked it up, but I have no memory of it whatsoever.
+
+It is a little short.
+
+But both ways.
+
+I believe.
+
+Like you're shaking it back and forth.
+
+Okay.
+
+Which is kind of a cute name.
+
+Okay. I mean, certainly is compelling when you look at the at the video. Right.
+
+There. Okay. Sorry.
+
+Probably not. No. They do.
+
+Well, they do it.
+
+Yeah.
+
+Of course. In the.
+
+Face. Yeah. Um.
+
+Oh, I saw another ridiculous sort, uh, the other day, and, uh. So what was it?
+
+I can't remember. Um.
+
+Where's the off? I I've done this before, but now I can't remember. Mode switch. Oh, wait, it's down there. This looks sort of.
+
+Like the conventional on the switch. So maybe I shouldn't do this. Hold on. Have you? There's a picture. I don't know, years ago about, uh. It's. It's trying to.
+
+Optimize on making the worst algorithms possible.
+
+It's not by far gloom, is it? I'm not sure. He's a friend of mine. We were grad students together. I haven't seen him many years. I think he was a professor at Cornell, I think. I don't know if he still is. Um, but I remember his grad students. He thought it would be funny instead of thinking about algorithmic optimization, to think of pessimism. Personalization.
+
+S11
+Oh.
+
+And he's a very mathematical person. So the idea is you could just do an infinite loop for everything, but that's no fun. Yes. So the idea is to figure out how slow you can make something go, but still making progress.
+
+Yes.
+
+Yeah. So no, I have not seen the paper. Yes, I did have discussions with Barb Blume about this back in the 1980s. Um, and it wouldn't surprise me if he had published something on it or somebody else did there.
+
+When you talked about Divide and Conquer, um, my mind snapped to what they called the opposite of it, which is multiply and surrender algorithms. Okay, I've not seen that.
+
+That's good.
+
+Multiply and surrender. Yeah.
+
+I love it. You make the problem, you make the problem.
+
+Bigger, and then you surrender. Because you have to at least work on.
+
+Part of the problem.

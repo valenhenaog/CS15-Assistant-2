@@ -1,0 +1,343 @@
+Um, so we will see. Um, first thing we have to do today must do radix sort. It's another sorting algorithm. It's so cool. And I think if you were able to escape the course without seeing it, they should dock my pay significantly. You really have to. It's really cool and fun. And, I mean, we saw bucket sort, but it's historically interesting. It's practical. It's it's interesting. Um, and then we have a choice. There's some there are some slides about final exam information, but I don't think you really need me to describe them to you. I'm happy to do that if you think that would help. And we can have some questions. But another thing is how many people are taking CS 40 in the spring? Yeah. So another thing we could do is kind of a little mini. What's different about CSS 40. So it's sort of prepping you for that. Um, and um, there's way more than I think I can cover, but we can just do stuff until time runs out. Um, and while we're on the subject, today's the last lecture. So I don't want to get all sentimental on you, but, uh, um, I'll miss you guys. And so that's why we will continue to meet through January. No. Uh, no. But you're always welcome to stop by and visit. Um, whether you're in theory or not. Um, and if you have questions about the major or grad schools or, you know, some of our careers may be a little less plugged in on the current state of the career situation. The career office is better about that. Um, so radix sort is a must. And then the rest is, you know, various questions. Perhaps if you don't have any, maybe I'll just start talking about CSS for a little bit. Um, but other questions are absolutely welcome. Um, okay. So radix um, radix sort is another non comparison sort. So remember okay final exam review. Um all comparison based sorts. Uh have the best big O you can get for comparison based sorts is n log n log n where n is the number of things you're sorting. Right. Um, we saw several n squared algorithms. And of course you can always do worse. Right. So there's a thing called bogus sort, which I think you mentioned last time. Um, yeah. So bogus sort is this, uh, uh, nutty thing where you just do a random permutation and you see if it's sorted and you just keep doing that until you hit the sorted one. So that's kind of who knows how long. Well, I mean it's bounded by the number of permutations. So there you go. But um, assuming your random choice doesn't repeat them, but you could systematically anyway. Um, so that's another good final exam question. Write a C plus plus function that returns a list of lists. Now this is maybe too much for the file and and the that it's a list of all of the permutations of some input list. That's a that's probably too much for the fun. Um, okay. So um, but the key word in the n log n best case scenario is that that there's that little thing comparison based. And, you know, the first time I saw that, I said, well, what do you mean? How do you how do you sort things if you never actually compare the things you're sorting? Um, but of course you can. And we saw bucket sort short last time, which is right if you know that you're going to have if you know everybody's age in this room is going to be somewhere between, you know, 15 and 45, then you just make a bucket for 15, 16, 17, 18, 1941, 42, 43, 44, 45. And then when you see someone, you put them in that bucket and voila! Now you go through the buckets in order. They're sorted by age, right? And you never actually had to compare one person's age to another person's age. Um, now this is assuming you can put them in a bucket in constant time key assumption. Right. Um, so radix sort is another thing in that category. And it has a long history that goes back before electronic computers. Right? Of course, bucket sorting was sorted that way too. Okay. How many of you saw the apple sorting video? Maybe I'll put a bonus question on the final about the Apple Siri. Um, What's the course? Theme song. Uh, anyway, so this goes all the way back. I think I mentioned Herman Hollerith, who invented the punch cards, which I can never remember what I've said. In what course, because we talked about these things in my other class, too. Um, did I mention the punch cards? So when I took my intro to computing class, we programed in a subset of IBM 370 assembly language, and we typed our programs and they were on little, um, cardboard cards about that size. And there was an 80 column limit. Why? Because there were 80 columns on the card. What happens if you put 90? It's not on the card. It goes off the end. Right. So we had the cards and you typed your program and it punched holes in the cards. It's very loud. And then you put the cards in a card reader which is on the right of this. This is a card sorter up there. I didn't use disorder, but I did use a reader that had a thing like that. And you put your stack of cards in there, and then there were two varieties. There was one that had like a little, uh, um, a wheel with a, like a rubberized thing that could like, you know, it goes under the card and sort of grabs the card and then shoves it along. Right. So there was a mechanical one like that, and then there was another one that was hilarious because it sounded like a vacuum cleaner. You would turn it on, it would go, and your card deck would do this because it would blow air through the cards separate. And then once the cards were separated, it could go like lightning to suck the cards. And so it would go and then the cards would just go through it. It was just wonderful. Um, okay. So, um, that's a little bit of history of punch cards, and they date back even earlier. So there were there were things called jacquard looms invented by Jacquard, um, a loom like weaving carpets and wall hangings. And I've got a great story that I will not tell you about that. Um, but they used wooden blocks with holes cutting. And you strung together the wooden blocks and put it in the loom. And that would control which of several colors of thread would get sent through the weft and to weave. Right. And so they would encode their pattern as a collection of cards. So this idea of putting information on things with holes goes way, way back. And pieces of cardboard that could be read on, interfaced with modern electronic computers, um, came about early, you know, fairly early in the, in the 40s and 50s. And it was still there in the 1970s and 80s. It was widely used even up until then. Um, so radix sort, um, a very good way to understand it is to use a card sorting machine like this. And I'll tell you exactly how it works. Maybe in a minute. Um, now, radix sort is often used for binary numbers, but it can be used for it can be used for other types. Basically it's going to go through symbol by symbol. And the symbols can be numeric. They can be alphanumeric. They can be whatever. Um, so it gets its name from radix which is the same as base. So like we talked in base ten, you could say radix ten. Right. Radix ten has ten symbols 0123, four, five, six, seven, eight, nine. Base five has five symbols zero, one, two, three, four. Base 16 has 16 symbols zero, one, two, three, four, five, six, seven, eight, nine. And then we need symbols for uh, ten through 15. And we usually just use abcdef. Right. Um, and of course letters of the alphabet are symbols, so it can be used, um, any time you have a, you want to sort sequences of symbols, and the number of symbols you can have in each slot is one of some fixed number that we call the radix. And if they're numbers, then it's, you know, basically based work is based on whatever. Um, so it's worth pointing out at this point and we've glossed over it in all the sorting lectures, but they're because we just use built in less than or equal to to and C plus plus would do different things if they were strings or if they were numbers. Right. Um, but it's important that to know they do different things and it can be important if you're doing radix sort, which one you want to do. So that we have numerical sort which we're going to look at. And um, we have something called lexicographic ordering which is a fancy name for dictionary order. Um, so if I have two strings, ABC and ADF, then the ABC comes first, right? Um, how about if I say AB and ABC? Which one comes first in a dictionary maybe AB yeah. So the dictionary just says okay, shorter ones come. If one is a prefix of the other, then the shorter one is alphabetically first. Right. Um, and we'll see that that has particular implications when you set up a radix sort. That's I don't know how much time we'll spend on it. Probably not much, but it's a it's a significant issue that's sort of fun. Um, okay. So there are basically two different ways of organizing the radix sort. Now, this doesn't mean lysergic acid diethylamide. This means least significant digit LSD, least significant digit to most significant digit. So, um, least significant is the ones place. So 341 one is the least significant. Digit three is the most significant digits. Right. So significant in terms of the weight. Right. Because the three is three times 100. It's not the same three as you would see in the last place. So radix sort very crucially depends on where a thing is in the sequence that you're sorting, and you can sort of organize it most significant to least significant, which is more what you would do alphabetically. So you can do it numerically, but numerically. Usually we do it at least significant to most significant. So we do it right to left.
+
+Maybe I should tell you how it.
+
+Works on the machine because it's sort of fun. Well, let's, let's, let's do a sort of overview of the algorithm. Um.
+
+Okay.
+
+I messed up the edge. Um, okay. So the way it's going to work is we're going to create a bin for each possible digit. Did you see in the sorting machine that there were a collection of physical bins that could hold cards? It turns out there were more than ten because what one of them was for cards, it couldn't read. So there was like, I don't know what the hell that is. There was a there's a bin for those. And then there was, but there were bins for 01234567, eight nine. Night and I think there were 12, so one's got to be, I don't remember. Anyway, there are a bunch of bins and so what we're going to do is. Whatever your radix is, we're going to make an auxiliary data structure that is that many radix sized bins. So base ten, there'll be ten, um, and each bin contains a list. And it's important that it be ordered because we have to maintain the order in there. Um, okay. So for base ten we'll have, we'll have an array of ten lists. Vector I don't care an ordered sequence of elements. And then we organize our process in a series of passes. And what we do is each pass corresponds to one digit going right to left. So we start with the least the ones place. We'll do a pass, then we'll do the tens place, then we'll do the hundreds place. And so this is where shorter numbers matter. If there are shorter numbers then you imagine they have zeros to the left until you got. You get through the longest number that has something that's not zero in the in the most significant digit, okay. So that's how you do it. Um. And so you said you send all the numbers through in order and each card. So the way you used to do this on the machine is you would take your things, you wanted to sort, and usually you had other stuff on the machine. So originally Herman Hollerith was doing census data so they would have names and stuff like that. Um, when I was writing programs on the cards, you would often have like a line number. And then if you if you're walking down the hall and you dropped your cards all over the floor and they're all shuffled. Oh, no. Right. Um, you could pick them up and put them in a card sorter and then run this algorithm, and then they would be sorted back in order again, provided you had line numbers. And so you would put the line numbers usually on the right. And so the way that machine works is you tell it what digit to sort on for each pass. You put the things in the hopper and you say, I want to sort on the rightmost digit, which is in column eight. If the line numbers are at the end of the day, and then what does it do in the in that past? Well, what it does is it takes each card and drops it in the bin associated with that digit. Right. So if if the first line has a one in the rightmost digit, that will go in one. If the first one has a two, it will go in the two bin. If it has an eight, it'll go into eights bin and so on. Right. Um, so we do that for all of the elements. Then you go through and you go, you collect all the bins from low ordered bin to high order bin, and you preserve the order within the bin. So you stack up all the cards again, and then you put them in the hopper, and then you turn the dial and you sort on column 79 and does the same thing. And you keep going until you get to the largest line number you have. Right. That's how it works. Um. And then they're sorted. Oh my God, let's watch. So here's an example. Um, suppose I have these, uh, these numbers and. Okay. Um, before I start all the passes, um, I make a collection of ten bins because we're sorting based ten. And inside each bin is a list. And so then we just go through each number and we look at its LSB. So, um, 300, the rightmost digit is zero. So it goes there 899. Well that goes and nine for 51 goes in one, two, 11 goes in one, five, 11 goes in one. We have a whole series of here. There's no significance to that. That's just the way they came out when I made that list. Original. Um, now crucial is we need to we do need to keep the order in the within the bins. So you can't use like a set if you need to. You need to keep the order. You need to know which one was first, which one was second because subsequent passes are going to rely on it. Okay, so then three goes in. Everybody. Any questions. All right. Um three six. That's going to be interesting in a couple of minutes. Eight goes in and zero goes here. Okay. So now what you do is you take all of the numbers out of the bins and you copy them back into the array, uh, bin zero and preserve the order. And here's why I love, uh, ratings. Here's why that was nice. That's why I, like, made it. Um, so 301 hundred 451 211 bin two goes pretty quickly. Bin three only has two things in it. 66 so that's that's past one. Right? So if you were asked on an exam, what would it be after pass 1 or 2, you could carry this out. I don't think I'm going to ask about this on the final though, since you're just learning about it today, but maybe in a subsequent class that would be that way. Um, okay. Now here's why I love reading short. Does the list look any more sorted than it did before? No. So what I love about Radix sort, it looks it looks random, random. Random. Random. Random sorted. And I just I love that about the about the algorithm. It's hilarious. Okay, so now we turn the dial and we look at the digit second to the right. So the the one more and more significant digit from the list. So.
+
+Just the ten.
+
+So zero goes in the same way 100 goes in the same place. But now for 51 goes down there, 211 goes there, 511 goes there, 901 goes in the zero spot, one, two, three. Those are the two spots. Seven. Seven. Three. Goes in the seven. 66 goes in the six.
+
+Three, eight goes.
+
+Into eight bin. 899 goes in the nine bin. Okay. So now we have to go through. We copy them back out again. And it comes out like that and it still doesn't look particularly suitable. Um it's interesting that it's partly a cognitive issue, but but it's fun. It makes it fun. Okay, so now we go one more digit to the left. And so that would be hundreds place. And so let's have a go. So three one. But now you can start to see that the order is sort of panning out right. 211 511 goes in 5123 goes in one 4 or 5 one. Now, um, if you get to a number that doesn't have three digits, you have to be you have to be sure that however you've instituted your algorithm, it will treat it as if there's a zero there. This turns out not to be hard, because if you just do integer division by thing that's larger, you'll get zero, so it works fine. Um, but when you're doing it on the machine, you know, you have to you have to be careful about stuff like that. Okay. So so 66 is going to go into the zero slot because the hundreds place is a virtual zero. How that gets represented in the algorithm can vary a little bit. Seven goes into the sevens. Three goes into the three. But hopefully you can see now what's happening. Because when we copy them back out. Isn't that cool? Can you see why I didn't want you to escape without seeing it? It's like, this is. This is just so cool. Um, so why does it work? Well, I hope you have some intuition just looking at it. Um, it sorts based on each digit. So then when it sorts on the next one, it's basically managing an invariant where it's sorted from all of the current digits after the past four digit, ie. The numbers are all sorted based on digits, ie through the rightmost digit, right? As long as you preserve the order. So that when you do the last digit, they all wind up in the right place. Uh.
+
+Okay. Um.
+
+So we've got some base that's in the in teletype font base. Um, and it's some position. Pause. How can you compute the digit in a number at some position? What do you think? So, um, if pause is zero one, the result will be nine. It causes one. And we want the result to be two. How would we do this? This is sort of a. As we can see, you don't give him ratings or you just give him this problem. You don't tell him why? It's a challenge. It's a little bit of a challenge. Well, suppose I was the ones place. What can I do?
+
+Um, you could use mod ten by ten.
+
+Yeah, if you do, Martin, then that isolates the ones place. And suppose I want the, um. Suppose I want the tens place by ten, and then I can divide by ten. That essentially chops integer division. So no fractions allowed. I can divide by ten. Right. So 329 divided by ten in integer is 32. And then we mod by ten again. So it's always you divide by the uh the power of the place that you're doing which goes 110 100. Or for whatever the radix is, it goes one r squared, r cubed and so on. Right. And so then you can just always do this div by um div by radix to the, to the past number and then mod by the radius. Opens here. Yeah. So this is what we just devised. And it turns out that this is actually really easy. You don't have to keep doing this exponentiation because you just keep track of the thing. You're going to divide by multiply it by ten every time through the loop. And so then ten times ten is 100 100 times 10,000 minutes or something. Right. So the key thing is that the that the integer division moves the digit you want to isolate into the ones place, and then the mod just takes the ones place. Right. So that's kind of the intuition. Um, that supports okay. Um. So let's, let's pseudocode this, um, and so um, you sort of have to say in advance how many digits they're going to be. Right. And so that means that numbers are going to be in some fixed range. They're going to you have to sort of say what the range is in advance, sort of like bucket sort for bucket sort. You had to say what were the range of possible values. And for radix sort you have to say, well, what's the radix, what are the different, how many values are there in each position? And then what's the largest number of positions you're going to have to deal with. So those things are kind of.
+
+Part of the algorithm.
+
+That we're going to have to know.
+
+Is this.
+
+Um, okay. So you start off with past zero. Um, then you, you make a new bins and, um, according to the base and the each bin is a list of numbers in this case. Um, and then you were told how many digits there are going to be. So you go up through the maximum number of digits. Um, and for each element in the list, how we're going to count them digit zero one, 235. So hence the lesson. Um, and then for each element in the list you figure out what bin it belongs in. Doing the computation you just worked out. Right. So you look at whatever the relevant digit is, um, insert into the list of bins. And it's important that that insertion preserve the order. So let's just say put at the end append. Um, and then once you've done that, you concatenate all the lists in the bins and then increment the passed and then you return the final concatenated list. So here's the note. You don't actually have to do this exponentiation, because you can just add a new variable that's denominator. And it starts out at one. And you just multiply it by base every time through. And then it's always the right thing. I went through that pretty quickly.
+
+I'll pause. The questions. So.
+
+Honestly the machine is really easy to see. Okay. So let's let's think about it. Let's analyze it. What's the time for this? Um, okay. Well, um. If that is the number of things we're sorting. Um, then every time we do a pass, we have an order n thing, assuming that computing the bin and appending to the end of the list in the bin is constant time, right? So that list runs order n times. And we just want everything inside there to be constant time. So that's why you don't really exponentiate. You just you mean you just do a constant amount of work to keep the denominator in scope each time? Okay. Um, concatenating all the lists. See, this is interesting because you might be inclined to say order n because they're order n things you have to pull out. But whether there are any you have to look at all of the B bins, right? You at least have to look at it to see whether there's anything in there. So that's why. So their order be peaks. And then for each non-empty bin, you pull stuff out and you don't know how much will be per bin. But you know, at the end that stuff is all order n there were n. There are n things in there somewhere, so you have to look at B bins and recover n things and copy them out. And that's the that's this analysis order n plus b and then past plus plus that's constant. Okay. Um so now that we know all that. The big question is how many times does this run. Well it runs d times. That's how many times it runs. Right. We already we already figured that out. Um, so there you go. That's the time.
+
+Complexity.
+
+Um, now what happens in in most cases is the number of digits is usually bounded by something reasonable. Even if you think, oh my God, we don't know how many digits there are in an INT. But yes, you do actually, because an int can only hold values from about -4 billion up to um, about positive 4 billion. It's not quite symmetrical but it's roughly 4 billion.
+
+Right. Oh isn't that negative two.
+
+Oh sorry 2 billion unsigned. It's 4 billion. Yeah. So thank you. Um yeah. So it can go from -2 billion in sum up to 4 billion while billion. How many is that. Uh let's see six, nine, ten digits. So ten if it fits in a if it fits in an int, D is bounded by ten and ten is a constant.
+
+Right.
+
+So so there. So then it turns out to be n plus b. And B is again going to be a constant. So. And. It's really it's just so delicious. I don't know why I like this better than but.
+
+For my.
+
+Um I use buckets a lot more in practice. Um, in the, in the physical world because it's, uh, well, less and less now that everything's online. But in the old days, when we used to get exam papers, I absolutely would put them in piles, not comparing them to every other thing, but just say, you know, here's everybody whose name begins with A, B, c, d, just say a s y.
+
+Right.
+
+And you just put them in. So I use buckets a lot. Um. I just sort of told you that many textbooks. But also, Mark, just a few minutes ago, we'll put an upper bound on d um, and treat it as a constant. And that's because in programs in the languages that you normally write in, okay, in C plus plus C and Java, um, ints are going to be 32 or 64 bits long. And so 10 or 20 is not going to be unbounded if you do it in Python it's unbounded. Or other reasonable languages. All right.
+
+Um.
+
+It's still the case that you might be better off doing a heap sort or a or something else. Um, and, you know, given the constants, it might be, it might actually be better for given the constants and the size of the data set. And log n might work out to be better than radix sort. Oh, this is also a good final exam, right. Because so radix might do might do worse than n log n, and as long as n is sort of less than the point where they cross, you'd rather do n log n, and that point can be a little bit further to the right than you might guess. So that's all. That's what's going on here. Um. Okay. Space complexity. Well, we I you got to have that. You got to have all the bins and you got to store n things in the bins. Now, if you're doing vectors, this is a little bit more of a complicated analysis. So I'm sort of assuming linked lists here because that means that the space in each bin is proportional to the number of elements in the bin. And it's not some guestimate that's greater than or equal to the number of things.
+
+Well, it's bounded by.
+
+Twice the actual size.
+
+That's true. That's true. Worst case would be twice. The twice. The worst is they would all go in one bin. And then that would be twice the twice n. And if they all went into a different bin each time than you'd have twice in in all of them. So. Yes.
+
+Yes. Excellent.
+
+All right.
+
+Um.
+
+Stability. What do you think? You're a fan of me, too? Yeah. Um, we sort of went to considerable effort to make it stable as part of the condition of getting it right, so, yeah, it kind of has to be. We kind of need it to be stable. And there's a key place in the algorithm where you enforce stability and namely, you preserve what two places, you know, what order you put things in the list. And then when you copy them back out of the list, you copy them back out in a consistent order.
+
+Um, okay. I want to talk about MSD.
+
+What time is it? Maybe I do. Um. I think I don't want to get into the numerical MSD. Sorting from left to right can be done numerically, but you have to be careful. Um. But you have to. You have to be very careful. Um, and the standard algorithm, it's done recursively and not iteratively, which makes it a little bit trickier to analyze a program. But MSD done without the recursion can be done, but it's easier to do a lexicographic sort that way. I think I'm not going to prove that. I'll just put that out. Um, and when a when when you run out of letters on a thing, then you have to treat that as the equivalent of zero right before all the other letters. You just have to treat it like that. And um, it's sort of a, And it's a variation of buckets, right? Um, okay. So um, here are some example exercises you can do. Oh, this is MSD. Sorry, this is an MSD example. So um, based on the hundreds place you put the three in the you put 300in the three column instead of in the 0899 goes into eight instead of the nine column. And so it goes like that. So now you have to do this recursively, I think I don't want to emphasize this because I think you get the gist. And I think this is more complicated than it needs to be, particularly since you're not going to program it. Um. So yeah. So MSD, you can start with the most important. I don't care about this. Um, it's more complicated and it doesn't necessarily require the recursion, but it if you do it sort of The way we were discussing it kind of is.
+
+You're saying it's.
+
+Similar to buckets or I don't quite see how it's different than buckets or buckets where it was just you put it into buckets.
+
+Yeah. It's like an iterative application of buckets, which you keep putting it in buckets and then pulling them out and then putting them in buckets based on a different digit, and then pulling them out and then putting it. So it's like each pass is like a bucket is a bucket.
+
+Okay. So bucket sort doesn't sort things 100%. It just sorts them into.
+
+The well bucket sort if you have if you have a bucket for 342, you put it into the 342 buckets. So bucket sort is all kind of one pass if you like. Okay. This is one bucket for each possible value.
+
+Yeah.
+
+Um not each possible digit within the them. So bucket sort can get really. So radix sort if you have numbers in the billions it's actually not. It's easy enough to just sort of look at ten.
+
+Digits.
+
+But you're not going to have 4 billion buckets if you've got you know, if you're doing an NS, you would need 4 billion buckets. And you'll probably not have enough memory to have the buckets.
+
+So that's the.
+
+That's the bit that. So relative bucket sort is very good. If you've got kind of a well defined range of values that is reasonable. And radix sort is good if the radix is, uh, normal, which it usually is reasonable. Um, and the range of values is substantially larger than radix, or it can be more practical.
+
+Always. Great question.
+
+And I sort of already told you this, but, um, I encourage you to go and look at the. So that's a picture of a Jacquard loom with the, uh, with the wooden cards. Okay, I have to tell you this story because it's just so hilarious. Do you guys know in Newport, Rhode Island, there are all these mansions there. Do you know about this? So, like the the robber barons of old, like, uh, um, early 20th century built all these, uh, they call them cottages. But the cottages are like places where they and 80 of their best friends could all go and stay for the weekend and have balls with gold plated pianos. I'm not making that up. There's a gold plated piano in one of them. Um, very luxurious. And you can go on tours of these things. It's sort of fun. So I went on a tour once, and the tour guide said that, you know, this room talking about all the stuff in the room, and there are these lovely wall hangings and and then she said, unfortunately, everything, all the furniture in the room was destroyed by a fire. And so we had to we got reproductions of everything. But she said all the wall hangings are exact reproductions. And of course I had to ask, how did you get how do you know exact.
+
+Reproductions.
+
+You know, 90 years later. How did you do that? And she said, uh, glad you asked. Um, in the house records, they found an invoice with the company that made these. They were actually carpets. But anyway, these woven things, um, they found an invoice, and the invoice had a number on it. And the company had long since gone out of business, but the company stuff was still around, so they found, like a company warehouse, and they found the corresponding invoice, which listed the colors for each of the codes and had the Jacquard loom deck. So then they went and they got like a 1900 vintage Jacquard loom and put the cards in and put the colors in and ran the program 90 years later and produced exact replicas. Isn't that amazing? Yeah. Yeah. Try to open a Microsoft word file from 1982. You can't do it. But. But this worked. Yeah. So? So this is one of the reasons.
+
+I really love this.
+
+Um, this algorithm. But so there's a there's a wonderful video to watch, and then there's another video that shows this machine in action or a machine like it. I don't think it's this one. Exactly. Okay, so that's your whirlwind tour of rate expert. Any questions about sorting radix sort? What sorts did we study? Well, you did heaps sort in in lab. So I didn't really do it in lecture. But you did it in lab. And that's sort of a cool trick. Do you remember the trick for heap sorting? This is one.
+
+Like, the list technically isn't sorted, but you like. It seems weird at first, but you just like, popped the first. The first thing from the the heap, so it's always the smallest. So therefore once you pop everything, it's going to be sorted.
+
+Yeah, there's a C plus plus built in thing that is kind of designed for this special case to do in place. He he sort and you're exactly right. So what you do is you take the array of numbers and you pretend it starts in the slot, like right before it begins. If that doesn't make sense, don't worry about it. Um, you take the array and then you run heap ify and you make a heap. That's order n right. Then you, um, but you make a max heap if you want to sort an ascending order. So you make a heap in the opposite sense of whatever your short order is. So if I want to sort low to high, I make a max high. Um, okay, so now I have a max heap order n and I do extract max. What do I do with it? You put it at the back, which is where it belongs in the sort. And that space is available because the, the the heap shrunk by one.
+
+You take the O one space to hold it until the heap is done.
+
+Yes. So it requires a constant amount of extra space, but no worse than than swapping. Right? So, um, yeah. So it requires an extra space to hold the number for a brief period, but it's constant. Um, and so it goes at the end. And so then you do, um, extract max again. Well, now the, the heap shrinks by one. When that's done, you put it in the next class. And we saw that in the video. You can see that very clearly. So it was you know, we did we ran the sort and it was like boom for the heap ify. And then it went.
+
+This is.
+
+As it picked.
+
+Uh.
+
+The, the give me Max, give me Max, give me Max. Give me. Um, what did we talk about in lecture? We talked about, uh, selection sort insertion, sort merge sort quicksort and bubble sort.
+
+Yeah.
+
+I was going to forget about bubble sort. Thank you. I always forget about it as soon as possible. I forget about bubble. Don't forget about it until after the final, but then you can forget it.
+
+Okay. Um. All right.
+
+So that is radix sort. Um. Hmm. What time is it? Quarter past. So we have half an hour.
+
+Maybe I'll.
+
+Start. Not everybody's taking 40, so maybe this is, um, not so good. Um, when I was preparing this lecture a long time ago, and I asked the Tas to make up fun names for it, and I eventually went with Melanie's, which was getting your sea legs. Um, we had a I can't remember now. We had, like. And I should have put them in here. We had a whole variety of bad puns about that. Um, okay. So if you're if you're not taking 40, you can be very smug and and maybe or maybe I don't want to say sympathy because it really is a great course. But you can, you can, you can use this as an as a way to exercise your empathy for other people. Um, and also to get a sense of what some of these things are all about. Um, so here's more more stuff than I can.
+
+Actually talk about.
+
+So we'll talk a little bit about what CSS 40 is. Um, maybe I'll do the first couple of things. I probably will skip this stuff. Maybe. But all these things are important to to C plus plus. But often students ask, oh I'm taking 40. What should I do to prepare? And probably the best answer to that lesson is learn to program in C with C style strings and um, C style I o. And those two things will make the first couple assignments go much better if you know those two things. Oh, and memory management with malloc. We don't have new ones. We have other things. So there's I guess that's three things. Um, So one of the things that we say that 40 is for is, um, the first sentence comes from Professor Mendelson that you'll turn the corner from introductory programing to programing as a profession. So, so CSS 11 gives you basic problem solving skills and gives you the programing skills to realize those algorithms as concrete things that run. This is not a trivial undertaking. Right. That's that's hard. 15 is what I call the journeyman Toolkit. If you're going to be an entry level programmer, you need all these tools because you need to know about trees. You need to know about hash tables. You need to know gosh lists. Who doesn't write a program? It'll list in it, you know. So, uh, 15 is all the basic toolkit as well as the analytical tools to figure out which one applies and what are the costs and sort of how you think about picking appropriate tools for a project. Right. That's 15, um, and, Um, 40 sort of ups the professionalism, um, requirement. Um, and also in 15, we do a lot with testing, which sort of I don't ask you about on exams, but it's a key part of programing. Um, and then the other part of 40, which is what the title of the course tells you is, it's about how modern computers are organized. What are their key components? What do all the components do? How do they work? Um, and it's it's from the point of view of an application program. In what way do these features of modern computers intrude upon your experience as a working programmer? And we learn a little bit about computer hardware and caching. And we learned about, uh, fetch, decode, execute cycle and machine instructions and assembly language. Um, we learn a little bit more about how compilers work and how all of these things put together can affect how your how your code actually performs. Um. So that's what the course is all about. Um, what does it mean in practice? You'll write a lot of code. The code will be in C, um, not in C plus. Plus it's closer to the machine. And you'll also learn to read a real assembly language and to write a fake one. Uh, but you'll get some experience in assembly. Um, as with Gerb, all programs are preprogrammed in 40. All of them. So no option to work alone unless, you know, somebody has to, um. Uh, which is, I think. Is it good? I hope it's going okay for your partners. Um, not every partnership works perfectly, you know? Uh, I've found that it's hard to work with some people I like and get along with, and it can be really easy to work with some people I wouldn't have thought I could work with. Um, so it's a very interesting experience to.
+
+Learn.
+
+How you can work together. But however it works, I learned something. I always learn something from my partners. Um, the designs that you do in this class are not. It's not a design check off. Before you write a formal document that is formally it's submitted. It's formally assessed not while you're sitting there, but it's like a homework. It's it's a document. And the level of detail that's required is much greater and will be spelled out in the assignments. Um, most of the assignments will require a substantial amount of reading to get up to speed. Um, the 15 assignments can be kind of long, but the 40 ones are longer.
+
+Um.
+
+Initially, the biggest hurdle that folks have is they have to go from programing in C plus plus to C. Now we purposely constrain 11. So many many of you have wondered, you know, well why can't we use all of these modern C plus plus tools? Come on. I want to do a unique pointer. I mean, how many of you were desperate for a unique pointer?
+
+These things.
+
+Um, but the reason we don't is because we know that in our curriculum, you're going to have to program in C. And so the C plus plus tools that are great for professional programmers that shield you from many of these problems, we kind of need you to have those problems in in 11 and 15 so that you don't like explode. And you know, the campus isn't littered with the bodies of vortices. So we need to, uh, so, so, so our curriculum is designed so that by the time you hit 40, you've had a lot of experience dealing, especially with pointers. A segmentation fault should not be you should go, okay, segmentation fault. It shouldn't be like, oh, that's a that's a legitimate CSS 11 response to a segmentation fault. But by 40 it's got to be like, hey, yeah, here we go again. Um, and we sort of need that, uh. Um, the history of this, I think maybe I want to skip, but it's worth pointing out because it's hilarious that, um, so C plus plus it was originally called C with classes. So the first thing you find when you go to C is you don't have classes in. Two things that you use classes for in C plus plus strings and IO immediately. Those have to be different in C because they don't have classes. They can't possibly work the same. Right. You don't you don't have the resource they they're implemented in.
+
+You don't have it.
+
+Um, so C plus plus was originally called C with classes. And then somebody is a joke okay C plus plus it's it's one better than C, you know. Um, but C came from a language called B which makes you think that that might be from a language called A, but it's not. Um, it's so there was a language called CPO Control program, and I hope I wrote it down.
+
+In a.
+
+Combined programing language. And then the B is the basic combined programing language. And B was a simplification of the basic combined programing language. But it was really confusing. And B only had one type word machine word not not float machine work. So very low level language. So C was an elaboration on BC pl uh sorry on B. Um that went sort of back in the other direction. So B was this hyper simplified, very machine oriented language for writing system stuff and operating systems. And then C was a thing to make that much more usable. Um, by Thomas and Ritchie and friends. Um, the first compiler was written by Thompson. Uh, yeah. And um, originally C was designed specifically for writing operating systems. So why do we use it in for you? I think that's the next one.
+
+Oh.
+
+Um, yeah. So this is kind of why we use it. I get into debates online with other people who are just wrong. Who say that? Who say that C is a high level language. Um, they're wrong in the sense that if you think that there's they think there's only two types of language assembly language and high level. And that's not true. It's a spectrum, right? There's higher level like SQL. The query language is a much higher level language than assembly language. And C is not a much higher level language and B is. And the one of the things I often say when people insist, no, it's a high level language. You're crazy. I'll say, well, I'm in agreement with the authors of the original language design who said this. Um, see is a relatively notice, relatively low level language on the spectrum. It's at the low level. It's close to to the machine because they want to write operating systems. This is what 40 is all about. How are machines organized and how does that affect your programs. So we want you to program in a language that's relatively close. So we can see those things clearly without having to program the whole semester in assembly language, which could be fun but wouldn't cover as much material. Um, and so C deals with characters, numbers, addresses and stuff. Um, and this is way out of date, but, uh, um, C is widely used in practice. And, um, yeah. So I think if you want to go and look at the resources and the admin page, I encourage you to do that for CSE 40. Those are those are up. Um, don't try to do the assignments early. That's just not cool. Um, and you need to do it with a with a partner. Right. And at any point, we can ask you and your partner to explain any line of code. So, um. Um, but you can look at what, you can look at the resources there. So I wrote a kind of whirlwind tour of C, and I encourage you to look through that and get a sense of what it's like to program and see and try it. Um, you'll find it's not crazy different from C plus plus, um, same data types, same array indexing, same function declarations, same issue of H files and source code files. Um, you know, while if for all that stuff is the same. So what's different? Well, there are no classes. And so because there are no classes, there's no string. Um, and there are no strings. C has a collection of kind of Consistent in many cases, tools for dealing with sequences of bytes that maybe end in a null character. And, um, you sort of have to look up every function to see what it does because it's a little bit of a crapshoot. Um, and of course you can't. If I'm representing bytes, I can't use null terminated strings. Why? Suppose I tell you that a string is a sequence of characters ending with the Ascii null character. Do you see a problem?
+
+How about if I.
+
+Say and strings can contain any Ascii character? This is why I've been hammering this thing about Sentinels. If I tell you there's a null sentinel, what if the sequence of characters contains nulls and the whole thing doesn't work right. And so this is this is a challenge that you will see throughout the semester in 40. Is that sometimes you can use this convention and sometimes you can't. And you have to know whether you can or can't. You have to figure that out. And then when you start to use the built in functions, you have to know whether they apply appropriately to whatever choice you make. Right. So, um, just right off the bat, we don't really have strings. We have this sort of convention, but it sometimes applies and sometimes doesn't. And there are tools that you can use when it applies and other tools you can use in situations where it doesn't. And it's just much messier. Um, and it's not terrible when you get used to it, but it so this is the kind of thing you could do in preparation with 40. When you're sitting around, you're really bored. In January, you could say, you know, I think I'll go and learn about string manipulation in C. Um, you know, constructors and destructors. What does that mean? Um, you're going to use something called malloc, or there's a thing called Carlock and there's a, there's a Alec, a I don't know, um, generally don't use that one. And then, uh, I feel like I'm missing out on one, but uh, uh, in C, you can't allocate an initialize an object because it's not object oriented. There are no constructors. So what you can do is you can allocate space for you can say, I want 50 bytes, give me 50 bytes, and then the bytes come back to you uninitialized. And so now you have to initialize. So you sort of to write a constructor. And we'll see that you know we have patterns of writing code that we use in 40 that sort of capture this common situation where you want to implement, um, a set. Come back to that. Um, and so you're going to call Malik, you're going to allocate a struct and maybe there's an array underneath. And you'll call malloc again. And then you'll initialize it and then you'll return a point. And then there's no destructor. So whoever's using it has to call you the way they would call delete and say, you know, that said I don't need it anymore. You can reclaim the space. So, um, it. It's it's just more finicky, um, lower level. And, um, requires you to go to some effort to get the choreography between client and implementation correct. More effort than it takes in C plus. Plus. Um, so use malloc to allocate stuff on the heap free to free it. Um, there's no issue of a destructor if there's anything you need to do before freeing it. Kind of your job if there's there's no initialization, if you want to initialize something after allocating space also kind of your job, um, there's no C plus plus style references, which again is why I like to teach call by reference with pointers, because that's what you'll do in 40. Um, there's no boolean type. But be careful. We do. We do require that you use std bool h. Um.
+
+Okay. And how much time?
+
+Uh, okay. So that's a high level view. I can talk about strings. I can talk about. Hold on.
+
+What else do I have?
+
+Or I can talk about the final exam.
+
+Final exam?
+
+Final exam. The final exam will be hilarious. No. Not hilarious. It will be over on Tuesday next.
+
+Uh, okay. Hold on, hold on.
+
+Final. That's it. Oh. Oh, um, Aria asked me to make an announcement. Um, some people are about to get a zero on phase one of group because their partner didn't put them in as the partner on the assignment. This would be considered bad. Um, if you have a zero, I would, I would I would encourage you to discuss with your partner, adding in a forceful but kind way that they add you as their partner to the to phase one. Um, we're a little bit unsure what great scope does if different partners submit the different parts. So it's it's probably easiest if the same person submits phase one and the final phase. Um, but definitely, um, be sure both partners are listed on both submissions because it's not always so easy for us to tease. Well, you can imagine I download a thing, I run it through a script, I take the output of the script and put it in a spreadsheet and. And then there are people with zeros, and that's very unfortunate. And, you know, so you can fix this easily enough. And just make sure that both partners are listed on all submissions. Okay, that's not related to the final, but I put the note here so I wouldn't forget. Okay, so what's the deal with the fine? Um, I don't think it's a surprise. Logistics are in person. We're in JC 270 for both sections. Um, I tried to get the first floor of JC, but they were like, well, you can have one room on the first floor and another one somewhere else. Uh, you can you can run around with stacks of papers to multiple rooms. And I said, okay, now we'll stick. So we're in JC, I forget the times, but they're one right after the other on. Anybody remember the date? Is it the like the 16th? Yeah. My other exam is on Friday the 13th and then this one is on the 16th. Um, if anything happens, like if suddenly other courses cancel their finals and I get a better room, I will announce on Piazza. But I would say it's very unlikely at this point.
+
+Um.
+
+What topics will. Logically, the final exam is cumulative, so nothing is completely off the table. Um, but hold on. Um. However, there will be a larger focus on the things since the midterm because you haven't been examined on that. Um, so I'll mostly I haven't written the exam, so I have no idea yet, but I will mostly focus on the new stuff, but particularly if, you know, if I ask you about hash tables, you you need to know how to expand a vector, because that's part of hash table ness, right? That you expand the hash table. So, um, so even if I don't ask you about how to do that, it's kind of implicit in the material. So just be aware. Um, and I could ask, you know, if I'm short of a question I can ask about, um, you know, modularity, abstraction, linked lists or something, but, uh, that won't be a huge focus. Um, so further logistics, closed, booked books closed.
+
+Notes.
+
+And no electronic devices or friends. Um, you shouldn't really need a calculator. Maybe after I've written it, I'll check if I've written anything that requires calculation. I'll confess and say you can have a calculator out, but, um, don't don't bring your phone, or you can bring your phone, but keep it in your backpack. Um, um, you can make notes as you did for the midterm for a reference sheet. Oh, wait, did we ever put them down in the labs? I can't remember. I didn't, did I? I wonder where they are. They're probably in my office. Um, if somebody cares, post on Piazza and I'll. I'll put them down in the lab. So I'll get the reference sheets from the midterm. Um. Same deal. Handwritten notes, front and back. If you write on a tablet, I guess it's okay. Um, but, like, just screen grab shrink paste. That's not really studying, so don't do that. Um, we'll supply scratch paper as we did before because the exams are scanned. Um, I recommend a pen instead of a pencil, though. If you're comfortable with a pencil that. Just be sure it's dark enough that it will scan. Um, and because it's scanned, and the way we grade it is when we assign somebody to grade a problem, they only see that piece. Like we'll tell them where where on the exam outline, the answer should be that's where grade scope will show them. That's what vegetables go. We'll show them. If you're if, you know sometimes we screw up I do this and then you cross it out. If you put it like on the back of another page, just leave a forward pointer there that says the real answer is on the back of this page or on page 11 or whatever. Right. So just just help the person is great and find your answer because we want to find it and evaluate it. Um. Every now and again I find some people, you know, want to like, rip the pages up and You don't do that. So keep the pages together. Um, can I just insert a new page in the middle? No, no, we really can't. We can't do that because, um, again, the way it works is we scan them, we upload the scan to grade scope, and we tell grade scope. Every exam is 16 pages. And if one of them is 17 and one is 14 and one is 11, and the whole thing just becomes a nightmare. So, um, get get your answers on the paper, we'll make sure there's enough room, including some spare, um, and topics. Well, so I just, um, this isn't a guarantee. I just went through the calendar since the midterm and sort of listed stuff. So we had Huffman coding and tries and templates and priority queues and heaps and sets and sorting and hashes and graphs. Um, and I put radix sort here because you just saw it today. So. Your knowledge that it exists and is a non comparison, so it is probably sufficient. Um graphs will be a big deal. Um 99% chance there is a Dijkstra algorithm where you fill out a table. Um, the way we did in class, the way you will in lab tomorrow and the way that we have on the review sheet. Um. The list from the first half of the course. I think this is good. I think this is the same sheet. But anyway, um, there's the stuff from the well sets again. Um, lists Q stacks complexity, of course. Right. I can't take complexity off the table. Anything we did in the second half of the course, you should understand that, um, especially time, but also space complexity. Um, you should be comfortable with recursion because how are you going to do a treatment when, you know, um, you can do a tree traversal, I guess, with a stack, but, um, you should be. You should be comfortable with recursion because you're you're powerful and you should be in touch with your power. Um, AVL trees, I guess. Uh uh, so I don't usually say what's not on the exam, but I'm going to this time I'm going to make an exception and say exceptions are not on the exam. I just want to ask you about exceptions. Um, make and make files and, uh, so you really should understand what's going on there because it, uh. Well, it's just, um. Would you, would you rather trek through the show and go to office hours or post on Piazza and wait five hours to get an answer? Or would you rather know the answer? I would rather know the answer. So it helps to sort of know what's going on. Um, I'm not going to make a big deal file. I oh, I mean, you should know what less less and greater greater do. But otherwise I'm not going to I'm not going to talk about like.
+
+Opening and append pens.
+
+And all that stuff. Um, types of questions. You've already seen a midterm, and that kind of gives you a view. There'll be some programing questions, of course. Um, carry out an algorithm. So like if I ask you to do, you know, insertion sort do a round of insertion sort on something. Um. The Dijkstra's algorithm is a big one. Um, bfs dfs on graphs, and, uh, what else am I missing? I don't know. Um, probably not a lot of detail about templates, but I could ask a question about it. Sure. Why not? Um. You should. Certainly. If I give you a template, you should know how to read it. Uh, and and maybe write one. It's not that great. You just put the word template in front, and off you go. Um. There'll be, you know, fill in the blank. I give you a definition, you give me the word, I'll give you a word, you give me the definition, I give you a situation, and you tell me which sorting algorithm you would use, or which data structure you would use. Or what are the pros and cons of data structure a versus data structure. B right. So those are all kind of short answer or possibly multiple. So you know all that stuff I didn't say true false but true false I don't know. Does anybody study differently depending on them. I wouldn't. Um but uh but anyway if you care sort of all the usual types of questions are in play. Um, the big one that students often want to know is will there be programing questions? I can't say 100%, but sure, you should. You should not be surprised by a programing question. And you saw in the midterm sort of what the scale of the programing question would be. Similar scale, similar complexity. Um, okay. So how to practice and study. Um. Yeah, I'm going to start here. I'm a big fan of productive study groups. I told you this for the midterm. I'll say it again. A well organized study group can be super duper as long as the group isn't. Let's all get together and watch you study.
+
+Right.
+
+That's not a cool way to do it. But if you pick some of the practice problems and you and I would encourage you to practice in the exam setting so, you know, get like a get a cramp desk maybe and set a timer, say, okay, let's do this problem, let's do this series of problems and we'll give ten minutes, whatever, 12 minutes something. And then set the timer go. And everybody works independently. And then when the timer goes off you notice it, but you don't stop. You notice it and then you continue and then you see, well, did it take me twice that amount of time? Maybe I need to do more practice problems like this. Did I finish very early then? Maybe I'm pretty strong on this topic, right? You're going to use that as kind of a Self-evaluation tool, not as a, you know, not not as a stick to beat yourself in the head with, oh, I didn't finish on time. I'm so bad. Yeah. So, um, so don't do that. Just just notice and use it as a way to figure out where you need to spend your practice time. Right. Um, and then compare answers. And this is why the study group is so excellent because you'll, you know, you might make a mistake or, and I might make a mistake, but we won't make the same mistake. And so, so now we can see twice as many mistakes. And now you can join us. And now we've got three times as many mistakes. And we can help each other understand them. And that's a really effective study tool is to see not just the right answer, but how to go from slightly incorrect to more correct and right answers. And that process is really educational. So I'm a big fan of that. Um, of course know all of the calculus and concepts because I'm going to use words to describe things and you have to know what they mean. Um. The lecture slides are good, you can review them. Um, look at the practice questions. Um, most of them, most of those practice questions came from exams. So they're good examples of exam style questions. We released the practice questions. Um, homeworks and labs are really good because you can play what if what if in the lab we had been asked to do this instead of that. Right. So that's a really good way to kind of make your own practice questions. Um, be very careful not to look at solutions quickly because I'm, I'm, I'm mostly human. And, um, and most of you are mostly here, and we we, the human portion of us have this immense capacity for self-deception. And I've done this. And you tell me if your experience is different. I have sat in a room like this and seen someone talk and go, sure, that makes sense.
+
+Oh, absolutely.
+
+Yeah, I get that. Wait a minute. I don't get it. And then they tell you and you go, yeah, yeah, yeah, yeah okay, I got it, I got it. And then you go home and you get almost the exact same problem, and you have no idea where it started. And then if you had this, I have had this too. So this is why looking at the solutions quickly is a really bad idea, because it not only deprives you of the effort to do it, but it subtly convinces you that you understand something whether you do or not. You might understand it, but you'll feel like you do even if you don't. And so that's the. So that little psychological hack is a really important part of studying is you have to challenge yourself. And you have to say, I have no idea what's going on. Okay.
+
+All right. What do I know? That's not. Oh.
+
+You know, and you kind of you have to go through that and you just do. There's not a shortcut. So, um, we'll post solutions. I'll. I'm thinking I might put them on Piazza rather than the website. I'm having a little internal conflict. It doesn't matter. You'll get. You'll get solution somehow. Um, but bring your questions to lab tomorrow, and then, uh, and then we'll post something somehow, and we'll announce something. Um, there will be a final review session or two. Watch Piazza for announcements. And we have about 55 seconds left. Uh, are there any questions or thoughts or concerns or. Oh, I know a good trivia question. What was the name of the butler on the first day of class?
+
+Oh, no. Oh, come on, girl. No, no, it was Jeeves. Oh, yeah.
+
+Jeeves. Think of Jeeves in Worcester.
+
+All right. Um, go have.
+
+A have a great week, everybody. It was a wonderful semester. That's a good skill on all of your exams and assignments.
+
+Yeah. I mean. No one does. But I put. I put conjunction. I remember there were a few memorable moments. So I remember thinking, I love the desert. You know. It's. Like, I mean, it's great. It's okay. No harm. No harm. And both my guests were. So I say thank you very much. I'll see you next week. Yeah. Okay. I have, I have. Instant comprehension of the. Okay. I don't know if I can help her. Ask her to pack.
+
+Up while you ask me, okay? And then you can ask him.
+
+We're having trouble.
+
+With the runtime, and we've asked Tas and the team, and, um, nobody can identify, like, any specific design flaw. And that's causing our time to do something like this. How do I get the file? I don't know, like a second, like, to, like, store all the stuff built in.
+
+But. So hold on back up. Um, is your time a problem for, um, tiny? Small?
+
+Medium large? All of them.
+
+Tiny data is fine. Small enough is a problem.
+
+Okay. All right. That's helpful to know. Um. Uh, so profiling is a bit tricky. Um, right.
+
+And one of the Tas brought up.
+
+I was wondering if someone would say.
+
+Yeah.
+
+Um, I don't know how to use it, but I'm sure.
+
+Um, you can get some things to help you with that. Um, I have a meeting now, so I can't help you with that, but, um. You know, other than you've already done what I. My first. And my first thing would be to sort of go through and kind of in my mind, imagine what's happening at each stage of the program. And is it building the index?
+
+Yeah, yeah. So you use car, you use.
+
+Like this, like a pronoun.
+
+Like, yeah, we use.
+
+The pronoun like before and after you.
+
+Go.
+
+All the way down the inner interview.
+
+Okay. And what did you find out?
+
+Everything seems reasonable. Use only. Maybe it's like a little bit.
+
+And then just.
+
+Everything is just a little bit.
+
+Clearer than okay.
+
+So here's a, here's a little bit of a suggestion is that I o tends to be about a thousand times slower than versions of it. So if there's any excess, I. Oh that's a big question.
+
+So the string team being good.
+
+Um, no. Okay. No firelight.
+
+But everything we have is, is it like we're reading the library?
+
+Um, but it's just like.
+
+It's like an accumulated. Like each word. Each word. You insert it slower and slower.
+
+Oh, yeah. We have I think we have the same issue each time. Yeah. We don't know where it's the other.
+
+By the seven year file. It's like really slow. Yeah.
+
+So we actually we actually track. So we actually I.
+
+Expect you've got a vector that's growing.
+
+Way, way back. We have a we.
+
+Are like tracking. Um, so we are.
+
+Tracking the.
+
+You guys are basically the same question.
+
+Yeah. We were actually tracking like.
+
+The size or. No.
+
+We were tracking like.
+
+Where the collisions happened. And so we were wondering like maybe it's like a collision because we saw that our number of collisions What increasing with BMI.
+
+Like with like the increase in time.
+
+And we found that there were like a huge spike in pollutant ground like 0 to.
+
+5 I think. Yeah. Okay, I don't think I don't know. Be careful that you're hashing. Characters are not pointers. Okay.
+
+It should still be okay. But just.
+
+You should.
+
+Be sure you know what?
+
+You're you're hashing the sequence of your.
+
+Characters and not the address of the character.
+
+Okay? So just.
+
+Be very clear.
+
+That if you.
+
+Put if you put a string in there, it'll be.
+
+Good. Or will it be like a C plus plus string? Okay. But if you do like, you know, sister, actually.
+
+It's.
+
+Probably going.
+
+To make sense.
+
+I don't know.
+
+Why it.
+
+Shouldn't be pointer to char.

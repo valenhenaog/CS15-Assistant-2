@@ -1,0 +1,394 @@
+And then. I feel like I just got everything. Like. This is what I. Have. Oh, yeah. Yeah. Oh. What? Do you. when you come back. I want you to use it. Yeah. Everyone come in.
+
+And sit down. I want to get started. Uh, because, um, we're going to talk about, uh, complexity today.
+
+Uh.
+
+I remain ready to start as soon as you are. Uh, we're going to start talking about computational complexity today, which is a big topic, this whole course on it. And we start talking about it in 15. But before we do. Now that you've done the first homework and the second one is kind of at the in the end phase, I thought this would be a good time to talk a little bit about structure and organization. Um, so, uh, okay. So, um, if you have pencil and paper, this is the best way to proceed. Um, I want to engage the brain here. So the point here is not get code and copy and paste. It's not take pictures of the codes to understand the principles. So what we're going to do is we're going to look at an array list implementation I did ages ago. Yeah I was trying to get it bigger and then it kind of didn't fit on the screen. And maybe I can make it bigger.
+
+Um, what happens if I do this?
+
+Nothing I don't want to spend a lot.
+
+Of time on.
+
+Oh, well, that's a little better, a little better. Okay. Uh, maybe you have to go down. All right, well, that's the best I can do right now. So we're going to look at an array. This implementation I did like in 2013. So it's not exactly the homework. Um, it was an example I did um, a while ago. And um, so very simple. Um, you know, we've got some constructors, uh, one with, uh, size. It's an integer array list. So it doesn't take an initial value because I don't know, just put zeros in everywhere. Um, but we do have a copy constructor assignment overload destructor. We've got get set add to the back, add to the front. Added a position. Remove from a position size. I made capacity public. Not because that's a good idea, but because the test driver I wrote for it prints out all that information and then you can test that it expands properly. Um, and then afterwards you make it private again. Right. So I just, um. So that was temporary. I should have put a comment in that. That's temporary. Um, I've got the usual suspects down here. Current capacity, current size, the address of the array in the heat. Um, and you can see I've got some helper functions. I've got one called initialize two. And hopefully that's clear what it does. Something called ensure capacity, something called clone. Okay. We're going to talk about code structure for just a few minutes. And there are some basic principles that are at work. In fact, I sometimes find I spend more time rewriting my code than I spent writing it the first in the first place. And here's why. The first draft of your poem is usually not good. The first draft of your novel is usually not good, right? There's no, um. Oh. What's this? Um, King? The Stephen King. I bet you he revises his novels, even though he famously pushes novels out the door like nobody's business. Um, so the first time you write something, it's not. It's best. That's just truth. Because you learn what, you learn what the mistakes are by making them and then fixing them. Right? So just like that, the first draft of your program is not going to be a usable thing. Um, of course, we all know in programing the first draft isn't even going to work. So a program that doesn't work is of no use to anybody. Right? So you you have to make it work. But the first working draft of your program is still not all it could be. Now, I know deadlines are practical. You turn them in when the deadline arrives. Even if it could be a little better, you might see there'll be opportunities here that I missed in 2013, and we could probably make it better. Right? So the job of making it better is kind of never over. But you pick a good enough place. Um, but here's the point. As Professor Ramsey, now retired, used to say frequently code that no one else can understand is also useless because if you work in a professional environment, you will take over code other people wrote. When you leave the company or retire or change projects, somebody will take over your coat. If people can't understand it, they have to rewrite it from scratch. You have not really been helpful. Employee, right? You just haven't done you haven't done a good job. So, um, so we want to think about how we can organize stuff. And the key is just to be aware that this is a thing, you know, budget some time for it if you can. Again, if you can't, you can't, but you do your best. Um, be aware as you're writing the code that improvements are possible. So often I'll get halfway through a function and then I'll realize I have a better way to do this, right? And, um, you know, and you have to balance it at some point to, to wake up again. Um, okay. Did it scroll? Actually, the scrolling is good because I was just going to talk about the principles, but let's go.
+
+Back.
+
+Okay. So here are some principles that you can pay attention to. Um, naming things is really hard. It just is. And you'll often find you have a better name. Don't be afraid if you come up with a better name later to change the name, you just have to do it consistently and retest. Because what? What are the chances you miss one instance of it 100%, right? If your name. So, um, but don't be afraid to be on the lookout for better names. The key is raise the level of abstraction. The names of things should be related to whatever it is your program. In the case of an array list, you know it should be about list sizes and, uh, number of elements and copies of the list and things like that. If you're writing a poker playing game and it's about cards and decks and hands and players and the house and the shoe, which is the thing they put the cards in, I'm told, um, so giving a thing a name, it raises the level of abstraction, right? And makes it easier to understand when you're new, particularly when you're new to the code. Um, if you write the same code over and over and over again, or as often happens to me while you're writing it, you realize, you know, I'm going to need this a lot, right? But if you look back at your code and you see the same block of code or nearly the same block of code, that feels like a function calling to be freed, right? You might have to generalize it. There might be subtle changes in one place versus another. So you might have to generalize the body of code a little bit. But here's the thing. You now have this task that you were doing over and over and over again, but it didn't have a name. Give it a name, make it a function. Now it's a thing you can refer to and call add parameters as necessary to adjust the cases. Um, if your function is getting complicated to syntactic markers of a complicated function are length and indentation depth. The longer a function goes, the more it's doing that's making it. Does it have one purpose or is it doing like 16 things? The more indented it is, the more the reader has to keep in their head for any arbitrary line of code. Right. This line happens if this test is true. And while this condition holds, and while this condition holds. But only if this thing is true, while the right. In order to understand the code, you have to understand every single indentation state that's implied. So it's much better to if you can break that stuff out when it gets complicated. Give a thing a name and then, you know, um, find the address of the node containing value. There you go. And in fact find is a good name. You just say address of node containing value. Um, better name. Sort of. So pointless words like get compute, find these. These are not good names. Usually for a function that returns something, just name it for what it returns address of node containing value, not find address. Because when you found it, what do you do? Do you return it? Find in return? No, just address a containing them. Okay, so, um, take duplicate code. That's an example of, you know, modularity. You can reuse a function if something is long, you can break it up into pieces even if they're not reusable, because it raises the level of abstraction. Now the code looks like pseudocode. Uh, Professor Mulaney wrote this thing years ago when we used to not have great scope, and we did our own scanning, and he wrote this beautiful script, and the main went something like fine title pages, scale if necessary, rotate if necessary, find bubbles, extract student name from bubbles. And it was like that. It was like, of course, if all those functions do what they say, of course it works. How can you doubt it? Right? It was so clear. I remember I inherited this from him, and I just ran to his office and thanked him and said, this is glorious. And he just chuckled and said, thank you. I worked hard on it. Um, okay. So, uh, so so you can give things a name just because they're a part of something else. They don't have to be reusable. If they're reusable, it's better. Um, so.
+
+Uh.
+
+To make a function more reusable, you can generalize it. We've seen that add parameters. For example, you can use overloading if you've got a general one that gets a lot of cases where like one argument is always the same. Give that a name or use the overload. I'll show you an example. Today, um, we're going to talk about invariants later. But functions that verify, establish or maintain invariants, things you require to be true in your program are very helpful. So I will show you some examples.
+
+Like.
+
+This. And then maybe if I get rid of I get rid of something else. Now I want to get rid of the thumbnails. How do I get rid of this? Um, what is it? Hide sidebar. Hide sidebar. I think it's very hard to read over your shoulder, actually. Okay, so here's my code. Now again, the purpose is not the code. Don't copy down the code. That's not the point. The point is the principles. If you understand the principles, you know you do you and just apply them. Um, the first thing you'll notice is that I think there are 21 functions in this. There are two pages in this code. The average length is between 3 and 4 lines per function. Uh, a third of the functions are three lines or less. The longest function is 12 lines. The second longest is 11. Then it goes nine and then it goes down from there. So now linked list will be a little more complicated probably. But um, the point is that the functions can be short, but shortness is not the only goal. The goal is clarity. So let's see. Let's walk through some examples. Um, so uh oh. You can see at the top I have some helper functions that are not part of the class. So I declare those static. If you don't know what that means, it doesn't matter. They're just helper functions that I'm going to use but are not part of the class. Okay, so things like copying copying data from arrays you copy data is an array list, right? So I've got functions to help with that. Um I'm going to find the maximum I know this is built in, but I'm going to do it anyway. Um, and force in range that maintains an invariant when that function returns, you know, you have an index in range because we don't throw an exception. Right. So that's an example of enforcing an invariant. Uh, is there anything else I want to talk about? Um, not really. So I've got this initialized to empty, which does the thing you would do in the default constructor. Yeah.
+
+What does static.
+
+Read in this context? Uh, static means not visible to the linker, but please ignore static for now. The thing I care about is write helper functions that will help you. That's the key. Um, if they belong in the class, you can put them in the class. If they don't, you don't have to. Um, if they don't, you should put static. But this is 1540 will go into more detail. Um, okay. So initialize to empty basically does what the constructor does. And so now the constructor, the default constructor is one line. But we might want other empty arrays of other points empty array. So that's why that's broken out. Um so for example if someone gives me an initial size I can make an empty array list and then push back the appropriate number of zeros. By the way, when I said three lines, I was counting blacks, blank lines and internal comments. So you see how we we we've made a helper function at different constructors. You can't call a constructor from another constructor. Really it doesn't work that way. So what you do is you make them both call a helper function. That's a common idiom. And this this came up on Piazza. So it's been talked about. So now I can initialize the for the default constructor I can just make an empty make the the make the current array as is empty or if I want if I want to, um, have an initial size, I can make an empty one and then push back with sufficient zeros.
+
+This should focus on.
+
+Readability instead of efficiency.
+
+Yes, yes. Um, egregious inefficiency is a problem. Like if you turn well, we're going to talk about what that means today. But uh, um, and generally, um, in industry you should too, because when you're writing the code, the first time, you, you, you have intuition about what will be inefficient and you're often wrong. So, um, better to write it cleanly and then it's easy to update when and if you find out that there are performance problems.
+
+Wait, so it's okay to call another constructor or other functions in a constructor?
+
+Yes you can. In any function including constructors, you can call helper functions.
+
+Absolutely. Why do you have three helper function called copy.
+
+But well we're going to come to that. But because there's um I went a little overboard, so, um, but we'll come to it in a minute, so that's a good question, but, um, I'm just kind of going to go through this. So how do you do the copy constructor? Well, you clone the other thing into the thing that this points to. Oh, wow. So now I can make a clone of an array list. What do you think that means? Um, actually, should I look, I think it's, uh. I think it may be on the next page. Um, yeah. So we'll come to that. Um, so the idea is that cloning an object just makes another copy, makes this object be like that one. Right? So that's kind of what the copy constructor does. But now the assignment operator, um, checks for um self assignment. And then uh, if it's not self assignment it deletes the old thing, clones the stuff from the right hand side and then returns this. So you can see we've already used it twice. And what's interesting is very few conditionals in the code. So then you don't have to think, well what did he get all the cases? Because there aren't any cases. I factored them out mostly. This one? Obviously not. Okay. Um, size and capacity. Nobody's going to object to those. That's normal. Um, but here's the thing. Did you find yourself writing if the index is greater than or equal to is less than zero or greater than? Did you find yourself writing that? Um, so I did two, I did two, and what I said is, you know, what am I really doing here? Because it's the same. And like every single function that has an index. So it feels like I want to pull it out. What I'm doing is I'm establishing an invariant in the code that the index is correct. So I want to write a function that makes sure the index is correct. And if it's not in this case it doesn't let the code continue. My word for that is enforce. It enforces the constraint by throwing an exception if it's not met.
+
+So like if a if like the helper function throws an exception, then the function and that will the function that you will also throw an exception out.
+
+Yeah. So whenever you throw an exception it goes up through. In the current function it goes up through each enclosing expression to see if there's a try. Sorry. If there's a try catch. And if there's not one in the function then it just goes up the call stack. If the function they call you have a try catch. Did the function that called that function have a try catch. And if it gets to the top then the program terminates. So it's just so exceptions. Just go up the call stack until either the program terminates or somebody handles it. Yes. So now this makes life really easy because if I know the index is valid I just return data some index. So enforce the correctness of the index return. The desired thing set is likewise very simple. All right I keep forgetting so I will.
+
+I will continue to. Don't turn off.
+
+Okay? Um. Likewise, if the index is valid, then you just update it. Just make sure the index is valid. Um, if you're adding to the back, you want to make sure you have enough capacity. I use ensure for this because this one doesn't terminate the program. If the invariant isn't met, it makes the invariant be true. So if there's not enough size, it makes enough size. So when the function returns sorry, it makes enough capacity. When the function returns, you have the capacity. It's there. Or the function crashed because you couldn't allocate enough memory. But then that went up through the exception thing. So sadly in C plus plus that doesn't work. We'll have another talk about that. But that's not your fault. That C plus plus is false. Um so as long as. So that's what ensured capacity is ensured capacity is my way to encode the invariant. Because you were doing this all the time, right. If size plus one is greater than capacity. Then expand or something, right? Um, so I just said no, make sure I've got at least this. And when the function returns, you have at least that you can count on it. You might have more, in fact, but you have at least that. Okay. So now add two back. Um, all of the add acts do the same thing. Um, so you need one more element. And but once you have the element you can just assign it. In fact, I could have called the other function say I'm noticing even now. Um, add that you want to make sure the range is there. If the range is correct, then you want to make sure you have the capacity. Then, um, what you have to do is you have to move all the elements over. Here's where the copy things come in. So I want to copy this many elements starting at the address of the current size minus one slot, uh, in the in the from place and then going to the current size of position in the to place. And I want to decrement the index. So I'm going to go. I'm going to move the last one I'm going to go right to left. So then you don't overwrite this. So who's asking why multiple copies. I have multiple copy functions because some drop down. So if you're if you're if you're removing things, you want to go up. And if you're, uh, if you're moving left, you want to go up. And if you're moving right, you want to go down. If you look at your loops, you'll see, um.
+
+Using the address of could you say data cluster, it says.
+
+Oh, you can use address arithmetic. But, uh, um, if you're talking about arrays, then I prefer to talk about arrays and not use address arithmetic. So, um, you know, in other environments you might use address arithmetic, but in this case, I'm just going to do this. Um, and then once you've moved. So what what would the pseudocode for this be? Make sure that the index is valid. Make sure you have enough space. Copy the elements over to make room. Then put the new value in the in the place you just cleared and then increase the current size. Right. So that would be the pseudocode. And the code looks like it. Now there's there's complexity but it's not. Again the point is the principles. You don't have to understand every character in the code. You have to understand is oh Mark noticed that he copies a lot. And so there's a function for that. And you notice sometimes he copies and shifts to the right and sometimes to the left. Ah, so we have different copy functions for that. But it turns out both of those copy functions call the same underlying copy function. So that's the that's the trick.
+
+Okay.
+
+So let's see. Um oh yeah. The destructor does its thing. I put bogus values in the capacity and size. Why do I do that? Because if I continue to use something after I deleted it and I got a negative one, I go, oh man, I just found something I delete. I don't need valgrind now to tell me. I can just look at the, you know, if my program crashes and the last value and the last instance of the class it looked at had a negative one capacity, I forgot to delete it or I either deleted it. No, I deleted it and then continued using it inappropriately. Right. So I do stuff like this to create to help me. I know in advance I'm going to screw up, so I put things in there to help me find out where. So that's why. Um, and add it front just adds a position zero. Um, add it back. Could have added at the size of the position. That also would have been correct. But I wrote it first and there's a comment about that. Now that I've written at eight, I could just do that. Um. Okay. And then this is the last page. There's not a huge amount here. I'm looking at the left. Remove that again. Checks the range. Does a copy decrements the size. If you were to write pseudocode that's pretty much what you would write. First draft right. What are you going to do to remove an element. Well you made sure the index is right. Then you copy everything to the right of the element down. And then you, you you have one fewer elements in the array. So you decrement the source. Um ensure capacity. This is the expanded one. Um, some of you will find out that doubling isn't always right. Suppose I have an array list with a capacity of four, and I want to a but a size of one, and I want to append to it an array list that has 100,000 elements is four times two greater than or equal to 100,000. No, no. so there's not. Um, so what what insure capacity does is it figures out what capacity would I like. And they've told me they want at least this. And what I'm going to do is I'm going to take the larger of whatever they asked for and two times capacity plus two. So if they ask me for 100,004, then I say, okay, 100,004 and doubling wouldn't be that. So 100,040 is. So that's that's the approach. Um. If we have enough, if we already have the capacity, nothing to do. Um, otherwise compute the desired capacity, allocate the space, copy the data, delete the old one, update the data pointer, reset the new capacity. So again um, not many conditions, right. Notice there's not like nested ifs and so on because you want to you want to try to reduce the complexity. Uh oh. Clone. Clone just copies the simple elements over. Um, and then, um, allocate something big enough to hold all the old stuff and then copies into it. So clone does what you would think. And then is there anything I want to say about the next page? I think I've gone on too long already. Maximum. Not strange. Um, and force in range. Does the check that you guys are doing in every function. So you've written this code 100 times. Um, copy. Copy is an example of a case where I was copying multiple times, but the copies were slightly different. So what do you do? In that case, you add a parameter to make it more general, but sometimes it's more general than it needs to be. So then you make an overloaded version that's simpler, but that can use the more general one. So the most general one has, you can copy the number of elements from someplace to another place, and you can increment the from place and the two place separately. So I want to copy stuff from this array to this array. And what I want to do is this. I can I can use negative one on the right and one on plus one on the left. So this is like could we be even more general? Yes. In fact there's a thing up there that you'll learn about in C, but it doesn't work. It won't work here so you can't use it. Um, but of course that function is clunky. Why should I pass 1234, five arguments? Mostly what I want to do is just copy from the copy. This many elements from two. In which case, and by default I'm going to go left to right. So the increment is plus one for both of them. And if you give me only one increment then I call the copy and pass the same increment to both. So this is an example where I couldn't use the exact same code in all the places I wanted, so I made a more general version, but then the more general version was annoying because there were too many parameters from my for my taste. So I made simpler, overloaded ones that I could call when I didn't need the other parameters and I could let them default to something. So those. So that was very quick. Um, I kind of want to stop, but if there are 1 or 2 questions, we can do that.
+
+Um, for overloaded functions or a matter which, you know.
+
+So the good news is, when you define your functions in C plus plus, the order doesn't matter, except that you can't refer to a thing until it's been declared. But if you declare them all at the top, then the order really doesn't matter at all. So that's, uh, that's and so you can organize them in a way that would make the reader happy. Honestly, I would say probably the worst thing about this code right now is that I really haven't thought carefully about how a new person would read it. So it's not. I did separate out the non class functions from the class functions, but other than that I really didn't put much thought into the order.
+
+Um, let's say that, inter alia, has a private, um, field called current size. And then you're in a, uh, it's realist scope. If you're given a reference to another inter list, are you allowed to access its.
+
+Yes. So the question is when you're when you're in a class function and you're dealing with multiple instances, can you access, um, the private members of instances that are not the one that call you caused you to be invoked? Uh, not this basically. And the answer is yes. So once you're inside the class, access to everything, everybody's everything. Right. So if we're both inside the student class, well, okay, so we're not. But if you two are both inside the student class and one of you is dealing with the other, you have access to each other's private data members. Now, you should. You should use the abstraction whenever possible.
+
+Um.
+
+One of my favorites is is empty because I often define is empty. And I remember a colleague who is an algorithms person. So they they don't really they're they only write code for the purpose of proving things about it. The code itself isn't really much interesting. And, uh, and they were laughing. They said, you're using is empty everywhere. It's only one line, you know, is this is equal to the null pointer or whatever. And I said, but the point isn't the number of lines. The point is to raise the level of abstraction. The question in the in the programmer's mind is is the list empty? So we're just going to we're going to give that a name. I don't know if he was convinced, but I had a colleague who was definitely on my side.
+
+Um, um.
+
+So that's that. I hope you have the principles and, um, I hope they're useful. And I've given you some food for thought.
+
+Okay.
+
+I don't know if that's what I'm told. When you sleep, one of the ways your brain figures out what things are important for you to remember, what things not to throw away, are things where there was, like a break in between. So one thing is the emotional charges. So if I had you all terrified of death at everything, then you would remember everything clearly. But that, of course, is not a way to go through life. Um, happiness also works, but that's a little bit tricky. But sometimes just putting breaks in, you know, like after class, just sit, let it sink in for ten minutes, and that works. Um, probably three breaths is not enough. Okay, so computational complexity. Very important. Someone was asking about, you were asking about efficiency. So we're going to talk about that now. Um, the stuff we're going to talk about now is like every programing interview ever is going to talk about this stuff. So really important. Um, the course that really doesn't is CSE 116. So in 15 we're much less formal, but we want to get you grounded in the basic terminology, the basic ideas, the basic notation. And then you'll do the proofs in 160. So we're not going to prove these things. We're just going to make convincing arguments. Hopefully they're convincing. And we've already started. Right. We've already said saying things like um insertion at the front. We said that was that was easy. In a linked list for the front pointer.
+
+Right.
+
+Removal at the front. Um, linked list is easy. And these two things were hard for us because you had to copy. But, um, accessing the element, the array list wins because to access, you know, element 500 In an in a linked list, you have to go through 499 elements, and then you finally go to the last one and get to the 400. Right. So whereas an array list can just calculate go right to the place. Right. So array list win big when you're accessing elements at a given index. And if you've got an application it's like skipping all over the place. Then array list are going to win huge. Um, if you have to find if an element is on the list, unless there's a, unless the list is sorted and you do binary search, if the list is unsorted, then you kind of have to just look until you find it. And they're kind of similar that way you have to look through every element. Either way, we'll talk about binary search later if you don't know what that is. So we're mostly going to talk about time. Um, the truth is space often matters a lot to how much space does this require. And often you can trade things off. You can make it faster if you have a lot of extra space. ArrayList. To do that right, you can get really good amortized performance if you're willing to just, you know, have 100% space overhead from time to time. Um, linked lists are much more parsimonious in their use of space. Now for characters and pointers. You know, the characters are only one byte and the pointers are eight each, so it's a lot of overhead for that. But the assumption is the things in the linked list might be like elephants, they might be really big, and then the two pointers become insignificant in the size. Um, so what we want is but we've used these vague terms, we think it's more efficient. And, um, we've kind of been counting how many nodes you go through. That's that's reasonable. But we want to be more precise, and we want to think about, um, both time and space complexity, how long it takes to program, to run, how much time space does it need? In fact, generally, the idea of computational complexity applies to any resource, right? It could be programmer time and in person months. It could be dollars which is highly targeted. To that last point. It could be area of silicon which also is tied to price. So the mathematical tools we're going to develop apply for any sort of computational resource where you want to get some estimation and you want to compare different approaches. It's very much about comparison and not absolutes. We'll get to that. Um, so computational complexity, uh, formally models resource requirements of an algorithm. Time space, silicon area, dollars, heat, um, battery drawdown. Right. You want to optimize. If you're putting it in a phone, you want to optimize for algorithms that uses little battery as possible. So power requirements might matter. We're going to we're going to think about time and space in almost. And most of the time Um. So we're going to use it in 15 to compare these different approaches to problems. Um, but you're going to get it in your groups and you'll learn more about it in one 615 and 160 are the two courses that get you through coding. Nice. Uh, okay.
+
+Um.
+
+So when we're measuring complexity, we're often going to talk about some notion of problem size or, you know, the input to the program or the number of items. So. Well, because we're talking about data structures, our size will often be related to the number of data elements stored in a thing. Right. So how many elements are in our list? How many elements are in our binary search tree. How many elements are stored in our hash table. We're going to ask questions like that. But now the thing is when we talk about time, you might think we're talking about, you know, you get a stopwatch and you measure seconds, or maybe it's a really fast stopwatch measure nanoseconds or picoseconds or something. Um.
+
+We're not.
+
+We're not going to talk about absolute measures of time like that. One reason for that is that the absolute measure tends to depend a lot on the underlying technology. So if I've got an algorithm and it's running on two computers and one is running on a, um, a 50 year old Motorola 68,000 and the other is running on a modern Apple M3, well, the M3 is going to win most of the time for the old one. Probably can't even store enough data for the measurements to be interesting, right? So, um, so we want to get rid of things like, you know, the compiler version. We want to think about what is the intrinsic complexity of this proposed solution. And we want to compare it to other proposed solutions. So we're not just going to measure seconds. Now the way we're going to start though is we are going to think about something. So we're going to think about kind of primitive operations. We'll abstract over this in a minute. But the idea is that, you know, a allocating space for kind of anything is pretty much the same amount of time. Yeah, there might be subtle variations, but then you just say, okay, well, what's the longest one? And they're all that speed or slower. So we're going to assume that simple assignments compared to comparisons additions and so on. We're going to assume that those all take like for simplicity one time unit. They're not all the same amount of time, but we're going to put them all in a bucket and say, you know what, we're considering all of you to be the same thing. Because then if we're thinking about time, we just count how many primitive operations do the two algorithms perform. And if one always performs ten times as many, then you can expect it to be roughly ten times slower. So that's that's kind of where we're going. So I want to think about these elementary operations, and we're going to regard them all as taking the same amount of time and not much time. Um, and as I said, of course it's not really true, but it's it's weirdly true enough.
+
+Okay.
+
+So what we're going to do now is we're going to look through some example functions, and we're going to think about how many elementary operations they take. And then we'll generalize this to a mathematical approach. So let's look at some examples. Okay so at the start of function we've passed in and so far it's performed zero operations. And we're going to say okay well now it's performed one. Um well we're going to say well, you know, two operations as good as one. We'll call it one. One. Okay. This is going to sound crazy to you. It did to me when I first learned it. But bear with me. We're going to consider that one. And you just have to trust me that it's actually going to be useful for something. It seems like it won't, but it is. Um, so we'll count that as one. We'll count that as one. One. You're getting the message here. So one one. So seven operations. All right. But the number of operations isn't always the same as the number of lines. So the examples are going to get more complicated. Here's one that's interesting. So this is still one operation. But now we get to something else. Um, when you have a for loop, the initialization happens exactly once at the beginning right before anything happens. Then the test happens. The body. This happens one time. For every time the body of the loop runs. So if the loop runs n times, the update runs n times, the test always runs one more time. It runs n plus one because you have to pass the test to run the body. But there's always one more test that goes false so that you stop running the body. So there's always a number of body iterations, plus one tests, a number of body iteration updates and one initialization. Right. So so this is going to be one now in the slides we're just kind of going to ignore these because this happens the same number of times as these. Right. And this happens the same as these but only plus one. And we're not going to worry about the plus one. Okay.
+
+So um.
+
+So how many times do these things execute. And it seems like anytime. So if n is five it's going to go five, four, three, two. And then it's less than or equal to one. And then it'll stop after that. So the loop is going to run five times. Again the test will run six times. Um. But whatever N is it's going to run N times. And the body has two operations in it. So that'll be two in operations and then three N and then four N. But you'll see that. I know it feels sloppy, but that's where we're going. So here's the thing to note. The time that we expect this function to run is proportional to the to the end to the argument you pass in. Right. So that's key. So if you pass in and we're going to have two N plus two operations, actually it's two n plus four plus one. Um sorry it's four n plus four. But we'll see. It doesn't matter to me. Okay.
+
+Uh, yes. Um, so this is a verify. So it's a plus two coming from the index and the return.
+
+Oh, you know what's interesting? I think that's wrong because it's, uh. Well, here's the two. The two end.
+
+That's a two.
+
+And then. One. Two. Yeah. Yeah. For a moment, I thought we had left out the rejects, but, uh, you know, it's there. We left out the things in the in the loop pattern. I mean, um, okay, so let's look at the next. So this looks sort of similar, but now there are two loops and they're nest.
+
+Right.
+
+So the outer loop is going to run n times right. The inner loop is going to run also n times. But in time the inner loop runs n times for each iteration of the of the outer loop. So we're going to have i0 and then j. You know i0 J001020304 up through, you know, zero n minus one, then I is going to be one. And then we're going to do 101112. Right. Like that. So I just said this in words. The inner loop runs n times, but n times for each time that the outer loop runs. So the print statement here, by the way, there's no such thing as a C out statement. It's a print step. Right. This isn't a JS statement, it's an assignment statement. This isn't a C outstate.
+
+It's a print.
+
+Just looking forward to future homeworks. That's an important distinction.
+
+Uh.
+
+Okay. Back to the topic. If that's true, then the print statement happens n times n times. Are we getting a feeling for this now. So we would say roughly n squared operations where n is the parameter to the function of the question.
+
+No I'm sorry. Okay.
+
+So, um. Okay, so so with that intuition, we're going to we're we're not quite ready to put the formal infrastructure in, but does everybody have that intuition? We're going to count things and loops. You know you just count how many times the loop runs. It's not always straightforward as I think we'll see later. But you know you can sort of count the number of times loops count. Uh, run. If they're nested loops you multiply. You can have n cubed, you know, like you've got a three dimensional thing. You'll have, you know, um, rows and columns and what do you call it. Call this depth z axis, whatever. The other one. The third one. Right. So you can have this. But there's another interesting thing that that's sort of fun. And this has to do with understanding something about n. So function one took seven Seminar operations function two to N plus two with a little hand-waving. Um func three n squared ops with a few more, but we'll just simplify it there. But just given this, do we have any idea which is fastest? Well, it kind of depends on n right. Um, so for example if n is one then actually if you look at that code func three is probably the fastest. Now of course they don't do comparable things right. These are just things meant to force us to think about timing. They're not. They have no other purpose than that. So don't don't don't say well, but it's hardly a replacement. If it doesn't do the same thing, then none of them did anything useful. That wasn't. My point was to waste time according to different patterns and then see what we could do. Um, but if n is two, how many operations happen? Okay, well, um, still func three kind of wins. But here's an interesting thing. If n is three and three squared is nine. But seven is still seven. Right. Seven doesn't depend on him. That's interesting. This one depends on N, but it's it's not as bad as that one. So for the first couple we would say that func three one. But now func one is the winner. And in fact I hope you can you can sort of figure out that. Func one is going to win from here on out. But part. So we're trying to compare algorithms and we're trying to think about the relative number of operations they employ. But it still also depends a little bit on the size because they can actually shift their relationships as the size changes. So that's the thing we need to take into account. I think we're ready for the formal.
+
+We put on a bow tie yet?
+
+No we don't. Instead, we graph them.
+
+Uh, I forget the name.
+
+Desmos. Is that still there? It's a wonderful site for graphic things.
+
+Oh, I love it. Oh, yeah. Um.
+
+I don't think I made this one, I made one. I made the next one. But, uh. But I just had a ball. I went there, and I just graphed all. I just I just spent, like, two hours graphing fun things. It's just so cool. Um, I need to put a citation on the slide because it's too cool not to say. Um, okay, so if we put sort of num values of n here and we put the result of the function here, then you get things that look like this. A func one is always seven, right. Um, func two was always two n plus two. So as n gets bigger it looks like a line. It's a linear function. High school algebra. Right. This, we say, is a constant function. It's the same no matter what. This one isn't linear, but this one is what we call quadratic. And so it's got half a parabola. It doesn't have the other half because you can't have negative ten items in the list. Right. And this quadrant is out because you can't finish before you start. So this is the only quadrant that makes sense that it's not just a limitation of the slides. It's the meaning of what we're looking for.
+
+Okay.
+
+So when we come to complexity theory it's also called asymptotic analysis. So we're going to look at the performance of different implementations of things in data structures based on how they behave as the input gets larger and larger and larger and goes on to infinity in the moment. Right. So that's kind of the idea. Um, generally for small inputs it doesn't matter, because for small inputs, Even the worst algorithm is fast enough. When I was in your seat, I remember getting the advice. You know, you're learning all these complicated algorithms. Don't bother, don't bother, and is never big. Which was more true then, right? If you're programing a thing that has only four kilobytes of storage and how big can end get right. But in today's world, you know you can't. With your new app, you do it by yourself, you test it with your best friend and you get ten friends. Then you get 100. Then you release it to the world. You got a million, then you got a billion, right? And Google doesn't even want to talk to anyone if there's not a billion. So these days N is big and N is big, like third version of the program. So it matters much more today than it did when I was an undergraduate. Um, so we care about how how things behave in the long run. And we don't really even care about the specific numbers. What we care about is the relationship between these two things. This one is roughly twice as bad, right? For this one is. Well, we'll see in a minute. Um, we mostly care about how the two algorithms behave as things scale, right. So I've got a new app. It works fine for a thousand people. What if I go to 100,000 people? Is it still going to be fine? That's the sort of thing we we we are interested how the how the number of operations grows. Um. Okay. So this where's the focus? Um. Right. So what's important is, as we saw in the graph, n squared is always going to eventually dominate anything that's linear. It might as we saw before, it might be faster for very small values of n. But when you start to get really big, there's a point where it wins and then it wins forever after that. So we're less interested in the numbers. And I think I thought this was on one of the it's going to come up and I'll just tell you, we're more interested in the shape of the curves and their relationships and which ones sort of. When you when you look way out, which one sort of dominates. So we're more interested in the shape of the curve than we are anything else. Um, and so we're going to have a mathematical notation for this, which is rather, um, boringly called or I don't know, we call it big O notation y, because we write a big letter O for all of the things. Seriously, that's that's what it is. And that's why, um, it does have a meaning. Um, big O, the O stands for order. These two things are on the same order of operations. They may not be the same value, but they both grow linearly with input right there on the same order. If you kind of think order of magnitude, it's not quite order of magnitude, but it's kind of a similar sort of sense. They're not we're not concerned with the the specifics of the value itself, but the relative but the comparison, the relationship. So, um, so Big-O is, you know, we're going to say that this thing grows on the order of n squared. It may be, you know, maybe two n squared plus 15. It may be 13 n squared, but it looks like an n squared parabola. And that's going to be close enough because we're mostly interested in this shape. Not the you know, you can move it around the graph a little bit, but the shape is going to be the thing that determines whether it dominates a linear thing. Okay. Here we go. Any math majors in the room.
+
+Come on.
+
+Okay. One.
+
+Sorry.
+
+You've been.
+
+Um.
+
+So, um, this is for the math major in the room.
+
+Um, okay.
+
+So if you if you look it up on Wikipedia, you go to a book, it'll say, let f and g of n be functions from non-negative integers to real numbers. Okay. Pause. Pause. Why?
+
+Why?
+
+Um, f of n and g of n are functions that represent the resource requirements of a program. They're going to return the time or the space. Right. They're they're going to be like things like that two n plus two. That's one of those functions that measures the number of operations this algorithm requires. Right. So f and g n are like that. The reason that n is non-negative is you can't you can't require negative two k of space. You can't take -15 seconds to run. Right. So n is non-negative because the resources are resources. They're things. And they they either they either don't exist or they exist in some amounts that's non-native. So that's what the first line is all about. We've got two functions, f and g. They both take a problem size number of elements stored in the list, a number of things in your hash or whatever they are, um, number of users on your system at any one time. You know, if you're running a website or a web app. Um, and so f, f and g event, take that number and give you back the amount of some resource that you need.
+
+We're going to think about time and space.
+
+So we say that f of n is Big-O of g of n, f of n is order g of n, we say. If there exists a constant c greater than zero and an integer constant n zero greater than or equal to one such that f of n is less than or equal to C times uh, times g of n for all n greater than or equal to n zero. Okay. Let's have a look at that. Um let's look at n zero. So the n zero means that we're not concerned with small n. So what happens is like n squared might be better than two n plus two for very small n. But at some point you reach an n. Let's call that NN0 where the squared one dominates every single time. And it does. It does from then on. Right. So that's what n zero is, n zero is. Let's look for large enough input such that one of these dominates all the time. There's not going to be any crisscrossing that happens. We'll get past that. And then at one point this one starts to win wins forever after. That's what n zero is. C is kind of a constant of proportionality. So basically if you have two lines. This one always wins, but it always wins by the same constant amount. You know, maybe in this case it wins by, you know, three times the first 1 or 2 times the first one. We're going to say that those two things are similar because they both look like lines. And the N0 will be bigger if I'm comparing a parabola to it. But the problem is still going to win all the time. And so for that purpose, all lines are the same. So that's what the C is about. It's a way to say, you know, within what we call a constant factor, we're going to disregard constant factors. Now in the real world constant factors do matter. Right. If I told you okay, we're going to we're going to use a new version of planning. And it's going to it's going to run a hundred times slower. You'd be like what. Well it's only a constant factor. It's always 100.
+
+Yeah.
+
+So, um, the mathematicians will the the mathematical analysts who do this, the algorithms people will Pooh Pooh constant factors, but in the real world, constant factors do matter. But for the purposes of this analysis, we're going to we're going to ignore them. So c times g of n is what we would call an upper bound on FN. If you graph the curves it's always above it's an upper bound. So for example two n plus two we're going to say well that's order n. It's also ordered two n plus two. But we'll say order two n plus two is the same is equal to order. And why. Um, well because if you let cb3 and you don't look until you get to two elements, then, then basically. It works out right. The definition, that's the point. It remains. So it's an upper bound. It's an upper bound. The question that Big-O answers is this how bad can it get? It's kind of the worst case analysis. You'll find that there are other ones which we'll talk about again. Um, so any linear function we're going to say is order N2N plus 2.5 n. Um, I don't know what that is a gazillion n plus a gazillion. Um, all of those are just constant factors. And you can always find a C and an N zero so that any one of them can dominate any one of the others, basically. Um, so all of these are going to be considered big O of N. We'll call these linear. Because they're linear. Is n squared. Also big O of n. Well kind of know why. Well we saw on the graph it will always win eventually. It may not win early on. Um. But so there's no C and N zero you can pick so that, so that's a linear function will always win over a quadratic function. Right? The quadratic will always win. That's really important. But here's the thing. All the quadratic functions we're going to say are order n squared. So n squared to n squared plus 100 n plus 1413 million n squared -100,000 n plus 16,000,403. We're going to say all of those are n squared. Um mathematically you can find the relevant constants c and n zero. Um so all of those are going to go in the same bucket.
+
+Okay.
+
+Um let's look at our other example f of n is seven. Um we say this is order one because remember I said that. Well, you know, if the thing does 2 or 3, we're not going to care about two versus three because it's still a constant number of things. It doesn't depend on the input. That's the key. Fact is, it's a constant number of operations that doesn't depend on the input. I'll give you an example. Inserting at the front of a linked list constant time. There are zero things in the list. Takes a certain amount of time. One thing, two things, 100 million things. It's the same. It's the three assignment statements or whatever it is. Right. So it's independent of the number of things. So constant time is our favorite time. But as you can tell, it's mostly not possible because if I have 100,000 things, it's hard to think of, there will be useful algorithms that actually have to look at all the data. So at some point there's at least a linear thing, right? You have to read it in. That's linear, right? You have to for every value you read in, you have to read a value in that's proportional to the number of values you read in. So, um, so constant isn't, um, Is it something we can always have? But it's our favorite and we can have it sometimes. Like insert at the beginning of a linked list.
+
+Um.
+
+Now, the thing about.
+
+Um, big.
+
+O is that anything that is order n is also order n squared, because n squared will always dominate n. There's always a way to do that past some n zero. Right? Um, so big O just means upper bound in general in the course it's, you know, we could just say, well, everything is is order exponential? Um, which is not helpful. So we want to do when we're comparing algorithms, just kind of find the best of the worst case scenario. So big O how bad can it get for this algorithm and then how bad? Well, you can always just, you know, insert more loops and make it run slower. Um, so what we're going to do is we're kind of going to look for a tighter bounce. So like if I ask you, you know, to give me the big O something on an exam, you could give me the answer I'm looking for or any larger one. But we're only going to accept the, the the lowest one. That makes sense in 160. They'll give you names for these things. Um. So if a thing is order one, it's also order n. It's also order n square. But we're going to we're going to insist on saying, well, let's be honest, it's constant time. Give me the best, worst case. That's. So how does this work in practice. Like if you're in a job interview, what do they expect you to say? They mostly don't expect you to say two N plus two stuff like that. Um, we've observed that like any n squared function behaves pretty much like any other n squared function. It just kind of moves up and down. So you can find the the relevant constants, Any n squared function dominates any linear function or constant function in the end after some suitable n0. So what we're going to do is we're going to consider all n squared things to be in one what we call complexity class the quadratic complexity class. Written order n squared um order one is constant. Order n is linear. Order n squared is quadratic order n cubed is cubic. After that we don't give special names to them. We just say polynomial. It's polynomial some polynomial. So let's look at some examples. If you have some constant time looks like that which is a thing of beauty.
+
+Um.
+
+There's one we haven't looked at. But if you've um, we'll look at in a minute. But there's another one that's very interesting that is highly prized. It's not constant, but it's almost as good. And it's this one. Logarithmic. That is, the number of steps is proportional to the log of the of the number. Now, if you haven't seen long since high school, they're about to become a lot more important. And they're a key part of your life now. Um, you don't have to understand all the identities and everything but you. But but just look at that graph, right? I mean, that's awesome. It it's worse than than constant, but it grows so much more slowly. It's the inverse of the exponential. That's what a log is. Right. So, um, the log of x is the power that you, the, um, what do they call it? Not the normal. The natural log is e, but, um, for base ten logs that if you say, you know, you refer to the log of X, that is the number you would raise ten to to get x. And we're going to be very interested in logs. Base two, because, you know, base two comes up a lot. Um, it turns out that all logs are the same. Because when you when you do law, when when you form the log base, whatever be, you know, ten to e, whatever it is, the logs are all within a constant factor of each other, whichever base you refer to. So then because we're disregarding constant factors that number C, you know, we can always just take that constant factor and fold it into our choice of C. And so all logs are the same. Doesn't matter. I found this very surprising. Um linear looks like that. We've seen it quadratic and um cubic and polynomial all sort of have a shape. Um. Oh can you even see them? The resolution on the screen isn't very good. So they're actually two lines here. But uh, The bigger K gets, the, you know, the worse it is. But they all have kind of the shape. So we'll refer to quadratic. We'll refer to cubic. And then after that we'll just say polynomial. And you can say you know n to the 16th or whatever k is. Okay. Are you ready. Here's the worst. Well one.
+
+The.
+
+Worst is one that can never be done at all right. It's impossible. But if an algorithm is possible when we get to exponential, we're sort of hosed because exponential is going to be two to the n and exponential growth. Humans are terrible about this.
+
+Okay.
+
+Pop quiz. There's a pond near my house. I go and I'm, I mean, and so I get a little thing of algae and I put it in the pond one thing. And so at time zero, there's no algae, but the rule is the number of algae doubles every day. And after a month, the whole pond is a solid pink or green or whatever it is. How much of the pond was covered? Sorry. When was the pond half covered?
+
+The day before that.
+
+The day before.
+
+Right. So exponential growth is. Do you guys have you seen Monty Python and the Holy Grail and you've seen that. So there's a scene in there where there are two guards at the castle, and there's this crazy person storming the castle, and they really like this in regards to the look. And they're far in the distance and they go and then it cuts back and the guy's like, running. And he hasn't made any headway. In fact, he's back where he started, right? He's running. And they look at each other and they do this like I don't know, 4 or 5 times. And then eventually wham, he hits them. And exponential processes are like, that seems reasonable.
+
+Oh, you know twice this.
+
+That's not a problem. Twice this. That's not a problem. And eventually wham now now everybody has Covid.
+
+Right? Right.
+
+So, um, so exponential processes are bad, and even reasonable numbers become so take so long to compute that, you know, you won't predict, you won't be able to predict the weather until after the weather happens. Right. That's not good. Have you ever used Google Maps? And so near my house. Um, I happen to know how to get to a few places, and it almost always sends me the wrong way first, and then sends me back down on the other side of route two. It's gotten better. But why does it do that? The reason is that the best known algorithms for finding the most efficient path from A to B in a map are exponential, so it can't use the best known. It uses various heuristics. So one of the things it does is it has certain like hotspots that are very popular. And it says, you know what, just get to the hotspot first and then I'll figure out how to get you the rest of the way to your destination. And so apparently that area just a little bit further up route two from my house is a hotspot. And, and it says, okay, there are a lot of roads down here. I don't I don't want to look at all those. I'll take you up there and then I can do it right. So what it's doing is it's it's using non-optimal algorithms that aren't exponential. And this means you often don't get the right answer, but you do get it right. If I wanted to go and buy bagels and Amy's Bakery, which I did yesterday, um, I if I didn't get the directions till next year, that wouldn't be helpful. But these are literally the times that we're looking at.
+
+Um.
+
+Okay, so I've shown you the mathematical machinery in practice in a job interview in CS 15. Um, we're not going to prove things here. And so when we talk about these things, we've got a couple of rules that are basically throw away all the constants and find the biggest thing involving N and just replace it with that. So two n plus two is order n ten to the fifth. N plus 99 is.
+
+Order.
+
+And also order in. 20 n cubed plus five n squared plus 50 times log n is.
+
+Thank you.
+
+Thank you. Yeah. Just throw everything away. Take the biggest value involving n. Um. Right. So any polynomial is just the largest power.
+
+UNKNOWN
+And uh this one.
+
+Okay.
+
+So just back to a couple examples. This is very similar to what we saw before right. So this is just that loop runs n times roughly. So that's going to be order n. Um the nested loops we saw before that's going to be n squared because each loop run runs n times. Try this one.
+
+Five minutes.
+
+Let's try this one. Well we've got constant squared plus. Then we've got n squared. Right. Because this is basically the same thing we had before. Then after the n squared we've got constant and we've got another order n and constant. So it's the sum of all those which we simplify which we simplify. Which we simplify to n squared. Getting the sense of this.
+
+Yes.
+
+How about this one.
+
+It would be one.
+
+O of one.
+
+Right. Because constant factors don't matter. Now the constant factor is getting big here. But it is nonetheless a constant factor 10,000. So 10,000 is as good as one. Still. It's still. The key is if I double the input size, does the time of the function change? No function runs the same amount of time, no matter what. It may be slow, but it's the same amount regardless of the input. Here's another example that sometimes makes folks a little queasy. Um, so we've got this, uh, we've got this engine, but it only runs when N is even, right? Yeah. Okay, so if N is odd, this thing is constant because the loop doesn't run. But if n is even, it's linear. So what do you think we're going to. How are we going to deal with this worst case. All right. So I said it's all about how bad can it get. Well how bad it can get is you do it on the on uneven. That's how bad it can get.
+
+Uh.
+
+So we are going to consider it. Order n because order n is the worst case.
+
+Um, later on we'll.
+
+Talk about sort of best case, worst case, average case. So we'll there will be times later like when we do sorting, we'll sort of puzzle this out. But for now just focus on the worst case. And you have to see this example because it's hilarious and wonderful. Um. So if you've started to think anytime you see a loop, say n, first of all, if it's a constant number of iterations, then it's not n, but this one is not an either. How many times does this run?
+
+Is this one log?
+
+Uh, why do you think so? Yes it is. Why?
+
+It's cutting in and in half each time.
+
+Right. So if if n is zero, then of course it doesn't run. If n is one, then it doesn't run. So constant time. If n is two then it runs with n two. Then. Then n will be one and it will stop. So one time log of two base two is one. If n is four, it'll run four, then two, and then it will stop two times. If n is eight it will run three times. If n is 16, it will run four times. If n is 1024, it will run ten times. Right. So what's happening here is that we're it's not linear in the in N it's in fact. Um, cutting it in half each time. How many times can you divide by two before you get down to one. And the answer is log base two number of times. So this is kind of our canonical canonical canonical um log time function. Log time is we're going to see log time a lot. So it's not it's not rare and weird. So if you've if you haven't looked at logs again, you don't have to know too much about them. You should know that they're they're worse than constant time, but they're much better than almost anything else. Um, and that very often repeatedly having get to them. And on the other side of the coin, exponential processes kind of repeatedly double or triple or something.
+
+Uh, okay.
+
+So I think given the time let's see. That's your log review. Um.
+
+I'm just trying to.
+
+Look, I want to get to a summary.
+
+Now we can talk about.
+
+Getting in half.
+
+We've already done.
+
+Log.
+
+In. Oh, yeah. So this next.
+
+Thing I just want to say, um, sometimes when I first heard this, I thought, well, launch this ten versus log base two, which is it? And the truth is, it doesn't matter because they differ only by a constant factor. You can look up log base conversion or something on that like that. And it's a formula. And what happens is the factor is like the log base ten of two and the log base two of ten, which is a constant. So that's that. And then.
+
+I think.
+
+We're going to accept for it. So I'm going to leave this to you guys. Apply this to the operations we looked at before. You will end here and have a great wait. What's today Monday. Have a great Monday.
+
+Have a great laugh. Have a great laugh.
+
+Ho ho ho. If you haven't watched the video before last.
+
+Watch the video from last Wednesday before last. I show you that I was just trying to. See?
+
+What I'm not so good at.
+
+Yeah, I worked out. I forgot something.
+
+I thought I'd.
+
+Come back and.
+
+See if you can make it a.
+
+Little tougher.
+
+But honestly, if other things are broken, that's worse than having.
+
+Okay. Okay. Oh. That's awesome. Yeah. Yeah. My question was about the beginning. Like something for you. You said that like. Are we allowed to do that just for nothing?
+
+I don't think C plus Plus has constraints.
+
+Well, I.
+
+Tried it with.
+
+You. Well, you have.
+
+To be careful. How did you try it? What did you do.
+
+With the.
+
+Colon.
+
+After the the constructor and then the other constructor name.
+
+Oh, um, yeah, you can do that. That's true. I forgot to do that. Um.
+
+I don't know. You have class? Yeah. I guess we didn't work. I'll catch you later. Hopefully the. Yeah, we, um, we tend not to do the initialization.
+
+So the thing after the colon is called the initialization list. Uh, yeah. And because we tend not to use it in 15. Um, I forget about it, but you're right, it's there. And there are times when you actually have to have stuff in it.
+
+When you have like a, like a constant like declare.
+
+Yeah. So there are cases where you have to use it actually. And um, it's fine if you want to use it on the homework. Go ahead. Okay. Um, it may weird out some of the Tas, but the experienced team will.
+
+Come in, So.
+
+Okay. And if they don't, they'll post on slack and I'll tell them what it is.
+
+Okay, great.
+
+I can't.
+
+Just making sure.
+
+Yeah. So what I meant when I said you couldn't cause you can't really call it in the body. If you refer to the constructor, that makes it a local temporary.
+
+Mhm. Yeah. Which is really helpful.
+
+Yeah. So, so that's what I was talking.
+
+You can do a local temporary and then copy it into now. But.
+
+Yeah. Exactly. So. So you're quite right. You can you can do that. Do they, do they formally call that constructor delegation. I wouldn't be surprised.
+
+I, I like.
+
+Looked it up because I was I knew that you could do it. And so I was like I did some research and it said that it was called delegation.
+
+I have used initialization lists occasionally in my code. So I do recall that coming up, but I don't recall the name for it. Anyway, go ahead and use it if you want. Great.
+
+Hey, sorry about that. So, uh.
+
+So, uh, so right.
+
+To the end.
+
+Is it always going to be two to the end? Or, like, if we found something that triples the amount of time for everything, would we write that as three then or.
+
+Well, you could write it as three to the end, but they're all going to be exponential. So it turns out that Just.
+
+Like logs.
+
+Don't matter the base, but the exponential doesn't matter that the bases.
+
+And some of them mentioned something about working together on next week's projects that are just projects with teams or individual. I think.
+
+It's an individual.
+
+One. Okay, good.
+
+Um, the last project for the last few years has been, um, has been in teams. I think all the other ones are individual.
+
+All right. Thank you so much.
+
+You're welcome.
+
+I'm just a quick question about.
+
+Sure. Come, come ask. And I'm going to pack up.
+
+Um, for uh, so three for my recommendation.
+
+For the final function when I iterate through the the linked list index. Right. Because we need to find one, we have to go through that whole entire list from the constructor. And um, I have it implemented as in, like if it's on the left half, it goes from the starts, from the back it goes.
+
+You got a nice.
+
+Optimization. Okay.
+
+So but it does make my code a bit more. Should I just ditch it and say from front to back or.

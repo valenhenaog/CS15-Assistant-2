@@ -1,0 +1,511 @@
+All right, everybody. Big day. Big day. Um, for some time now.
+
+I keep waving my hands and say, if the tree is well-behaved, if it's balanced, you know, then we get great stuff. But we can't assume that. So we should assume we're not getting great stuff. Right? So I've been saying that for a while. So I've also been promising that we're going to address that issue. And today is the day to, uh, make some progress. Uh, so first let's, uh, let's just recall a little bit about how we did insertion, what we called the naive insertion in a binary search tree. Because we're not giving up binary search trees, it's going to be binary search trees. Plus it's not a replacement for binary search. Um, okay. So if we insert that into a binary search tree, what does it look like? Can anyone just sort of visualize it? Yeah. Kind of, uh, looks like that because eight becomes the root, then seven becomes the left child of eight. And then you try to put six in. It's less than eight. Less than seven. Five is less than eight less than seven less than six. So. It kind of grows like this. And uh, not log n n right. Very much. N uh, okay. So if we want to get to a leaf in this tree, we have to go through order n nodes. Potentially. That's the worst case. So we're not happy. Um. What we prefer is something like this. Oh, doesn't that just make your esthetic sense? Um, I don't know. What is it when your esthetic sense is stimulated to be pleased? Is it? I mean, come on, just look at that. That's that's just amazing. Um, now, this is a completely full tree. Uh, well, we'll come back to that. Um, okay. So, like I said, we've been talking about, you know, these great things that are maybe, um, log in, but really not in a just if we have a regular BST. Um, so what we're looking for is something that will guarantee that those bad things don't happen and that relatively good things do happen and that we get the efficient access. Not surprisingly, there's been a lot of effort in this over the decades, and there are all kinds of trees that we could study that all have this feature, the basic idea that they all exploit is that there is a, um. Um, is that you? You insert into a into a tree, and then whenever you discover an imbalance, you fix it. Right? So they're, they're kind of self repairing binary search trees or self-balancing binary search trees. Um, and there's a whole bunch of them. So we're going to look at AVL trees. Why. Because they're relatively easy to understand and they have good performance. Um, and it's pretty straightforward to go from binary search trees to them because they're still binary search trees. Um, scapegoat trees. I like because of the name. Because what this does is this, uh, this is very low overhead, but apparently what it does is when you discover an imbalance, you designate the root of the imbalanced tree as the scapegoat. You blame everything on them, and then you have to rebuild that tree. And I just think that that's weirdly funny. Um, there are red black trees which are used in the Linux kernel. So if you are familiar with the thing called Linux, Um, you'll know that, um, there are two, three trees, which is, the name suggests, aren't really binary trees because you either have an outdegree of 2 or 3. Right. So there's a thing called splay trees. Anyway, there's, there's a whole menagerie of these things. There's another thing called general balanced binary search trees, which as far as I know, are really the same thing as scapegoat trees. But I don't, I haven't, I haven't looked at the code. Um, I just know they exist and I've used them actually, because those are in some environments that I use. Uh, okay. So AVL trees, well, we have to start with widely called AVL trees. And it's not like, um, a levitating something. Right? Um, it's named after the initials of the inventors of the of the data structure and the algorithms Adelson and Landis. Um, so AVL, which I never remember. So every time I give this lecture, I have to be sure it's on the slide because I can never remember. But, um, no offense to, Um, to the inventors, it's a great thing. So their self-balancing binary search tree, which we've said, there's one flavor of this, there's a whole bunch of them. And what does that mean? That means that you insert things into a tree and you delete things from a tree. And when you do that, you look to see if there's an imbalance. So not surprisingly, there's going to be a new invariant in town. And the invariant is going to constrain how out of balance the tree can get. We'll talk about that in a minute. Um, but take for granted that the tree will get out of balance when you insert and remove, because you've seen it. Right. It absolutely will. Um, and so you detect that and you fix self-balancing. Now the key is the fixed part has to be very efficient. Right. Because if we've got long time to get here and then we get order in to repair the tree, well that's order N again. Right. So ideally what we want is that we want to limit how out of balance a tree can get, and then devise an algorithm that's constant time for repairing the damage. And then this way it just gets folded into the log time insertion or deletion as an additional constant bit of work. Um, okay. So that's kind of the plan.
+
+Yeah.
+
+So balance. But life happens. Uh, okay. Now we you might start out by saying, well, let's just make all trees be perfectly balanced. Well, you can't really have that. You can't have perfection because a perfectly balanced tree, and in fact it's called a perfect binary tree always must have two to the k minus one nodes. I was going to say two two to the k minus one nodes for some k, right. So that's a seven node tree because a seven node tree can be complete. But an eight node tree can't be perfect, right. Because where are you going to put it? Anywhere you put it. It's not perfect. Right. So. we need to start out with trees of size zero. Then we need to have size one two. We need trees of any size. And so they can't be just completely jam packed. That's just an unreasonable ask. So we can't take that off the table. Um, and so the AVL approach is to say, all right, all right. Things can get out of bounds, but not two out of bounds. Right. And if you're thinking about out of balance, um, let's think about what that means. So an AVL tree. Um, they enforce the BST. I mean, an AVL tree is a special type of binary search tree. On exams it's very common for students to verify the AVL invariant. But forget the BST invariant. But you have to do both. Right. Because it's a BST and it's an AVL tree right. You have to have both. So they're going to enforce the BST invariant which we all know right left is less. Right is greater. Um okay. And the invariant for AVL trees is like a BST. It applies to every single node in the tree. Important, right? So it's not just you look at the root. It's not. It has to be every single tree. So what we're going to do is we're going to create we're going to think about this thing called a balance factor, or we're going to ask whether a tree is AVL balanced. Remember we can't have perfect balance because we're going to do things like insert one thing or remove one thing from a perfectly balanced tree. And so it can't be perfect. It's not going to be. So what we're going to do is we're going to keep track of balance information. And we're going to ask, well, what are the relative heights of your left and right subjects? Okay. So, you know, if I'm a node and I've got my left subtree and I've got my right subtree, you know, can I be like that? Uh, no, but I can be like this. So I can be a little bit out of balance. Um, how much is a little bit one. Okay, well, that's about as good as you can ask for, because we can't have zero. That's unreasonable. But one almost as good as zero. And when you get to 160, you'll prove that that it that it works. Which is not really obvious. Maybe, but it does. Um, and so what we're going to do is we're going to look at the height. So if I'm a node, we're going to look at the height of my left subtree and the height of my right subtree. And we're going to look at the difference in heights. And so if you subtract them and take the absolute value um I should get either 0 or 1. Two is going to be AVL imbalanced zero and one AVL balanced be all okay. Right. Um, hopefully that seems reasonable. And the balanced factor is just that, uh, that difference. All right. Okay. So some things that you need to remember about our definitions of path and height and depth and all these things is that when all of our definitions are are consistent in that we base them on paths and we count the hops in a path, not the nodes of the path. Um, and again, when you look online, you'll see there are books that do it both ways, so you have to read it. You need to be clear. You need to be clear. Um, so, um, the height of a leaf is zero. Why? Because it takes zero hops to get from a leaf to itself. Right. We're counting the hops, not the nodes. So it's a zero. If it's of height zero, then the height of the empty tree can't be zero, because then it would look like a leaf. It has to have you, and you want it to have a height that's smaller. So we pick negative one. So um again not intuitive. You don't look at it and see sort of that it's negative one height. But um, that's just so this is, this is just a definition. We're just going to assert height of an empty tree. Negative one. Uh, and then in general this is the same definition as before. This isn't about AVL tree is this is for any, any, uh, any tree even not even binary trees. The height of any given node is the longest path from that node to a leaf. Okay, so this is review but always worthy to do. Okay. So now we play our game. AVL tree or not AVL tree. What do we think. Yeah. So we figured this out. Now the empty tree always has to be whatever it is because that's how they always start. Um okay. And both invariants are vacuous. True. So all of the keys in the left subtree are less than the key in the non-existent node, and all of the keys in the right subtree are greater. So the BST invariant holds vacuous, and the AVL tree holds vacuous lead because the height of the non-existent subtrees are the same. So there are differences here. Well, they don't exist. It's always vacuous. Okay, how about this one. We're warming up. You know it always starts with the So. You should answer these because it'll make you feel good going to the next ones. So, um. Wait. Oh, it's not there.
+
+Well, I can see this one.
+
+All right. Yes, this is an AVL tree. Um, the height of its two subtree subtrees are negative one and negative one. Negative one minus negative one is zero. Two zero which is less than or equal to one. Um okay. This one. How about if we reversed 84 and 17 it would be balanced. But it wouldn't be a binary search tree and therefore not a valid, um, AVL tree. Okay. All right. But clearly it's balanced. Uh, how could you, you know. You've got two to the two minus one nodes arranged perfectly. It's a perfect it's a perfect. I kind of. I kind of spilled the beans on that one. So, um. Okay. So it's. So the balance condition holds, but the best condition does. And they both have to hold to be an aviary. Okay. Are you ready? More complicated. All right. I'm seeing some disagreement. Well, here. How do you find out? Right? I mean, you see this on an exam? What are you going to do? Or you write code and this is what comes. Well, let's see, is this node balanced? In general, leaves are always balanced. Right. Because the leaf has two equal size equal height. So all the leaves are balanced for well the height of this tree is zero. And the height of this tree is negative one. So four is okay. Two um the height of this tree is one. And the height of this is zero. So it's okay. Um, seven is okay. Eight is okay, just like four is. So the difference is five. This is of height one and this is a fight two.
+
+So what?
+
+Now if you thought no because it looks to stream, um, it does kind of look a little stringy and that's what I mean. Um, it's not obvious that an AVL tree is going to give you log time. What you need to know is that the maximum height of an AVL tree with n nodes has to be within some constant bounded factor of log n for this to work. And it's not obvious when you see strings like this that that would be true. Um, and yet it is. So you can pose the question. We're not going to do this in class. And my theoretical muscles are have been inactive for a long time and they're weak. So I would need to prepare more.
+
+But yeah. So what does balance mean here. Because I was under the impression that balancing that like both sides have to be equal or like this symmetrical. No.
+
+They just have to have heights within one of each other, and that has to apply to every node. And we just went through every node and we saw that it does. Right. Because the height of the subtree rooted in eight is one. The height of the subtree rooted at two is two.
+
+Okay. So the height from like the belief is that you have to be close enough.
+
+They have to be close enough. So for each node in the graph, the heights of the left and right subtrees of that node can differ by at most one. So there's no um, as a human, we love symmetry. But you're not promised that. You're you're just promised this relationship. So it's a there was another question that was sort of in the middle, but, um, the hand went down and I've lost. Okay. Um, all right. Uh, so this is interesting. Oh, where I was going to go with the, um, the way the proof works based on my fading memory. Is that you? Um. What you do is you try to figure out what is the maximum height of a tree of an AVL tree, a valid AVL tree with N nodes. And I remember they call them like Fibonacci trees or something, because something about it follows the Fibonacci sequence. I can't remember exactly. Um, but the point is you can do this and then you can figure out basically how much more than log n it can be. And it's a constant factor. And so it's still log n. So that's what's uh, that's the key. Um, okay. So is this an AVL tree? I'm seeing some cautionary tales. Um, what's out of bounds. So which node is out of bounds for, uh, five. Yeah. Because three, one and eight are balanced as Individuals. Forest balanced because height zero, height negative one two is balanced. Height zero. Height one eight is balanced. Five is not balanced because height one two versus height zero. So it's out of balance by two. Or the heights differ by two and that is greater than one. And so they're out of balance.
+
+Wait, how is that.
+
+Aren't the heights of five one and three because it's one hop to eight and then one hop to two, one, hop to four, one half to three.
+
+You can count it like that. Two. You can take the two paths out to the left and right, which just basically adds one to each side.
+
+Oh, I guess if you.
+
+And so one, two, three and one is counting the hops, which is still differ by two, you just added one to both sides. So you're and honestly I usually think about it that way. But the official definition is the height of the subjects.
+
+Okay. So it's like you're starting. You're not even looking at the jump. You're just looking at like two and. Right.
+
+Yeah, you go, you go to the left subtree and you say, how high are you? And it's and it says two and you know, how high are you? And it says you're up and you say, okay, two -0 is two.
+
+Which is the difference which is two.
+
+So okay, so here's a fun one. This is one of my favorites. I don't know why this tree amuses me, but.
+
+It does for my.
+
+Tree. Yes. Anyway. So why though why. Because look um, six and four have the have the same height.
+
+Because four has, uh, a left five of two and a right height of zero. Yeah.
+
+So it turns out like four and six are out of balance, right?
+
+Yeah. Huh.
+
+So it applies to every node in the tree. Of course, the depth of this tree is order in which in fact it's order n over two. But we throw away constants, so, uh, that's too bad. It's a delightful treat, but it's sadly inefficient. Um. Okay. All right. So, um, so you know that there are two invariants that apply to AVL trees BST invariant plus the AVL balance invariant. Um, and you've seen a bunch of examples and you should look at more, um, because, well, not just because they'll be on the exam, but because it's good to know. And it's a good practice for when you take 160, you think about alternative data structures. I want to think a little bit about, uh, uh, about implementation now. Uh, so what we don't want to have to do is, you know, how we wrote the height function then for binary trees before? Um, we don't want to do that because that doesn't sound very constant. Right. You've got to take this potentially log n dive down each subtree. We don't like this. Um, so to implement it, it's probably a good idea to keep track of some extra bookkeeping information in the nodes. And that's okay. We know how to write structs. You just add some numbers. Right. Um, and you can keep you know, there are a variety of choices here. You could keep the height of this node. Um, and then and so now you know how to write the code. Right? If I want to know if I'm balanced, you just what's my left height. What's my right height. Yeah. Special case for if left and right or empty. But that's easy to do. You just write a function. Not a big deal. Um, and then you can subtract them, take the absolute value or whatever you want to do. Right. You guys can write that. Um, so but the key observation here is that remember that as we think through the implementation, we need to keep all the additional steps constant. Right. That's that's an important goal that we have here. And so one way to do that is to what we call.
+
+Half.
+
+The height, um, in a tree.
+
+Okay.
+
+Oh, yeah. So when you add a node or remove a node from a tree, you have to descend down to that node. And so what we're going to do is when you return out of that recursive process, you just update all of the heights. And that's just again, that's a constant amount of work. One thing. Other thing subtract compare update update value. That's constant. Right. 3 or 4 operations.
+
+Wouldn't it be like log n, which I guess, you know, the whole thing could still be log N because it's just to log n which goes to log n. But like since if it's a, you know, height of n and you go through n nodes, then you have to do an update as well. So you know, but that's log n compared to the whole thing.
+
+Right.
+
+So um, so you're thinking through this very well actually. But so one thing that I want to caution you about, particularly in job interviews and on.
+
+Experience.
+
+Is if somebody is asking you about complexity, either space or time complexity. Um, always be sure you know what N is. And if you don't put it on the table, because if n is the tree height, then it's order n. Right. And if n is the is the number of nodes, then if the tree is AVL balanced then I'll just you'll prove it in 160 it's going to be longer. Now if you do it log n at every step then that could be log n times log n which is a log n log squared which is not something we usually see much in. But it does come up. Um, so we're trying to avoid any kind of factor that that changes the complexity class. So basically anything above constant we're not happy.
+
+But but this is or this is operation one per log n. So that's log n. So it's okay but it's not constant.
+
+Well it's a constant amount of work per log n to update these things that most. I have to look at two things and then do 5 or 6 operations, but it's independent of the size of N, right. It's so I have to do that amount per when I come out of the recursion per node I went through. Yeah. So that just adds but that just adds a constant factor. So the amount of work for each node just goes up by a constant factor.
+
+O on a constant factor.
+
+Yeah. Yeah. So we're happy with constant factors. Yeah.
+
+So I think the point here, if I'm getting it correctly is that the we're not it's not.
+
+Like we're adding one, but we're, we're, we're doing one more operation per each of the log n steps of recursing down the tree. So we're adding a multiplier in front of the the log n. And we don't care about multipliers.
+
+Perfectly good. Yes.
+
+Um, and what that multiplier is, it's you know, it's five six operations or something. But it's the key is it's not dependent on n. Right. That's the key. These are great. These are fantastic.
+
+Fantastic people. Okay.
+
+So, um, let's sort of look at an example and assume that we have that information in the background, which we kind of were before. So let's insert what are we inserting six into this. Right. So we sort of know where it's going to wind up. Right. Where is it going to wind up.
+
+That's gonna unbalances. We can't.
+
+Do that.
+
+Uh, well, so the way it works is you insert it, you make it go out of balance, and then you fix it in an additional constant time step. So we're going to let the tree get out of bounds. But we'll come back to how out of bounds right. So um six is greater than five. So this is just the algorithm we saw for binary search trees because in fact insertion is exactly the same. And so it winds up there okay. So now the tree is out of balance. What node is is out of bounds. And yeah so eight is out of bounds. Five is actually balanced right. But so we've just inserted six. Whenever you insert a new node we were always inserting leaves. Leaves. Leaves are always balanced. Um seven is balanced right. So we return from this recursive call. How about I was just at seven I went down the left subtree. That's balanced eight okay. The left subtree of eight has a height of one. But the left but the right has a height of negative one.
+
+Oh no.
+
+Two. So what are we going to do? Anybody do a cartwheel. If I could do that that would be so if.
+
+That.
+
+Two were just uh, root six back to eight and then seven, six, eight. So six is less than eight. And so I know.
+
+What node becomes the right, uh, child of five.
+
+Six, seven.
+
+Seven. Right. So what we're going to do is we're going to take this and then we're going to spin it like that. We're going to grab this note and like yank it up and it will fall down there. Um, okay. So I already posed this question and there we go. Ah, okay. So now this subtree is balanced and this one is also balanced. Right. Because 112. There we go. Interesting, interesting. Now if we're going to commit the radical act of programing we need to think about this in some detail. So let's uh let's make some observation first about what nodes can go out of bounds. Not any node in the tree.
+
+It has to be at least two higher than where we inserted.
+
+That's true. That's true too, actually. Yeah. Okay.
+
+Um, only nodes that we've traveled through.
+
+Yeah. So this is the cool thing is if you went and this is really important. Right. Because if I'm a root of a tree and you insert it on my left subtree, my right subtree is still itself balanced. I might go out of balance, but the right subtree, it's balanced. That's an important consequence of of the invariant and sort of how we're doing the repairs. We're not changing any heights in subtrees we don't descend through. So this is really important. Only on the path to the inserted node. So this tells us that we can identify the repair without any extra work. It's just we would go back through the node anyway. Right. We went through it once. We'll go back through it again when we return. Then if you do it with loops in a in a software stack or stack data structure, structured. It still doesn't matter, right? You would visit that node and then you would do stuff, and then you would come back and then you can update a type. So the good news is we don't have to like search the whole tree because that would be devastating. So that's very important. Um oh. This next one is when we detect an out of balance condition. What's the balance factor? Couldn't balance factor be fine? No. Why not.
+
+Reduce it?
+
+It has risen up by one. So you can verify amounts to.
+
+Right. So the thing is that if I, if I were a valid AVL tree before. Right. I'm just some node, you know, minding my own business and an evil tree. But if, if we're, if I'm part of a valid AVL tree, then my left and right subtrees have a hyper differs of at most one. If you insert one value into a tree, you can only change the height at most one. You might not change it at all. Right. Because the longer path might be somewhere else where you didn't insert it. Right? So, um, so if you insert a new node into a tree, you can increase the height by either 0 or 1, but not more than one. And that means that when I'm out of balance, I have to be out of balance by two, by exactly two, because I'm not going to let it get any further. The AVL invariant prevents that.
+
+So, you know, like if you're a node in the middle of a tree and like you're inserting something and like it goes through this, you know, this node, how do you know if it ends up actually increase in the height or if the longest path is right.
+
+So um, so this is very important. So when you, when you come back through the recursion, you can't do nothing. You actually have to either return or update heights as you go. Yeah. So you insert a new node. It's a it's a it has a height of zero I suppose it communicates that to the caller that inserted it. Well, now you say, okay, well, you're the subtree you just created used to have a height of negative one, but now it has a height is here right?
+
+Oh wait. So you include. So in the struct you don't just include like the node's bone height, you also include the height of the subtree.
+
+Well you can do it either way because you can always just ask the subtree what its height is. Uh, right. And that's constant time because you just chase one pointer. Yeah. And then find it, find the the slot in this. Right. So it's constant time to query the height of the subtree. Um, and you know, people do various things. There are versions where you score each of the subtree heights in the node rather than its own height, and then its own height is one plus the larger of the two. Um, people have done various things. Um, but, um, this is this is really, really cool. Um, because the the height can differ. When you're out of balance, the height will differ by exactly two, nothing else. So that's interesting. And that also means something. That means that two steps down you must be balanced. Now just let that simmer for a while because it's it's going to be important later. But right now um, just kind of um, let that simmer last year. So the good news is and we'll see why we have to look down two levels in a few minutes. So we're not there yet. But just notice that I only really need the balanced conditions because, you know, the height can increase at a level by at most one. Right. And if I just went out of balance, then one of my subtrees just increase was already one greater than the other side. And I've just increased it by one more. So just let that center again. We're not doing proofs here. So just an appeal okay. So we we inserted six and we're there. Six is balanced because leaves are always balanced. Um, seven. Seven is balanced. Eight.
+
+Uh. Oh.
+
+No. Okay. Um, so now what we're going to do, and we haven't really thought through all the cases, but there are four that we'll talk about. Um, and so what we're going to do though is we're going to identify the imbalance case. And like I said, there are only four ways a node can go out of balance. Um, okay. So in this case what we the balanced case is one when we inserted to h left and then to the left of that subtree of eight. So we sort of did a left left insertion right. Okay. And in a case like that what we're going to do is that operation that I referred to before and it's called a rotation. Um, which we saw. Okay, so what are the what are the cases? What? Remember, you only have to go down two levels to determine this. So you either went you either went left left or right. Right or you went left right or right left right. So now everybody has to do the AP all dance. So okay, a group of you must do this on TikTok and then let me know. I'm sorry, I will not be doing it with you, but I will like it, I promise. And I don't even have TikTok installed, but I'll install it and like it if you do it.
+
+Okay.
+
+Um, so these are the only possibilities because any tree further down where, where if the decision were further down, then they're being out of balance condition further down. The fact that I'm the first place you found out a balance and an out of bounds by exactly two means that there has to be links that have changed in the two steps below at most. So this is one. Exactly. Exactly. Okay, so, um, how do you figure out in which case applies? Well, this is Snowpipe small matter program.
+
+Um.
+
+You can you can say, well, is my left height the big. So you just ask which side is heavier, is the left side heavier or the right side? If the left side is heavier then, then it's a then it's a left something. And so then we can, we can then ask which side of the left subtree is heavier. And if it's the left side of the left subtree then it's a left left. And if it's the right side of the left subtree, then it's the left right. And if it's the right side of the right subtree, then it's a right right. And if it's the left subtree of the right subtree, then it's a right left. So are there a bunch of if statements? Yes. But you guys it's not it's not rocket science. There are four cases. There are four things to compare. Right. Um.
+
+This is flesh.
+
+Um, and then it goes on like this, right? Um, okay. So as you know, this is the way I think about it. Um, they're the two outside cases. And then there are the two. Uh, akimbo cases. All right. Um. Now it turns out that the, uh, it's not surprising that the the the solutions are very symmetrical. So if we solve. But the the akimbo cases are different from the outside cases. But if I if I solve either one of the outside cases, and then I just take that code and paste it in and whatever I see left, I right, right, and whatever I see right, I right, left, it's the same right. So I only basically I only have to have solutions of two of them on my slides, even though there are four cases, because once you have one, you can even write a program that will take the solution to one and give you the other one, because you can write a program that just changes left to right and right to left. So that's not hard. Okay. Um, so if we're back to, um, back to our example, uh, we're going to do this rotation. And so how does this, um, this rotation work? Um, well, first of all, it's an l l case left, left. Uh. And so we fix single rotation to the right. Um, so let's look at this. Right. So we solved it. Now, notice, uh, whoever was pointing to eight has to point to seven. Right. So there's this there's there's a pointer variable that's not in the picture, but that has to be updated. But it's constant. There's one. One is a constant right. So there's one pointer that we can't see that's updated. Well we'll discuss how many others there are in a minute. But first this this one is simple because the left and right subtrees are both, um, trivial. They both have only one thing in them. So let's let's make a more general picture. Okay. Um, now the scaling. So I grew this. It's a little bit. So my artistic skills are one thing, but what I'm trying to communicate with is that, um, there's a height difference of two between the two sides, so I tried to capture that. Right. And the hypothesis that we did a left left means that the insertion was over here in X. So that's bigger because we've just got the insertion. Um, whether it's really big or I don't know, it's definitely its height is definitely, um, bigger. It's one bigger than this one and it's two bigger than this one. Right. Okay. All right. Uh, so how do you fix it? Well, I sort of told you before, what you do is you reach into the tree and you pick the out of the root of the out of balance subtree, and you pick it up and shake it, and then the root, the out of balance root will fall down to one side or the other. In this case I pick up k1. K2 will fall down to the right. Uh, actually, before I show you the whole picture, let's think about that. So if K1 comes here and K2 is down here, Z, everything greater than K1 and K2 will have to stay where it is. So K2 is going to move down over here. Z is going to stay on the right, K1 is going to be here. Everything less than K1 is in X that's going to be over here. Notice that x will decrease its height by one. And this subtree of this subtree is going to increase its height by one because K2 is going to come down. Right. So the idea is we're going to reduce this height by one, increase that one by one. But there's something missing. And maybe you'll ask about it. What about.
+
+Why.
+
+So why gets why gets this left out okay. So what happens. You pick this up and y just falls off. And so we have to put it somewhere right okay. Because K1 is right. Subtree is now going to be rooted in k2. So k2 is going to have to be all right. So where do we put y. Well what do we know about the things in there.
+
+All those K2. So you could stick them at the end of Z.
+
+Right. In order to be here they have to be less than K2 but greater than K1. Right. So if we put K1 here, they have to be somewhere on the right of K1, right. Because they're everything there is greater than ten. We know that they're less than K2. So K2 is here. We can put it in k2 left subtree. Good news. K2 just gained a vacancy in its left subtree.
+
+So.
+
+So that's the final picture. Uh, so this satisfies the BST invariant, which we just kind of went through in words, um, by analyzing. So everything in X is less than K1, so it belongs there. Every K2 is greater than k1 because k1 was to its left before. So that's okay. Everything in Z was greater than K2, but we don't know how it relates to K1. Well, it's larger though. We know it's larger. So that stays where it is and that remains. And then why was the one that we knew was less than K2 but greater than K1? All we've done is we've computed the the comparisons and said okay, instead of less than k two and greater than k one, let's say you're greater than k one and less than k two. We all have it's the same, right? Because it's just it's the same two comparisons. We just switch the order.
+
+Okay.
+
+So the original difference was two because that's we agreed that all out of balance conditions when you first discover them of our size two, we shrunk the height of the heavy subtree by one. And we increased the height of the light subtree by one. So now the AVL tree has a. The bounce factor is zero. You know the same way. So you can see how it sort of creeps towards perfect balance little by little, which is kind of the genius bit about this really cool people who do algorithms are a special kind of people. Um. Okay. And this is called a rotation to the right because, well, just kind of looks like a rotation. Take this thing.
+
+And you know what?
+
+Can you get that? So that's.
+
+The. Um.
+
+Now, when we do this, we do have to update some things, right? We have to update the heights of the tree, but we don't have to go, like, way down into Z. Its height is still the same. It's just that K2's height is now, um. Well, k2's height is the same, but K1 height is now different, so we have to update the heights in three places. We have to update the height of this and the height of this. Actually that's kind of it. We have to update three pointers. That's what I was thinking three three pointers.
+
+Is there a way to update the heights. Uh without the help function which goes through the heights?
+
+Yes.
+
+Because you're keeping track of the heights. So we we can just ask this note. How tall are you? And we don't have to descend. So that's the important thing. But it doesn't have to be the height you can keep. There are a variety of ways you can you can sort of skin this. Um, I don't know why people skin cats. I think that's pretty mean. Anyway, um, there are many ways to skin the cat. I wouldn't skin a cat, but there you go. Um, anyway, the point is, we do need to cache some information so that we can make the decision without doing the thing you were worried about. And the height suffices. Okay. And there was another question.
+
+Yeah, this is the height I see two now where it was one previously.
+
+Well, the difference. So the the height of K-2 here, here on the well. Uh, actually no you're right, you're right. So we do have to update the height of K2, right. Because it's going to hold on. It's going to be the height of this thing plus one. But it was the height of that thing plus one. So so we need you're right. We have to update it. So thank you. Good point. Okay. And the three pointers we have to update our the one in the node that we can't see. Or if it's not a node, it would be the root of the whole tree. Right. So but there's a variable there that's in the root of the whole tree. Or to one of the two pointer variables inside another node. So that. But anyway that's one pointer we have to update. Then what else do we have to do. Well k ones right is different now. Um k ones left is the same k2's right is the same but k two is left. So three pointers. Now notice that three it's not three times n is not log and n times three it's three.
+
+UNKNOWN
+Which is a constant.
+
+Okay. So um so we can discover an out of balance condition in a constant number of steps. It's basically get two values and compare them. Um, and we can fix it by updating three pointers and a few weights, but a few. Okay, three weights it must. So, uh, height. Not weight. Height. Uh, so the fix is order one. All right. So let's just, uh. What time is it? Oh, okay. I didn't think I'd finished today, but now I think I might. I can talk.
+
+More.
+
+Slowly. Uh, or we can just have a ten minute break and do the AVL dance for a while.
+
+Yes. Uh, okay.
+
+Now, um, let's just take a second to imagine. Oh, yeah.
+
+All right.
+
+Okay. Um, so here's your algorithm for insertion into an AVL tree, by the way. Um, well, not by the way, uh, you do the naive VST insertion, right? So you start off and you do that, then as you return up the tree, those log n steps, um, at each node you have to recalculate heights. Um, you can check for bounds at some point. You may or may not. If you get all the way up to the top without finding an out of balance condition, you win, right? That's great. Best work is always appreciated. But, um, you find the first node on the way out that's out of bounds. Um, then if it's, uh, if you have a left, left or right, right. Uh, insertion, you do a single rotation update, three pointers, three heights. Done. Um, and this is where that look down two levels really matters because in order to determine which step we're in, which case applies. We have to know if it's left, left, left, right, right, left, right, right, right. We have to figure out which bucket it goes in. And the bucket can't be go all the way out to the leaves again. Right. So and you saw the code where we were looking at, you know, my, my, my left height and then my left left height. But we don't have to go down any further than that. That's really cool. So constraining how out of balance the tree can get buys us a lot here, because that means that that puts a limit on how much work we have to do to repair. Then it's the same. It's like homeownership, right? If you if you repair your window right when it breaks, then it's easy to repair. And if you if you wait, you know, 50 years then it gets harder. Not surprising. Right. If we if we if we wait, if we know that a tree is out of balance by two and we fix it, then things work out well. Uh, okay. So let's, uh. What are we inserting here? We're going to insert 12. Oh, so we know where 12 is going to go. Do. Ding ding ding less. Ding ding ding ding ding ding ding ding ding. So 12 is going to go here right. Yes okay. And what sort of insertion is that. Left right left left right right right left right left. When you do it from the top right. So, um. Well, I guess it depends on what node is going to be out of balance, isn't it. Yeah. So let's look at that okay. So the insertion happens here okay. So 12 is balanced 15 is balanced. Is uh 20 balanced.
+
+Yeah yeah yeah.
+
+Yeah.
+
+So 20 is balanced is 50.
+
+Balance is.
+
+Less. No. So 50 is where it all goes to.
+
+All goes.
+
+Crazy. Uh, and by crazy, I mean balance factor of two. All right. Because the height of this tree is the height of this tree is one, two, three. And the height of this tree is one okay. And three minus one is two. There's that college level math. Um, okay. So is it. Is it? So now I ask again, is it left left left right right left right right. It's left. Left. Because from the out of balance node we did an insertion to the left of that. We did an insertion to the left of this node and then an insertion to the left of that node. We don't have to worry about this. This is so this whole thing is going to be that big subtree called x. And remember it's balanced. Just verify it.
+
+Right.
+
+It's it's AVL balanced which means within one okay. So if we do a single rotation, what's going to become the root? In 2020, what's going to be the right child of 20. It better be 50.
+
+Right?
+
+And then 70 is going to be the right child of 50. So that doesn't change. And so remember remember poor why I got lost. Who was concerned about why somebody was. Did you have a concern about why. Yeah. So, um, so here, uh, wait. Where's why? So, uh.
+
+What are you dirty?
+
+Yeah, it's right here it is. Here's why. So why is now going to have to become the left subtree of 15?
+
+Okay. All right, that's it.
+
+It's funny because you think it's going to be really hard because we've been saying for weeks, oh, we're going to get there. But then when you look at it, I mean, yeah, there are a lot of conditions, but okay. For it's not the usage. You have more than that in your RPN calculator with four cases, so you can deal with that. Um, now the right right case is the same, except that instead of rotating this way, we're going to rotate this way. So you pick up K2, you shake it, K1 falls down here, it stays where it is. Um, k2's right subtree is still z. Y gets abandoned for y, but y is going to be k1 s right subtree.
+
+All right.
+
+So okay. Um, all right. So those are the outside cases. And like I said if you have the code for either one, you just everywhere you see a left or right you do one. And now you have code that fixes them, that fixes the other case. You can even do it with a macro.
+
+But uh.
+
+That's a CSS 40 thing. You don't do that.
+
+All right.
+
+Now uh, so now let's look at left right and right left. Um, I'll just warn.
+
+You, it's.
+
+Hard. It's not. It's not impossible. But it's a little bit harder. And to see why.
+
+Um.
+
+Here's what happens. If we. If we're out of balance on the on the left of this of K2 and we do a single rotation, then why winds up being the right child of K2, which moves down a level, basically why it stays where it is and we get this tree. And so if you try to do single rotations, you're out of balance on the, on the left you rotate. Now you're out of balance on the right you rotate. Now you're out of balance. On the left you rotate. Now you're out of balance on the right. So the single rotation won't do because it just it just makes it somebody else's problem. And then if they do the same thing it makes it your problem. Right. It's not. So single rotations aren't going to do it. Um, but don't worry. Avi and L have figured this case out, too. Um, and so this is the akimbo case, right? We went. But, you know, we went left and then right. So that's.
+
+This one.
+
+Um, okay. So there are kind of two ways to think about this. Um, well, okay. So, so some things to notice I guess. Um, we so k two is out of balance because of a left right insertion. Uh, k2's left subtree is two more. Right? Because that's just what happens when you go out of balance on an apple tree. Um, but we also know that k1 s right subtree is one greater than the left. It can't be more than one, because then we would k one would have been out of balance. But since we're talking about K2, we've already verified K1, so that must have been balanced before. So the difference in these two heights has to be one.
+
+Right. I'm sorry. Is why like a subtree?
+
+Why is this entry?
+
+Well, maybe I didn't say that.
+
+Yeah. So the circles are nodes, and the triangles are subtrees that may or may not. So a triangle could be empty. Maybe.
+
+But in this case it has to have at least one height. Right.
+
+Yeah. This one can't be empty because otherwise the heights don't work out.
+
+It can't be height zero either.
+
+But this, this.
+
+One could be, for example.
+
+But why can't be empty and it can't be a singleton, right?
+
+Yeah.
+
+So if this were a singleton then that would be height zero. And so then this would have to be empty because then the height of the negative one and then that height would be one plus that. So so this one would be one plus zero is one. And then right. So this would be one. And then this one by hypothesis is two less. So that would have to be negative one. So that would have to be empty. That's true.
+
+Does that make sense.
+
+Yeah. So so Z could be empty.
+
+So Z.
+
+Right.
+
+So the triangles represent subtrees and its its visible nature does not imply that any nodes actually inhabited. Though of course in this one we know there has to be at least one, because otherwise you have to have some notes to go out of balance. Right? Somebody's got to have a nest. So, um, so excellent question.
+
+All right.
+
+Um. Right. So why has at least one.
+
+Cool. Um, okay.
+
+Now. Because we know that. Why. So that's important. We know that. Why has at least one node in it. So let's give it a name K3. We know it exists because otherwise we couldn't be out of balance. There has to be at least one.
+
+Then what if you, the unbalanced was caused because you removed something from why though? Then it could have no nodes.
+
+Um, yes that's true. So we're not going to talk about removal, but um, it's.
+
+Dual.
+
+But so dual dual to insertion instead of going, instead of going out of balance. By going up, you go out of balance by going down on one side. But the there's a similar sort of reasoning, and I kind of don't want to talk about removal because I want to be sure we're clear on insertion. But but you're absolutely right. Removal will be will be different. But you can do a similar kind of analysis to solve that too. Um, okay. So we know that K3 exists. These could be empty for K3 must exist okay. So once we know this there are two ways to think about the solution. Um, and one way to do that is just to uh, uh, put everything where it belongs. This works for some people. I honestly, I didn't see it, but some people just see that and they go, yeah, that's the answer. Um, and one way to think about it is that, uh, K2 didn't work. Can't stay the route. Um, and we know that if we put k if we put K1 up there, we know that doesn't work out because that just moves the problem to the other side. So we only have three nodes we know exist. And so if the root of the tree can't be this one or this one, maybe it's this one right. So let's start with that. And then you can sort of reason about well what do we know about all the things in Z. We know that they're greater than K3 and less sorry, greater than K2. Um, and also greater than K3. So we, you know, so we can we can preserve that. Um, the x similarly will be preserved and then the A and B, we sort of have to think about where they go. Right. So A is less than K3 but greater than K1. And B we know is greater than K1 and greater than K3 and less than K2. So you can sort of you can sort of work through using the using the BST invariant, what relationships hold among all the data. And you can just figure it out. Um, I guess, you know, I can go through that. But somehow when I first learned about this.
+
+I.
+
+Thought, you know, there are some people who just go, yeah, and they get the tree, and I didn't. It took me a few minutes to sort of think this through. So I find another way to think about it kind of helpful. And.
+
+Um. Okay.
+
+And so and it's useful because sometimes thinking about problems this way can be very helpful. Uh, I had a friend who had a really odd algorithm he applied in his, in his life where if he needed to get somewhere new, um, if there were a path from somewhere he knew about to your. So suppose I'm giving directions to my house, and I moved, right. So I'm giving him new directions to my house. And he would say, well, what is it near? And I would give him, I would say, well, it's near this other place, so I know how to get there. So now give me directions from there to your house, like, okay, but there's a more direct route. And he would say, I don't want the more directly because then I have to learn a whole new route. I already know how to go here. Just tell me the rest. Right. So he was kind of. He was weird this way. And he would sometimes go a few miles out of his way to avoid. This was in the age before GPS, right? So he was removing clutter from his brain in this in this way. And so when you're solving a hard problem, very often an interesting thing is to say, well, this problem is hard, but we know a solution to a related problem. Can we in constant time convert this problem to the problem we know how to solve?
+
+For that something. See.
+
+I'm not following. I'm sorry.
+
+Um, like.
+
+If you can solve NP hard problems. Oh.
+
+Uh, I see. Yes. Yeah. So the. Right. Okay. Uh, but we haven't really talked about P versus NP. Um, do you guys know about P a few of you take 160.
+
+It's delicious. Um.
+
+Okay, so here's the idea. We know that a single rotation of this tree doesn't work, but in constant time, can we convert this to an outside case? And the answer is yes. And it's called a double rotation. Does it say that on the next slide. Okay. So we're going to do a double rotation. And the key idea is in constant time. Convert this one back to a case we know about in a way that doesn't make it any worse right. So what we're going to do is we're going to say, well if only the heavy tree were out there. Oh, so you know what? We'll put it out there. Rotate the wrong way first. So we want to rotate to the right around K2. We'll go down to the heavy side of K2 and will rotate the wrong way. And what that's going to do is that's going to move the heavy side to the outside.
+
+Right.
+
+Ah, but now we have a left left and we know how to solve that.
+
+So now we take that tree.
+
+And we rotate the other way. So now we have to update. Um.
+
+Okay.
+
+Um, yeah. So we're going to step through this. Uh, so K2 is still out of balance because the left subtree got heavier and the left subtree of the left child got heavier. And we know how to solve it. So now we do a rotation to the right around K2 and it's balanced. Right. So this is like my friend who says, you know, get me to your house from Medford and I. And then I say, well, okay. And it gets complicated. And he says, okay, give me directions from Porter Square and Porter Squares in the wrong direction. Yeah, but I know where Porter Square is. So then he goes there first. So we're going to do this. It's kind of fun, right? So what we do is we take this case, sorry, we take the original case. We want to turn right. We want to rotate right. We go down here and we rotate the wrong way. And now we have the problem that we know how to solve. Now we can rotate right around K2. Okay. Now interestingly, the the first rotation we did was on a tree that was actually AVL balanced. But it.
+
+Okay you.
+
+Can think through all this stuff.
+
+Okay.
+
+Um, so I don't know. That amuses me. And it it made it easier for me to understand if you understand the first way and you just put all the pointers where you want, that's fine. But if you like the if you like this, then that's also helpful. But I think the other reason to appreciate this is that, um, this is very often a thing in computer science. You can do and in job interviews, too, because you can, you know, they give you a problem if you've never heard of it and you explore it, and if you can turn it into a problem you know how to solve. That's actually a really good skill. Okay. Um, so we got it. Okay. So here's the here's the summary. Um, if you go out of balance so out of balance by two and you know that you have say a left right or a right left symmetrical, you know that you have a right left one, then what you do is you go down one subtree and you do the, the wrong way rotation. So you say, if I want to rotate to the right, then I'm going to go down there and I'm going to say, hey, rotate left down there. That's going to move the heavy side to the to the outside. And now I can do the rotation to the right at the, at the root.
+
+Okay, which is really pretty cool.
+
+And remember before we updated three pointers to do a single rotation. So you do two single rotations. You're up to six pointers. It's still constant right. It's still six. It's not log n or n squared or n. It's six. And if you just update the pointers directly what is it. It's four maybe I don't remember. It's whatever it is. It's less than six but it's within a constant factor. We would not we're not upset.
+
+All right. Um.
+
+Okay. So, um, removal is like insertion. You still do the BST removal. Uh, and then you, you go up the tree and you do the, and you figure out where the balance occurs. And when you're out of balance, you fix it and you have the same solutions.
+
+So Alexa.
+
+Okay, so I have some former exam questions here. You can do that.
+
+Um.
+
+The useful thing to do on it. So I'll just give you a hint. Often the way I ask about these things on exams is I'll give you like a bunch of squares on the page and I'll say, okay, here's an empty tree, or I'll give you a starting tree, and I'll say, insert this value into the tree. Draw the resulting tree. Now, now take that tree and insert this value in and draw the resulting tree. Now take that tree and insert something and draw that subtree. Right. So that's a good way to practice it. Um, so we know that we're going to have if we just start. So two is going to be the root then one is going to be to the left of two. Four is going to be to the right of two. So that seems okay. Five is going to be to the right of four. Are we out of balance yet?
+
+So let's.
+
+See. We've got, uh, so two and we've got 4 or 5 and we've got one. Right. So we're still okay. So then um, we insert nine and nine sort of goes where it goes. So to the right of two to the right of four, to the right of five. I think we go out of balance now. And that felt like a right right insertion. So now we would do a left. I really wish the board weren't covered up. Um. So I urge you to practice these and then, um, a good way to test it is you can go to the visualization site and test it. So let's.
+
+See. Um, 2145937.
+
+We can do that. Should we do it? What time is it?
+
+UNKNOWN
+Yeah, we have time.
+
+Oh, I need the evil. To come to that.
+
+All right, so I'm.
+
+At the site. The evil tree site, like I said. And there are a lot of cool things here. Oh, wait. It goes there. All right, so, um, what's the first node we inserted in there? I see you. I see you. Um, so we inserted two. One. Not queue one. Let me know if I screw something up. So you can see it when it goes back up the tree, it sort of checks things, uh, for. Yeah. So that works out okay. Should we slow down the animation a little bit?
+
+What was the next five?
+
+Five. So where's five going to go? To the right of four. There we go. So still balanced. We said that. So that's good. Now we're going to do nine.
+
+There we go.
+
+There's a right insertion. So we did a left rotation around a node that was there. All right. And you can see that the tree got nicer looking. Um so now three.
+
+Things. Are not okay.
+
+So how did they do the first one. What did we just put in. That was three. So I guess seven is the last one. Um, and if we put in seven, it's going to go right, right, left. And so what's going to go out of balance. So it's going to be to the left of nine nine is going to be balanced. Is five going to be balanced. No. But that's going to be a right left case. Right.
+
+So I'm going to.
+
+S11
+Make some further.
+
+Uh yeah. I don't have a good.
+
+Intuition about how much that slows down, but let's see if that's adequate.
+
+Okay. Quite a bit. That's all right.
+
+S11
+Because this is the hard one.
+
+Yeah. Fair enough.
+
+And look at that. It's a perfect.
+
+Tree. There. Wonderful.
+
+Um.
+
+All right, uh, I think.
+
+Is this.
+
+Um.
+
+So we have some more examples, but I think I kind of want to, um, leave that to you guys. And then the fun thing to do is on Piazza if you if you come up with a cool insertion sequence, um, then you can share it on Piazza and then other people can delight in it. Are there any questions before we wrap up? I think I get all the way through.
+
+I did. All right.
+
+Have a great sunny Monday, everyone. I will see you on Wednesday. Enjoy the.
+
+Lab. Let me. Tell you. What I. Liked about. Oh. Yeah, I predicted. So I've lost my mouse. So the others are still. I don't have it. That's. Why? I think better is better. Um, I. Don't know what we're doing. I got my tunnel test coming through the variables. Have you done this? Well, it's a test of credit, so give me I know, right? Don't give me all three if I want. If you want, be sure everything.
+
+Else works first. But, uh. Um. No. The gypsies are just for fun and so you can use them to support your own learning. They're not. That's what they're for. Therefore, you know, you've got things working and you've got time and you've got interest in exploring. We just don't disrupt anything, right? Don't break other stuff in order to get it to work, because that would really suck.
+
+Yeah.
+
+Okay. But, uh, no more power to you. Do whatever you want. I think that's great. And just document it and say that, you know, but we won't take deduction. Well, we do look at the style, of course, but so it counts in that because, you know, any code you want us to read should be styled. Um, but the very fact that you looked at it is sort of fun. And that's when the grading will go. Look at this. It's cool.
+
+So go ahead.
+
+I don't know who is next.
+
+That would be good. Okay. Um. Uh. So two. Thank you. No problem.
+
+Two kind of related questions, I guess. One. Do you have.
+
+S11
+Any advice on.
+
+Like, remembering or internalizing all of this other than just doing it a bunch of times?
+
+Um.
+
+Yeah. Uh, practice. Really? That's kind of all I got. Um, because. It seems like a lot. But when you go through it. So there's a coherence that when you first learn it is not obvious because you're dealing with all the details. And so once you internalize it to the point where the details become less problematic, then you can sort of see an internal structure. But I don't know of a faster way to do it other than just, you know, do a bunch of examples until your brain decides that this is normal.
+
+And then.
+
+S11
+Two, would you recommend.
+
+Like.
+
+S11
+Practicing like implementing a.
+
+You know, a generalized tree and then a binary tree and a binary search tree, just in case there were a question on those. Or how would you recommend, like studying all of this?
+
+Well, um, first of all, for your for you, for your own.
+
+Um, knowledge and elucidation, any exploration you do is, is is worth it within the assuming you have the time and energy to do it. So, um, it's never a negative to know more.
+
+Right?
+
+That's never been to have more skill.
+
+Um.
+
+Whether practicing those particular things would help you. Um, in terms of grades, it's hard to say because for some people, a general tree is sort of an easy thing to comprehend, and for others, it's complicated. And it's not about whether you're a good person or a bad person. It's a bit of a coin toss, right? I found some things easy that my officemates found hard, and they found some things easy that I found impenetrable. So. So I can't say specifically. So I think the, the key is to.
+
+Is.
+
+To be more self-aware about what are the things you understand and what don't you understand? And if you can identify those things accurately, accurately, then practicing the ones that are fuzzier is the good solution. And, you know, we'll try to help you with those things. Like there's some example code that I think I used to sometimes give out for a general kind of a file system thing that Professor Chris Gray wrote beforehand. Um, yeah. The key is, if you're going to do that, you know, don't go nuts. Don't write like a real file system. Just, you know, they make clear assumptions that you only have files in directory. You say. And what's in the file? Just the name. Right. So just prune anything. You don't need to study the particular phenomenon.
+
+Thank you. You're welcome.
+
+And we should probably vacate because there's another. So I finished a few minutes early. Anyway go ahead.
+
+I'm just trying to wrap my head around, like, everything today.
+
+S12
+So one thing I was too confused on is, uh, so the rebalancing should be o of.
+
+Are you waiting to.
+
+Yeah, sir. Oh, okay.
+
+Well, I'm just going to go up here.
+
+Yeah.
+
+S12
+Oh the login. I thought you had to like each one along the path. Right. For which one? The rebalancing the tree after you insert it.
+
+No. So, um, inserting this log in, rebalancing a particular node is.
+
+Constant time.
+
+In this framework, assuming you've, you know, stored some.
+
+So. So. Yeah. Verse 19. Yeah. This is the first time. This is for you. I.
+
+UNKNOWN
+Don't want to say this.
+
+But I also. Yeah.
