@@ -4,7 +4,8 @@ import dotenv from "dotenv";
 import fs from 'fs'; 
 dotenv.config();
 
-const prompt = fs.readFileSync('system-prompt.txt', "utf8");
+// read in system prompt (path: chatbot/system-prompt.txt)
+const prompt = fs.readFileSync("system-prompt.txt", "utf-8");
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
@@ -58,10 +59,13 @@ async function retrieveContent(query: string): Promise<string> {
     // data.documents is an array of relevant document strings.
     return data.documents.join("\n");
   } 
+    { role: "system", content: prompt}
+
+  ];
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method Not Allowed" });
+    return res.status(405).json({ error: "Method not allowed" });
   }
 
   try {
