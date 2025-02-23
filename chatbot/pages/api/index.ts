@@ -31,9 +31,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // Append the assistant's reply to the conversation history.
     conversationHistory.push({ role: "assistant", content: botReply });
 
-//     res.status(200).json({ reply: botReply });
-//   } catch (error) {
-//     console.error("OpenAI API error:", error);
-//     res.status(500).json({ error: "Failed to fetch response from OpenAI" });
-//   }
-// }
+    res.status(200).json({ reply: botReply });
+  } catch (error) {
+    console.error("OpenAI API error:", error);
+    res.status(500).json({ error: "Failed to fetch response from OpenAI" });
+  }
+}
