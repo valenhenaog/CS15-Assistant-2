@@ -1,8 +1,4 @@
 CS 15 ArrayLists Homework
-
-
-
-
 Introduction
 In this assignment you will implement a version of the array list data structure discussed in class that
 contains characters.
@@ -17,14 +13,6 @@ CharArrayList.cpp. You will also write test code in unit_tests.h (described belo
 to implement a well-tested array list that a client could pick up and use in their own program.
     We will describe the (public) interface first, give some implementation specifics, and finally sub-
 mission instructions.
-
-
-
-
-                                                    1
-                                                                                                      2
-
-
 Program Specification
 Important Notes
 
@@ -41,10 +29,6 @@ Important Notes
 
     • You may not use std::vector or any other built-in facility that would render the assignment
       trivial.
-
-
-
-
 Interface
 Your class must have the following interface (all the following members are public):
    • Define the following constructors for the CharArrayList class:
@@ -69,9 +53,6 @@ Your class must have the following interface (all the following members are publ
      Define an assignment operator for the class that recycles the storage associated with the instance
      on the left of the assignment and makes a deep copy of the instance on the right hand side into
      the instance on the left hand side.
-                                                                                                       3
-
-
     • bool isEmpty() const
       An isEmpty function that takes no parameters and returns a boolean value that is true if this
       specific instance of the class is empty (has no characters) and false otherwise.
@@ -121,12 +102,7 @@ Your class must have the following interface (all the following members are publ
 
     • std::string toReverseString() const
       A toReverseString function that takes no parameters and has a std::string return type. It
-1
-    [N1 ..N2 ) is interval notation for a “half open interval”. See Wikidpedia for more.
-                                                                                                 4
-
-
-  returns a string which contains the characters of the CharArrayList in reverse. The string will
+returns a string which contains the characters of the CharArrayList in reverse. The string will
   be formatted like this:
            [CharArrayList of size 5 <<ecilA>>]
 
@@ -175,8 +151,6 @@ Your class must have the following interface (all the following members are publ
   element at the specified index. If the index is out of range it should throw a std::range_error
   exception with the message “index (IDX) not in range [0..SIZE)” where IDX is the index that
   was given and SIZE is the size of the array list.
-                                                                                                       5
-
 
    • void replaceAt(char c, int index)
      A replaceAt function that takes an element (char) and an integer index as parameters and has
@@ -226,9 +200,6 @@ but they’re fun and educational.
      the right index is not included in the final slice, requesting a slice where the right index is 1
      index past the last element is still a valid request. If the either index passed is out of range the
      function should throw a std::range_error with an appropriate message.
-                                                                                                       6
-
-
 Implementation Details
 Copy the starter files from /comp/15/files/hw_arraylists to get the exception examples and pro-
 gram files with header comments:
@@ -259,8 +230,6 @@ message (which we’ve specified above). You’ll use the std::runtime_error or 
 ception type, depending on the circumstance.
     You will need to write unit tests to test your code. The advice section (below) has more about
 what kinds of things to include here; also, see the provided unit_tests.h for some examples.
-
-
 timer main.cpp
 As mentioned above, when you copy the starter files, you will receive a file named timer_main.cpp.
 This file has been fully implemented for you. It contains a main() function, and when compiled and
@@ -273,8 +242,6 @@ program by running “make timer” in terminal. This will run the compilation r
 in the Makefile, and create a new executable which you can run using ./timer. Observe the table of
 operations and their time measurements that gets printed. Do these times match your expectations?
 We will ask more questions about these times below, to be answered in your README.
-                                                                                                          7
-
 
 Implementation Advice
 Do NOT implement everything at once!
@@ -324,8 +291,6 @@ With your code files you will also submit a README file, which you will create y
 named README. There is no .text or any other suffix. The contents is in plain text, lines less than 80
 columns wide. Format your README however you like, but it should be well-organized and readable.
 Include the following sections:
-                                                                                                         8
-
 
  (A) The title of the homework and the author’s name (you)
 
@@ -378,9 +343,6 @@ files. If you feel that you need multiple classes or structs in your solution, p
 CharArrayList.h and CharArrayList.cpp.
      Finally, remember that you only get 5 submissions for this (and most) assignments, so use
 your submissions wisely. After submitting, you can wait a few minutes then check Gradescope to view
-                                                                                               9
-
-
 your autograder score.
 
     Before submitting your work, please make sure your code and documentation (including sections

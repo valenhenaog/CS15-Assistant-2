@@ -1,8 +1,5 @@
 CS 15 LinkedLists Homework
 
-
-
-
 Introduction
 In this assignment you will implement a linked list data structure. The list for this assignment will
 be a doubly linked character list. You will have to write both the public and private sections of the
@@ -36,14 +33,10 @@ Important Notes
     • Some functions are required to be implemented with recursion. For these functions, you are
       welcome to write private helper functions that do the recursion.
 
-
-
-
 Interface
 Your class must have the following interface (all the following members are public):
 
    • Define the following constructors for the CharLinkedList class:
-
         ◦ CharLinkedList()
           The default constructor takes no parameters and initializes an empty list.
         ◦ CharLinkedList(char c)
@@ -61,8 +54,6 @@ Your class must have the following interface (all the following members are publ
      Define a destructor that destroys/deletes/recycles all heap-allocated data in the current list. It
      has no parameters and returns nothing. This function must use a private recursive helper
      function.
-                                                                                                       3
-
 
     • CharLinkedList &operator=(const CharLinkedList &other)
       Define an assignment operator for the class that recycles the storage associated with the instance
@@ -169,8 +160,6 @@ Your class must have the following interface (all the following members are publ
   A popFromBack function that takes no parameters and has a void return type. It removes
   the last element from the list. If the list is empty it should throw a C++ std::runtime_error
   exception initialized with the string “cannot pop from empty LinkedList”.
-                                                                                                     5
-
 
    • void removeAt(int index)
      A removeAt function that takes an integer index and has a void return type. It removes the ele-
@@ -222,10 +211,7 @@ but they’re fun and educational.
      A slice function that takes a left index and a right index and returns a pointer to a new,
      heap-allocated CharLinkedList. The new list contains the characters starting at the left index
      and up to, but not including, the right index. If the first index is equal to or greater than the
-                                                                                                         6
-
-
-      second, it returns a new, empty list. The left index must be in the range [0..SIZE) and the right
+second, it returns a new, empty list. The left index must be in the range [0..SIZE) and the right
       index must be in the range [0..SIZE] where SIZE is the size of the list. Since the right index is
       not included in the final slice, requesting a slice where the right index is 1 index past the last
       element is still a valid request. If the either index passed is out of range the function should

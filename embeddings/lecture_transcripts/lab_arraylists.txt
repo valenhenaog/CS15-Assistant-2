@@ -26,15 +26,6 @@ you write a function, write some basic tests for it.1
 What Makes a Good Test
 Good tests are small functions which test precise areas of your code. They
 have easily understandable function names and often use helpful print state-
-1
-    There is even a software engineering paradigm where you write the tests before you write
-    the code it tests! If you’re curious, it’s called test-driven devleopment (TDD)
-
-
-                                              1
-                                                                              2
-
-
 ments. Small test functions that test a single specific thing are useful because
 if something goes wrong you know where in the code to begin looking.
     For example, if a test function named removeFromEmptyArray fails, you
@@ -117,9 +108,6 @@ consider on your own—along with some of their pros and cons.
       and tests your program. This is often difficult to read, particularly
       when you have a lot of tests. However, it is relatively easy to compile
       and run your work. That said, the output of the testing program is
-                                                                            4
-
-
      very likely going to be difficult to read and managing all of your tests
      as you run them together becomes a bit of a headache.
 
@@ -160,7 +148,6 @@ development workflow as smooth as possible. More precisely, it is a script
      others from running).
 
   3. Run valgrind on your tests.
-                                                                               5
 
 
       4. Output the results of your tests, including error messages, number of
@@ -205,8 +192,6 @@ development workflow as smooth as possible. More precisely, it is a script
      of your testing functions. Thus, your testing code cannot have a
      main()! Again, thinking of each testing function as its own main is the
      right way to approach the situation.
-                                                                                  6
-
 
     Editing the Makefile
     In order to use unit_test, your Makefile must have a target named
@@ -367,9 +352,6 @@ You will need to submit the following files:
       ArrayList.h
       ArrayList.cpp
       Makefile
-                                                                           10
-
-
       unit_tests.h
       README
    You must submit them using Gradescope to the assignment lab_arraylists.

@@ -1,21 +1,5 @@
 CS 15: Recursion Lab
-
-
-
-
-Introduction
-Mazes have probably been around since before the Egyptians created gigan-
-tic labyrinths circa 2000BCE. A ‘perfect’ maze is a maze with only one path
-from a start point to an end point. As it turns out, it is relatively easy for
-computers to create and solve perfect mazes. In this lab, we will investigate
-solving mazes using recursion. The code you will be given can already create
-perfect mazes; today, you will write the code to solve them.
-
-
-
-
-                                      1
-                                                                                 2
+                                                               2
 
 
 Depth First Search
@@ -198,9 +182,6 @@ least some of the steps.
 12:   Trying north , row 2 and col 3 , We came from here , Back at row 3 and col 3 ,
 13:   Trying east , row 3 and col 4 , Hit wall , Back at row 3 and col 3 ,
 14:   Trying south , row 4 and col 3 , Marking with period (.)
-                                                                                       6
-
-
 15:   Trying north , row 3 and col 3 , We came from here , Back at row 4 and col 3 ,
 16:   Trying east , row 4 and col 4 , Hit wall , Back at row 4 and col 3 ,
 17:   Trying south , row 5 and col 3 , Marking with period (.)
@@ -379,9 +360,6 @@ When you run the test program, it does the following:
 
   1. prompts for a maze size (make sure to test with small and large num-
      bers).
-                                                                           10
-
-
   2. prints out an unsolved maze and then the solved maze using solve().
 
   3. prints out the length of the path using path_length()
@@ -412,12 +390,4 @@ You will need to submit the following files:
    You must submit them using Gradescope to the assignment lab_recursion.
 Submit these files directly, do not try to submit them in a folder.
 
-
-Acknowledgements
-Recursive maze problems are widely used in CS. They are particularly com-
-mon in settings with physical or virtual robots. The overall idea for this lab
-was borrowed from https://www.cs.bu.edu/teaching/alg/maze/. The
-lab was adapted by Chris Gregg, and then modified by Eliza Schreibman
-and Julia Cooper and Mark Sheldon. The maze creation code was taken
-from here: https://azerdark.wordpress.com/2009/03/29/588/.
 

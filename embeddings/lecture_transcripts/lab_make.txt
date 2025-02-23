@@ -26,10 +26,6 @@ exports
 exports are things that other modules can use. This might be a function
 like CharLinkedList::first.
 
-                                       1
-                                                                              2
-
-
 imports
 imports are things that are used by a module, but not defined in that mod-
 ule’s .o, and must be supplied by some other module. If your module calls
@@ -69,8 +65,6 @@ You probably already have done this!
 
 Compilation Errors
 Compilation errors include:
-                                                                            3
-
 
    • syntax errors
 
@@ -155,8 +149,6 @@ evil.cpp. If you take a quick look at the code you will see that it uses
 an object of class Roster, whose interface is in Roster.h and whose im-
 plementation is in Roster.cpp. The class contains a simple ArrayList of
 Students (a struct defined in Student.h). Thus, in terms of dependencies,
-                                                                             5
-
 
 evil depends on Roster which itself depends on Student. How would this
 look in the Makefile?
@@ -197,9 +189,7 @@ old version exactly.
 compare the contents of two different files. All differences between the two
 files will be reported to you by diff—if there are no differences, then nothing
 gets reported.
-                                                                              6
-
-
+
 Redirecting Output
 Because diff compares files, if you want to compare your program’s termi-
 nal output with that of the reference, you first must save each program’s
@@ -239,8 +229,6 @@ diff my.output ref.output
     If the outputs were identical (which is our goal), then diff wouldn’t
 print anything, because there are no differences. However, in this case you
 should receive a diff output that looks as follows:
-                                                                            7
-
 
 1c1
 < Here is a log of failed students!
@@ -275,58 +263,4 @@ you want to get a good autograder score, it is necessary that you use diff
 to test your program against the reference implementation we provide you.
 
 
-Separately Redirecting stdout and stderr
-Not so fast! It turns out that your evil program may still have differences
-from the reference implementation. Specifically, when we used &>, it redi-
-rected all termainl output from your program to the same file. But what
-if your program’s outputs are actually from different places? For example,
-when you send output to cout, it goes to the standard output stream (abbre-
-viated stdout), and when you send output to cerr it goes to the standard
-                                                                           8
-
-
-error stream (or stderr). But using &> lumps these different output streams
-into a single file.
-    Luckily, in bash we have a way to separate outputs from these two
-different streams. Namely, we can use > and 2>, which respectively redirect
-stdout and stderr. Try doing this with your program:
-./evil gradebook.txt > my.stdout 2> my.stderr
-
-    This will create two different files, my.stdout and my.stderr, which
-respectively contain your program’s outputs to the stdout and stderr
-streams.
-    Now do the same with the reference implementation:
-./evil_reference gradebook.txt > ref.stdout 2> ref.stderr
-
-    Finally, we can separately compare your program’s stdout and stderr
-streams with those of the reference:
-diff my.stdout ref.stdout
-diff my.stderr ref.stderr
-
-   You’ll notice that we are now getting outputs from diff that we did
-not get before! This means that, even though our program’s total output
-matched the reference’s, there are still differences in which stream (cout or
-cerr) that output was being sent. Note: this is also a subtle way to lose
-autograder points!
-   See if you can interpret the results you got from diff and determine
-what changes you need to make to your program to have it match the refer-
-ence. It should be as simple as sending output to the correct stream. Once
-again redirect your output streams to files, compare against the reference
-with diff, and make sure the changes you made have resulted in the two
-programs matching.
-
-
-Submitting your code
-You will need to submit the following files:
-    Makefile
-    evil.cpp
-    roster.cpp
-    roster.h
-    Student.h
-    README
-                                                                  9
-
-
-   You must submit them using Gradescope to the assignment lab_make.
-Submit these files directly, do not try to submit them in a folder.
 

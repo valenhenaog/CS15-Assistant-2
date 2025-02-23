@@ -7,7 +7,7 @@ import os
 print("Current working directory:", os.getcwd())
 
 # Set your OpenAI API Key
-openai.api_key = "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"
+openai.api_key = "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"
 
 # Store the text files in a dictionary {filename: filedata}
 def read_txt_files(folder_path):
@@ -27,7 +27,7 @@ def get_embedding(text, model="text-embedding-ada-002"):
 
 
 # folder with trasncripts (stored as a {filename: filedata} dictionary):
-folder_path = "embeddings/test" # ------THE FILEPATH MAY CREATE ISSUES--------
+folder_path = "embeddings/lecture_transcripts" # ------THE FILEPATH MAY CREATE ISSUES--------
 texts = read_txt_files(folder_path)
 files = list(Path(folder_path).glob("*.txt"))
 print("Files found:", files)

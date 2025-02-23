@@ -43,10 +43,6 @@ You are operating on the department server using the command line, a text-based 
 navigating a computer. In reality, you are just running another computer program called the
 Linux shell.
 
-                                                                                             1
-                                                                                      CS 15
-                               Introductory Lab                                  Spring 2025
-
 To confirm you successfully logged in, try typing hostname into the command line and hitting
 enter. You should get back the name of the department machine you are operating on, which
 will look something like vm-hwXX, where XX is replaced by numbers. NOTE: if you see a
@@ -89,10 +85,6 @@ To learn about the cal tool, for example, use the man tool:
 
   ⇒ man cal
 
-                                                                                           2
-                                                                                        CS 15
-                                Introductory Lab                                   Spring 2025
-
 This will display the help page for the cal tool. These help pages can be terse but have all
 information about the command. You can exit out of a manual by typing q.
 These days, this information is also available on the internet. You can search there. The
@@ -131,11 +123,6 @@ called your working directory. When you first log in, you are placed in your hom
     removing a directory. Type ls; the directory should now be gone. WARNING: The
     rm command permanently removes a file. There is no temporary trash bin! Use it
     carefully.
-
-                                                                                              3
-                                                                                       CS 15
-                                 Introductory Lab                                 Spring 2025
-
 Important:
 You will be navigating the command line all semester long, so it is important to
 know these commands. You can use this as a reference:
@@ -176,13 +163,6 @@ type the dot at the end ! The cp command copies files and we have given it the p
 program file that we want to copy, as well as the dot symbol ., which tells cp to copy the file
 to the current working directory. You can use ls to make sure you have successfully copied
 the file.
-
-
-
-                                                                                             4
-                                                                                      CS 15
-                               Introductory Lab                                  Spring 2025
-
 The filename ends with .cpp, indicating that it is a C++ program. In a moment, we’ll learn
 how to view and edit this program. For now, let’s just compile and run it. Compile the
 program by typing the following command:
@@ -222,12 +202,6 @@ department servers—you can do this by typing hostname and checking that you ge
 output as before. Use ls to make sure you are in the same directory as your welcome.cpp
 program. If not, navigate to it. If you are, recompile the program:
 clang++ -Wall -Wextra welcome.cpp
-
-
-                                                                                           5
-                                                                                       CS 15
-                                Introductory Lab                                  Spring 2025
-
 Every time you edit a program, you have to recompile it before running it again. Finally,
 run the program by typing “./a.out” and hitting enter. You should see an output that looks
 as follows:
