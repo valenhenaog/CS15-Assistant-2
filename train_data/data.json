@@ -334,5 +334,127 @@
   {
     "role": "assistant",
     "content": "Yes, it's good to keep the Makefile under that limit. You can use a backslash (\\) to split the lines up."
+  },
+
+{
+    "role": "user",
+    "content": "Since the spec states that we must use private recursive helper functions for certain functions, I wanted to make sure that my implementation of replaceAt() meets this criteria. As shown below, I have two if statements that check whether the index is 0 or currSize - 1 to quickly update front->data or back->data, respectively, and to avoid any count logic errors in the helper function. While I can implement these in the helper function, it would be redundant and repetitive as this logic would be checked with each recursive call of replaceAtHelper(), making my implementation more efficient and logical. However, I want to ensure that this meets the spec's specification on using private recursive helper functions.\n\nCode:\n\nvoid CharLinkedList::replaceAt(char c, int index) {\nthrowRange(index, false);\n\nif (index == 0) {\nfront->data = c;\nreturn;\n}\nif (index == currSize - 1) {\nback->data = c;\nreturn;\n}\nreplaceAtHelper(front, 0, c, index);\n}\nvoid CharLinkedList::replaceAtHelper(Node *curr, int count, char c, int index) {\nif (count == index) {\ncurr->data = c;\nreturn;\n}\nreplaceAtHelper(curr->next, count + 1, c, index);\n}"
+},
+{
+    "role": "assistant",
+    "content": "Yes, this looks good to me. If you had just an iterative solution within your replaceAt function that didn’t use recursion at all, that would go against the intended nature of the spec. But you are certainly using recursion here, so it’s all kosher."
+},
+{
+    "role": "user",
+    "content": "I would be grateful for guidance in handling \"valgrind: Unrecognised instruction\"! Currently, I am implementing elementAt using a recursive helper function. Initially, I received an error because elementAt is const, but my helper wasn't const. (Is it correct that I made the helper also const? It is modifying variables that were created inside elementAt, but it is not modifying the object.)\n\nNow, however, I am getting this error. I see that valgrind is not recognizing my function call, but not sure what to do with it.\nCould you please help me debug this error?\n\nThank you!\n\nMy elementAt and helper functions:\n\nchar CharLinkedList::elementAt(int index) const {\n\t// Throw an exception if the specified index is out of bounds\n\tif (index < 0 or index >= this->size()) {\n\tstd::stringstream ss;\n\tss << \"index (\" << index << \") not in range [0..\" <<\n\tthis->size() << \")\";\n\tthrow std::range_error(ss.str());\n\t}\n\t// Create variable that will store character at specified index\n\tchar charToReturn = 'i';\n\n\t// Call a helper function and provide it with variables it needs to find\n\t// element at user-provided index\n\tint counter = 0;\n\telementAtRecHelper(front, &charToReturn, &counter, index);\n}\n\nvoid CharLinkedList::elementAtRecHelper(Node *curr, char *toReturnPtr,\n\tint *countPtr, int neededInd) const {\n\t// Base Case\n\tif ((*countPtr) == neededInd) {\n\t// (*toReturnPtr) = curr->data;\n\treturn;\n\t}\n\n\t// Recursive Case\n\t(*countPtr) += 1;\n\telementAtRecHelper(curr->next, toReturnPtr, countPtr, neededInd);\n}"
+},
+{
+    "role": "assistant",
+    "content": "This is always a very tricky error to get. The error most certainly comes from your elementAt function, not the recursive helper. Take a look at your char *toReturnPtr, as I think while you update it correctly, you never actually return it in your elementAt. If you return that char, your problem should go away, I think."
+},
+{
+    "role": "user",
+    "content": "Do we need to organize our unit_test header file in terms of readability (i.e. grouped by method)? On the previous homework, I grouped all of my tests based on the method they corresponded to, which matched the order in the class header file. However, it feels a lot more intuitive to have the tests in the order that I wrote them because they build upon each other. Does this matter? (Given that the necessary commenting is included and the test names are descriptive.)"
+},
+{
+    "role": "assistant",
+    "content": "The style guide doesn't mention anything about this, so how you organize unit_test.h is up to you. As you said, as long as each test has a descriptive name and brief description, you're all set."
+},
+{
+    "role": "user",
+    "content": "I have a few methods that go over 30 lines, mostly due to many Node element reassignments, ex:\n\nStruct *ptr1 = new Struct();\nStruct *ptr2 = new Struct();\nptr1->elem1 = data;\nptr1->elem2 = ptr2->elem2;\nptr1->elem3 = ptr2;\nWould it be stylistically appropriate to put similar assignments on the same line separated by commas, ex:\n\nStruct *ptr1 = new Struct(), Struct *ptr2 = new Struct();\nptr1->elem1 = data, ptr1->elem2 = ptr2->elem2, ptr1->elem3 = ptr2;\nto decrease the number of lines in a method?"
+},
+{
+    "role": "assistant",
+    "content": "Although the style guide doesn't mention anything about this, I would recommend not using multiple variable declarations in the same statement because it isn't as readable as declaring variables across multiple lines. But, with your example above, you could probably make a helper function that would condense all five lines into only one or two."
+},
+
+{
+    "role": "user",
+    "content": "Do we only need to implement the errors provided in the function description? Take this function for example: Can I throw an error of \"remove from empty LinkedList\" or can my program ONLY error with \"index (IDX) not in range [0..SIZE)\"? Would there be some edge cases testing removeAt(0) etc...\n\nI would assume that I should only throw the error provided and no other \"edge cases\"? Otherwise in what order would I throw my errors (like would it first check if the list is empty or first check the index out of range)?"
+},
+{
+    "role": "assistant",
+    "content": "You should only throw the error provided. The range error message will account for an empty list because it will say that the index ranges from [0 to 0) which does not include the index [0] showing that there are no valid index’s to removeAt in an empty list. Also, throwing errors not specified in the spec would cause your program to end early or print a different error message, and the autograder would fail that test. Please only throw errors mentioned in the spec."
+},
+{
+    "role": "user",
+    "content": "I don't actually understand why we start using \"and or not\" instead of && || ! like cs11, is there a particular reason for using this syntax?"
+},
+{
+    "role": "assistant",
+    "content": "It is easier to read. The symbols don't signify exactly what they mean, but the words do. It is common to use the symbols in many languages so most likely CS11 uses them so you can get used to recognizing them in other people's programs. Also, CS15 and CS11 are just different courses that do things differently."
+},
+{
+    "role": "user",
+    "content": "When I declare Node as a public struct, my recursive helper runs and doesn't crash. However, when I run node as private, only the recursive function doesn't recognize the Node parameter and crashes. Will I be penalized for a public Node struct declaration since the spec says my node struct should be private?"
+},
+{
+    "role": "assistant",
+    "content": "Like variables, structs follow similar scoping rules, and the order in which you declare and reference/use structs matters."
+},
+{
+    "role": "user",
+    "content": "I was running my unit tests and somewhere in between, I got this error about disk quota being exceeded. I know this happened to some people in CS11 and they solved it by deleting big output files, but we don't have output files in CS15, only header and cpp so far. Please how do I handle it?"
+},
+{
+    "role": "assistant",
+    "content": "Run free_space. That should fix it at least temporarily, but if not you might have a .out file that got caught in an infinite loop and made a giant file."
+},
+{
+    "role": "user",
+    "content": "When I run the destructor on my list of 1000000 elements then I get a stack overflow. Is this something to be expected or is there something I need to fix?"
+},
+{
+    "role": "assistant",
+    "content": "If this is only happening for larger lists, it is quite likely that your program is just running out of memory. Assuming you implemented your destructor using a recursive helper function, keep in mind that for each call to the helper function, some new stack space is allocated. A very large number of calls could mean you use up all of the space that is available to your program.\n\nMake sure to thoroughly test your destructor on smaller lists, keeping an eye out for memory issues via valgrind (which is run automatically by unit_test). If everything works fine for smaller list sizes, then you are probably good to go."
+},
+{
+    "role": "user",
+    "content": "I am trying to make concatenation work when a CharLinkedList is supposed to concatenate itself, but when running a test that does this, it freezes and eats up memory. Here is what I have in my method:\n\nvoid CharLinkedList::concatenate(CharLinkedList *other)\n{\n    if (other != this)\n    {\n        for (Node *oth = other->front; oth != nullptr; oth = oth->next)\n            pushAtBack(oth->item);\n    }\n\n    else\n    {\n        for (Node *oth = front; oth != nullptr; oth = oth->next) // This is the line that valgrind cites as the problem\n            pushAtBack(oth->item);\n    }\n}"
+},
+{
+    "role": "assistant",
+    "content": "It’s good to have narrowed down the problem. The key here is that you are concatenating a list with itself, and that the termination is that oth != nullptr. In your pushAtBack function, you are continually updating this (and therefore the list that oth is a part of), so will oth ever equal nullptr?"
+},
+{
+    "role": "user",
+    "content": "Is the linked list for HW2 circular?\nShould the last element point back to the first element as the \"next\" node in a circular fashion, or is that up to us?"
+},
+{
+    "role": "assistant",
+    "content": "Up to you, I suppose. As long as you have a doubly linked list that subscribes to the specifications in the spec, then you should be good. It might be harder to implement CharLinkedList as circular, but feel free to go for it if you feel comfortable doing so."
+},
+{
+    "role": "user",
+    "content": "I wanted to check in to make sure that I properly fulfilled the \"recursive helper function\" requirement for replaceAt. I looked at @94, but I'm not sure if I fully followed.\n\nI have been using a recursive helper function called findNode to help with modularity. In replaceAt, I use my findNode function to return a pointer to the node at the desired index in the list. I then dereference it and change its data member. (Both are included below).\n\nMy main question is if changing the node data member within the public function is acceptable, because in our linked lists lecture, we were shown a setup where the public function exclusively calls a private recursive function to complete the task.\n\nWould I lose points for my function design because of this? (Not worried about functionality, just style)"
+},
+{
+    "role": "assistant",
+    "content": "Yes, this is okay. If your findNode function is used elsewhere, then it is also good modularity! As long as findNode is private, then this is okay."
+},
+{
+    "role": "user",
+    "content": "Do our functions have to abide by the interface given in the specs verbatim? For example, can we change\n\nvoid concatenate(CharLinkedList *other);\n\nto \n\nvoid concatenate(const CharLinkedList *other); ?\n\nThis might help when I wish to call concatenate(other) in certain cases where the \"other\" CLL is const at the instance."
+},
+{
+    "role": "assistant",
+    "content": "No, you may not change the interface. The above declarations create two different functions. So, the autograder tests won't compile with your code if it makes a call to concatenate(CharLinkedList *other), passing in a non-const CharLinkedList because your CharLinkedList interface won't have a concatenate function that takes in this type."
+},
+{
+    "role": "user",
+    "content": "When I run the destructor on my list of 1000000 elements then I get a stack overflow. Is this something to be expected or is there something I need to fix?"
+  },
+  {
+    "role": "assistant",
+    "content": "If this is only happening for larger lists, it is quite likely that your program is just running out of memory. Assuming you implemented your destructor using a recursive helper function, keep in mind that for each call to the helper function, some new stack space is allocated. A very large number of calls could mean you use up all of the space that is available to your program.\n\nMake sure to thoroughly test your destructor on smaller lists, keeping an eye out for memory issues via valgrind (which is run automatically by unit_test). If everything works fine for smaller list sizes, then you are probably good to go."
+  },
+  {
+    "role": "user",
+    "content": "I am trying to make concatenation work when a CharLinkedList is supposed to concatenate itself, but when running a test that does this, it freezes and eats up memory. Here is what I have in my method:\n\nvoid CharLinkedList::concatenate(CharLinkedList *other)\n{\n    if (other != this)\n    {\n        for (Node *oth = other->front; oth != nullptr; oth = oth->next)\n            pushAtBack(oth->item);\n    }\n\n    else\n    {\n        for (Node *oth = front; oth != nullptr; oth = oth->next) // This is the line that valgrind cites as the problem\n            pushAtBack(oth->item);\n    }\n}"
+  },
+  {
+    "role": "assistant",
+    "content": "It’s good to have narrowed down the problem. The key here is that you are concatenating a list with itself, and that the termination is that oth != nullptr. In your pushAtBack function, you are continually updating this (and therefore the list that oth is a part of), so will oth ever equal nullptr?"
   }
 ]
