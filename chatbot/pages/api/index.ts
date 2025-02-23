@@ -12,6 +12,7 @@ const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 // Initialize conversation history with a system prompt if desired.
 let conversationHistory = [
     { role: "system", content: prompt}
+
   ];
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
