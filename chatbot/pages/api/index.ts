@@ -1,12 +1,12 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { OpenAI } from "openai";
 import dotenv from "dotenv";
-import * as fs from 'fs';
-import path from 'path';
+import fs from 'fs';
 dotenv.config();
 
 // read in system prompt (path: chatbot/system-prompt.txt)
 const prompt = fs.readFileSync('system-prompt.txt', "utf8");
+console.log(prompt);
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
