@@ -1,23 +1,23 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { OpenAI } from "openai";
 import dotenv from "dotenv";
-import fs from 'fs';
+import fs from "fs";
 dotenv.config();
 
 // read in system prompt (path: chatbot/system-prompt.txt)
-const prompt = fs.readFileSync('system-prompt.txt', "utf8");
-console.log(prompt);
+const prompt = fs.readFileSync("system-prompt.txt", "utf-8");
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 // Initialize conversation history with a system prompt if desired.
 let conversationHistory = [
     { role: "system", content: prompt}
-];
+
+  ];
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method Not Allowed" });
+    return res.status(405).json({ error: "Method not allowed" });
   }
 
   try {
