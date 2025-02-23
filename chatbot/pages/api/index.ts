@@ -59,9 +59,9 @@ async function retrieveContent(query: string): Promise<string> {
     // data.documents is an array of relevant document strings.
     return data.documents.join("\n");
   } 
-    { role: "system", content: prompt}
 
-  ];
+
+
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "POST") {
