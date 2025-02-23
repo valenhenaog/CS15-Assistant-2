@@ -1,7 +1,16 @@
 {
   "devDependencies": {
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.5.3",
     "tailwindcss": "^4.0.8"
+  },
+  "dependencies": {
+    "@types/react-router": "^5.1.20",
+    "next": "^15.1.7",
+    "openai": "^4.85.4",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   }
 }
