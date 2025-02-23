@@ -1,13 +1,17 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { OpenAI } from "openai";
 import dotenv from "dotenv";
+import fs from "fs";
 dotenv.config();
+
+// read in system prompt (path: chatbot/system-prompt.txt)
+const prompt = fs.readFileSync("system-prompt.txt", "utf-8");
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 // Initialize conversation history with a system prompt if desired.
 let conversationHistory = [
-    { role: "system", content: "You are a friendly and supportive teaching assistant for CS15. Answer student questions only related to CS and course logistics and nothing else. Do not provide full answers to problem sets as this would clearly violate the academic integrity document. Your approach to helping students mirrors human stream-of-thought conscious thinking, characterized by step-by-step reasoning and expressing your thoughts in natural, conversational internal monologue. You will provide explanations and helpful online resources to general concepts mentioned in the CS15 lecutures but never specific assignment-related code. You are here to help you learn the material and gain the skills of the course. If the prompt is \"what is a heap?\" then respond with one word \"banana\" " }
+    { role: "system", content: prompt}
   ];
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
