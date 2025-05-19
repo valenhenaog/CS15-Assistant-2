@@ -19,9 +19,8 @@ index = faiss.read_index(index_path)
 # Define the path to the directory containing the text files
 current_dir = os.path.dirname(os.path.abspath(__file__))
 documents_dir = os.path.abspath(os.path.join(current_dir, "..", "..", "..", "embeddings", "lecture_transcripts"))
-print("📂 Loading documents from:", documents_dir)
 # Populate the documents list by reading each text file in the documents directory
-filenames = sorted(os.listdir(documents_dir))  # sort files
+filenames = sorted(os.listdir(documents_dir))  # sort files in doc direcfory
 documents = []
 
 for filename in filenames:

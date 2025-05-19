@@ -1,3 +1,4 @@
 node_modules
 chatbot/.next/
 chatbot/.env.local
+.env

@@ -1,56 +1,43 @@
-import openai # openai libraries
-import numpy as np # for fast vectors
-from pathlib import Path # for iterating through every file
-import faiss # efficient nearest-neighbor search
-
+from pathlib import Path
 import os
-print("Current working directory:", os.getcwd())
+import openai
+import numpy as np
+import faiss
+from dotenv import load_dotenv
+load_dotenv()
 
-# Set your OpenAI API Key
-openai.api_key = "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"
-
-# Store the text files in a dictionary {filename: filedata}
-def read_txt_files(folder_path):
-    folder = Path(folder_path)
-    text_data = {}
-
-    for file in folder.glob("*.[tT][xX][tT]"):  # Find all .txt files
-        with open(file, "r", encoding="utf-8") as f:
-            text_data[file.name] = f.read()
-
-    return text_data  # Returns a dictionary {filename: file_content}
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 # Function to generate embeddings
-def get_embedding(text, model="text-embedding-ada-002"):
-    response = openai.embeddings.create(input=text, model=model)
-    return response.data[0].embedding
+def get_embedding(text):
+    response = openai.Embedding.create(input=text, model="text-embedding-ada-002")
+    return response['data'][0]['embedding']
 
 
 # folder with trasncripts (stored as a {filename: filedata} dictionary):
 folder_path = "embeddings/lecture_transcripts" # ------THE FILEPATH MAY CREATE ISSUES--------
-texts = read_txt_files(folder_path)
-files = list(Path(folder_path).glob("*.txt"))
-print("Files found:", files)
 
-# Generate embeddings
-embeddings = {filename: get_embedding(content) for filename, content in texts.items()}
+files = sorted(Path(folder_path).glob("*.txt"))  # sort files in docs directory
 
-# Convert embeddings to NumPy array for FAISS
-embedding_list = np.array(list(embeddings.values()), dtype=np.float32)
+embedding_list = []
+documents = []
 
-# Save filenames for retrieval later
-filenames = list(embeddings.keys())
+# Loop through files in sorted order
+for file in files:
+    with open(file, "r", encoding="utf-8") as f:
+        content = f.read()
+        embedding = get_embedding(content)
+        embedding_list.append(embedding)
+        documents.append(content)
 
-# Determine the dimensionality of your embeddings
-d = embedding_list.shape[1]
+# Convert to FAISS index
+embedding_array = np.array(embedding_list, dtype=np.float32)
+d = embedding_array.shape[1]
 
-# Create a FAISS index using L2 (Euclidean) distance
 index = faiss.IndexFlatL2(d)
-index.add(embedding_list)  # Add all your document embeddings to the index
+index.add(embedding_array)
 
 print("Number of embeddings indexed:", index.ntotal)
 
-# Save embeddings to a file
+# Save index
 faiss.write_index(index, "faiss_index.index")
-
-# To load the index later: index = faiss.read_index("faiss_index.index")
